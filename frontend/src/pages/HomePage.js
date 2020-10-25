@@ -7,6 +7,7 @@ export function HomePage() {
       <h2>Contributors</h2>
       <p>Jan Hrdy</p>
       <p>Michael Linka</p>
+      <p>Jaroslav Drahotinsky</p>
     </div>
   );
 }
