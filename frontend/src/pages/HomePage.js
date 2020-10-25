@@ -6,6 +6,7 @@ export function HomePage() {
       <h1>Fit.me</h1>
       <h2>Contributors</h1>
       <p>Jan Hrdy</p>
+      <p>Michael Linka</p>
     </div>
   );
 }
