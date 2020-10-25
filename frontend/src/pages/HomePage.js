@@ -8,6 +8,7 @@ export function HomePage() {
       <p>Jan Hrdy</p>
       <p>Michael Linka</p>
       <p>Jaroslav Drahotinsky</p>
+      <p>Tomáš Karásek</p>
     </div>
   );
 }
