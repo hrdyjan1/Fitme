@@ -13,7 +13,7 @@ const GET_PLACES = gql`
 `;
 
 export function HomePage() {
-  const { loading, error, data } = useQuery(GET_PLACES);
+  const { data } = useQuery(GET_PLACES);
   const places = isFilledArray(data?.places) ? data?.places : null;
 
   return (
