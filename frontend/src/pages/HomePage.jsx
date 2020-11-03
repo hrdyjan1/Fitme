@@ -1,6 +1,12 @@
 import React from 'react';
 
 export function HomePage() {
+  const [state, setstate] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log(state);
+  }, []);
+
   return (
     <div className="appWrapper">
       <h1>Fit.me</h1>
