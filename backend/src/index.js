@@ -44,7 +44,7 @@ const main = async () => {
         dbConnection = await getConnection();
       }
       const {authorization, Authorization} = req.headers
-      const auth = authorization || Authorization ||'';
+      const auth = authorization || Authorization || '';
 
       return {
         req,
