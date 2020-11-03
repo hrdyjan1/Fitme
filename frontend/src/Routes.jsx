@@ -5,7 +5,7 @@ import { HomePage } from 'src/pages/HomePage';
 import { PageNotFound } from 'src/pages/PageNotFound';
 
 export const route = {
-  home: () => `/`,
+  home: () => '/',
 };
 
 export function Routes() {

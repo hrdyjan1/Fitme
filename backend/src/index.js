@@ -4,14 +4,19 @@ import cors from 'cors';
 import { ApolloServer, gql } from 'apollo-server-express';
 
 import { getConnection } from './libs/connection';
-
 import rootResolver from './modules/rootResolver';
 
 dotenv.config();
 
 const typeDefs = gql`
+  type Place {
+    id: String!
+    name: String!
+    description: String!
+  }
   type Query {
     todo: String!
+    places: [Place!]!
   }
 
   type AuthInfo {

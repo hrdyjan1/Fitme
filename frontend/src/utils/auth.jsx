@@ -12,11 +12,15 @@ const initialState = {
   token: null,
 };
 
+// INFO ❗
+//
+// Tuhle cast casem uplne smazu a prepisi na neco rozumnejsiho
+//
+
 const AuthContext = createContext(
   createContextValue({
     token: initialState.token,
-    setState: () =>
-      console.error('You are using AuthContext without AuthProvider!'),
+    setState: () => console.error('You are using AuthContext without AuthProvider!'),
   }),
 );
 
@@ -72,7 +76,9 @@ function getStorageState(defaultState) {
     if (token) {
       return { token };
     }
-  } catch {}
+  } catch (error) {
+    // Empty
+  }
 
   return defaultState;
 }
