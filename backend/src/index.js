@@ -43,7 +43,8 @@ const main = async () => {
       if (!dbConnection) {
         dbConnection = await getConnection();
       }
-      const auth = req.headers.Authorization || '';
+      const {authorization, Authorization} = req.headers
+      const auth = authorization || Authorization ||'';
 
       return {
         req,
