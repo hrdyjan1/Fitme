@@ -66,7 +66,7 @@ export const signup = async (
   );
 
   
-  const emailText = `Link pro overeni http://${req.get('host')}verificationToken=${verificationToken}`;
+  const emailText = `Link pro overeni http://${req.get('host')}/verificationToken=${verificationToken}`;
   await sendEmail(
     '"Fit me 🥇" <no-reply@fitme.com>',
     email,
