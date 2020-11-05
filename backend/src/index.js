@@ -36,6 +36,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    verify(token: String!): Boolean!
     signin(email: String!, password: String!): AuthInfo!
     insertPlace(
       name: String!
