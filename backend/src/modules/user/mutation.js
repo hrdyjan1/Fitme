@@ -53,7 +53,7 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
 export const signup = async (
   _,
   { firstName, lastName, email, password },
-  { dbConnection },
+  { dbConnection,req },
 ) => {
   await checkIfValidEmail(email, dbConnection);
   const id = uuidv4();
@@ -65,7 +65,8 @@ export const signup = async (
     [id, email, firstName, lastName, password, verificationToken, 0],
   );
 
-  const emailText = `Link pro overeni ${address}verificationToken=${verificationToken}`;
+  
+  const emailText = `Link pro overeni http://${req.get('host')}verificationToken=${verificationToken}`;
   await sendEmail(
     '"Fit me 🥇" <no-reply@fitme.com>',
     email,
