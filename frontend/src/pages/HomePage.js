@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { isFilledArray } from 'src/constants/array';
-import { AppBar, Toolbar, Button, Typography, Box  } from '@material-ui/core';
-import SignUpDialog from 'src/components/SignUpDialog'
+import {
+  AppBar, Toolbar, Button, Typography, Box,
+} from '@material-ui/core';
+import SignUpDialog from 'src/components/SignUpDialog';
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -21,22 +23,22 @@ export function HomePage() {
 
   return (
     <div>
-      <AppBar color="transparent" position="static" className={'appBar'}>
-        <Toolbar variant="regular" className={'toolbar'}>
+      <AppBar color="transparent" position="static" className="appBar">
+        <Toolbar variant="regular" className="toolbar">
           <Typography variant="h6">
             <Box fontWeight="fontWeightBold">FitMe</Box>
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => {setShowSignUpDialog(true)}}>
+          <Button variant="contained" color="primary" onClick={() => { setShowSignUpDialog(true); }}>
             Registrovat
           </Button>
         </Toolbar>
       </AppBar>
-      <div className={'appWrapper'}>
-      <h1>Fit.me</h1>
-      <h2>Sport places</h2>
-      {places && places.map((p) => <p>{p.name}</p>) }
+      <div className="appWrapper">
+        <h1>Fit.me</h1>
+        <h2>Sport places</h2>
+        {places && places.map((p) => <p>{p.name}</p>) }
       </div>
-      <SignUpDialog show={showSignUpDialog} close={() => {setShowSignUpDialog(false)}}/>
+      <SignUpDialog show={showSignUpDialog} close={() => { setShowSignUpDialog(false); }} />
     </div>
   );
 }
