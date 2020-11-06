@@ -1,7 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { useUserContext } from 'src/contexts/user';
 
 // const VERIFY = gql`
 //   mutation verifyVoe($token: String!) {
