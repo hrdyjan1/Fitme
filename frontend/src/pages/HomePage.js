@@ -18,11 +18,16 @@ const GET_PLACES = gql`
 `;
 
 function HeaderInfo({ onClick }) {
-  const { fullName, logout } = useUserContext();
+  const { fullName, logout, user } = useUserContext();
+  const ver = user?.verified === 1 ? 'ano overeno' : 'neovereno';
 
   return fullName ? (
     <>
-      <h3>{fullName}</h3>
+      <h3>
+        {fullName}
+        {' '}
+        {ver}
+      </h3>
       <Button variant="contained" color="primary" onClick={logout}>
         Odhlasit
       </Button>

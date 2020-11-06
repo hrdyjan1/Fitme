@@ -1,6 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useUserContext } from 'src/contexts/user';
 
 const VERIFY = gql`
   mutation verifyVoe($token: String!) {
@@ -9,6 +10,7 @@ const VERIFY = gql`
 `;
 
 function Verification({ token }) {
+  const { set, user: u } = useUserContext();
   const [verify, { data }] = useMutation(VERIFY);
 
   React.useEffect(() => {
@@ -23,6 +25,12 @@ function Verification({ token }) {
       })
       .catch((e) => alert(e));
   }, [token, verify]);
+
+  if (data?.verify) {
+    const newUser = { ...u, user: { ...u.user, verified: 1 } };
+    set(newUser);
+    localStorage.setItem('user', JSON.stringify(newUser));
+  }
 
   return data?.verify ? <p>Overeno</p> : <p>Problem s overenim</p>;
 }
