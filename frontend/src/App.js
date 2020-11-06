@@ -5,6 +5,7 @@ import { ScrollToTop } from 'src/utils/ScrollToTop';
 import { EnhancedAppoloProvider } from 'src/utils/apollo';
 import { Routes } from './Routes';
 import { AuthProvider } from './utils/auth';
+import { UserProvider } from './contexts/user';
 
 export function App() {
   return (
@@ -12,7 +13,9 @@ export function App() {
       <AuthProvider>
         <EnhancedAppoloProvider>
           <ScrollToTop />
-          <Routes />
+          <UserProvider>
+            <Routes />
+          </UserProvider>
         </EnhancedAppoloProvider>
       </AuthProvider>
     </BrowserRouter>

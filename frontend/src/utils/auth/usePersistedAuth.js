@@ -1,12 +1,12 @@
 import React from 'react';
-import { getStorageState, setStorage } from '../storage';
+import { getStorage, setStorage } from '../storage';
 
-function usePersistedAuth(defaultState) {
-  const [state, setStateRaw] = React.useState(() => getStorageState(defaultState));
+function usePersistedAuth(defaultState, item) {
+  const [state, setStateRaw] = React.useState(() => getStorage(defaultState, item));
 
-  const setState = React.useCallback((s) => {
-    setStateRaw(s);
-    setStorage(s);
+  const setState = React.useCallback((_state) => {
+    setStateRaw(_state);
+    setStorage(_state);
   }, []);
 
   return [state, setState];
