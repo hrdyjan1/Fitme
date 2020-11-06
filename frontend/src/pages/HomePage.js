@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { isFilledArray } from 'src/constants/array';
 import {
-  AppBar, Toolbar, Button, Typography, Box,
+  AppBar, Toolbar, Typography, Box,
 } from '@material-ui/core';
 import SignUpDialog from 'src/components/SignUpDialog';
 import { useUserContext } from 'src/contexts/user';
+import { Button } from 'src/atoms/'
 
 const GET_PLACES = gql`
   query GetPlaces {
