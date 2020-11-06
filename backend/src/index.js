@@ -13,18 +13,45 @@ const typeDefs = gql`
     id: String!
     name: String!
     description: String!
+    latitude: Float!
+    longitude: Float!
   }
   type Query {
     todo: String!
+    users: [User]!
     places: [Place!]!
+  }
+
+  type User {
+    id: String!
+    email: String!
+    verified: Int!
+    firstName: String!
+    lastName: String!
   }
 
   type AuthInfo {
     token: String!
+    user: User!
   }
 
   type Mutation {
+    verify(token: String!): Boolean!
     signin(email: String!, password: String!): AuthInfo!
+    insertPlace(
+      name: String!
+      description: String!
+      latitude: Float!
+      longitude: Float!
+    ): Boolean!
+    updatePlace(id: String!, name: String!, description: String!, latitude: Float!, longitude: Float!): Boolean!
+    removePlace(id: String!): Boolean!
+    signup(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+    ): AuthInfo!
   }
 `;
 
@@ -43,7 +70,7 @@ const main = async () => {
       if (!dbConnection) {
         dbConnection = await getConnection();
       }
-      const {authorization, Authorization} = req.headers
+      const { authorization, Authorization } = req.headers;
       const auth = authorization || Authorization || '';
 
       return {
