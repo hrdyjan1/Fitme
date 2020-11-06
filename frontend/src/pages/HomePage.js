@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { isFilledArray } from 'src/constants/array';
 import {
   AppBar, Toolbar, Button, Typography, Box,
 } from '@material-ui/core';
-import SignUpDialog from 'src/components/SignUpDialog';
-import { useUserContext } from 'src/contexts/user';
+import { noop } from 'src/constants/functions';
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -17,32 +16,9 @@ const GET_PLACES = gql`
   }
 `;
 
-function HeaderInfo({ onClick }) {
-  const { fullName, logout, user } = useUserContext();
-  const ver = user?.verified === 1 ? 'ano overeno' : 'neovereno';
-
-  return fullName ? (
-    <>
-      <h3>
-        {fullName}
-        {' '}
-        {ver}
-      </h3>
-      <Button variant="contained" color="primary" onClick={logout}>
-        Odhlasit
-      </Button>
-    </>
-  ) : (
-    <Button variant="contained" color="primary" onClick={onClick}>
-      Registrovat
-    </Button>
-  );
-}
-
-export function HomePage() {
+function HomePage() {
   const { data } = useQuery(GET_PLACES);
-  const places = isFilledArray(data?.places) ? data?.places : null;
-  const [showSignUpDialog, setShowSignUpDialog] = useState(false);
+  const places = isFilledArray(data?.places) ? data.places : [];
 
   return (
     <div>
@@ -51,15 +27,18 @@ export function HomePage() {
           <Typography variant="h6">
             <Box fontWeight="fontWeightBold">FitMe</Box>
           </Typography>
-          <HeaderInfo onClick={() => setShowSignUpDialog(true)} />
+          <Button variant="contained" color="primary" onClick={noop}>
+            Registrovat
+          </Button>
         </Toolbar>
       </AppBar>
       <div className="appWrapper">
         <h1>Fit.me</h1>
         <h2>Sport places</h2>
-        {places && places.map((p) => <p>{p.name}</p>) }
+        {places && places.map((p) => <p>{p.name}</p>)}
       </div>
-      <SignUpDialog show={showSignUpDialog} close={() => { setShowSignUpDialog(false); }} />
     </div>
   );
 }
+
+export { HomePage };
