@@ -42,33 +42,15 @@ export default function SignInDialog(props) {
   const { set } = useUserContext();
   const [signin, { loading }] = useMutation(SIGN_IN);
   const theme = useTheme();
-  const [values, setValues] = React.useState({
-    email: '',
-    password: ''
-  });
-  const [showErrors, setShowErrors] = React.useState({
-    email: false,
-    password: false
-  });
   const [showPassword, setShowPassword] = React.useState(false);
-
-  const updateValue = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const showError = (prop, value) => {
-    setShowErrors({ ...showErrors, [prop]: value });
-  };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const onSave = () => {
+  const onSave = (values) => {
     signin({
       variables: {
-        firstName: values.firstname,
-        lastName: values.lastname,
         email: values.email,
         password: values.password,
       },
@@ -107,7 +89,7 @@ export default function SignInDialog(props) {
           <Box width="65%">
             <Formik
               initialValues={{ email: '', password: '' }}
-              onSubmit={(values) => onSave()}
+              onSubmit={(values) => onSave(values)}
               validate={(values) => {
                 const errors = {};
                 if (!email.test(values.email)) {
