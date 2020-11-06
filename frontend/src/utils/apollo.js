@@ -12,7 +12,7 @@ import { onError } from '@apollo/client/link/error';
 
 import { config } from 'src/config';
 import { route } from 'src/Routes';
-import { useAuth } from './auth';
+import { useAuth } from 'src/utils/auth/index';
 
 const UNAUTHENTICATED_CODE = 'UNAUTHENTICATED';
 
