@@ -1,14 +1,22 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-export function Loading() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
+
+export function CircularLoading() {
+  const classes = useStyles();
+
   return (
-    <div className="center black-60">
-      <div className="tc f4 pa4">
-        <FontAwesomeIcon icon={faFeatherAlt} spin />
-        <div className="dib ml3">Loading...</div>
-      </div>
+    <div className={classes.root}>
+      <CircularProgress />
     </div>
   );
 }

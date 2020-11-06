@@ -17,16 +17,14 @@ export function DefaultButton({
   disabled,
   ...rest
 }) {
-  const classes = useStyles();
-
-  return (
-    <Button
-    variant='contained'
-    color='primary'
-    disabled={disabled}
-    {...rest}
-    >
-    {children}
-    </Button>
+    return (
+      <Button
+        variant='contained'
+        color='primary'
+        disabled={disabled}
+        {...rest}
+      >
+        {children}
+      </Button>
   );
 }
