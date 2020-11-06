@@ -6,8 +6,8 @@ function usePersistedAuth(defaultState, item) {
 
   const setState = React.useCallback((_state) => {
     setStateRaw(_state);
-    setStorage(_state);
-  }, []);
+    setStorage(_state, item);
+  }, [item]);
 
   return [state, setState];
 }
