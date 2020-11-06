@@ -1,6 +1,5 @@
 import React from 'react';
-import { usePersistedAuth } from 'src/utils/auth/usePersistedAuth';
-
+import { usePersistedAuth } from '../../utils/auth/usePersistedAuth';
 import { initialState } from './helpers';
 
 const Context = React.createContext(initialState);
