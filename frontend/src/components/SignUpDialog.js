@@ -1,9 +1,11 @@
 import React from 'react';
-// import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
+import {name, email, password} from 'src/constants/regex'
 import {
   TextField,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FilledInput,
   InputLabel,
   InputAdornment,
@@ -21,134 +23,252 @@ import {
 import {Close, Visibility, VisibilityOff} from '@material-ui/icons'
 import useTheme from '@material-ui/core/styles/useTheme'
 
-// const GET_PLACES = gql`
-//   query SaveUser {
-//     places {
-//       id
-//       name
-//       description
-//     }
-//   }
-// `;
+const SIGN_UP = gql`
+  mutation SignUp($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    signup(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+      firstName
+      lastName
+      email
+      password
+    }
+  }
+`;
 
 export default function SignUpDialog(props) {
   const { show, close } = props;
+  const [signup] = useMutation(SIGN_UP);
   const theme = useTheme();
-  // const { } = useQuery(GET_PLACES);
   const [values, setValues] = React.useState({
     userType: 'athlete',
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
     passwordCheck: '',
   });
+  const [showErrors, setShowErrors] = React.useState({
+    firstname: false,
+    lastname: false,
+    email: false,
+    password: false,
+    passwordCheck: false,
+  });
+  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPasswordCheck, setShowPasswordCheck] = React.useState(false)
 
-  const handleChange = (prop) => (event) => {
+
+  const updateValue = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+  const showError = (prop, value) => {
+    setShowErrors({ ...showErrors, [prop]: value });
   };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
+  const resetDialog = () => {
+    setValues({
+      userType: 'athlete',
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      passwordCheck: '',
+    })
+    setShowErrors({
+      firstname: false,
+      lastname: false,
+      email: false,
+      password: false,
+      passwordCheck: false,
+    })
+    setShowPassword(false)
+    setShowPasswordCheck(false)
+  }
+
+  const onSave = () => {
+    signup({
+      variables: {
+        firstName: values.firstname,
+        lastName: values.lastname,
+        email: values.email,
+        password: values.password,
+       }
+    }).then(response => {
+      // TODO loading state, response data - verified user -> sign in
+    }).catch((error) => {
+      // TODO handle error state
+    })
+    resetDialog()
+  }
+
+  const onClose = () => {
+    resetDialog()
+    close()
+  }
+
   return (
     <Dialog fullWidth className="registration" open={show}>
-      <Toolbar variant="regular" className={'toolbar'} style={{'background-color': theme.palette.primary.main}}>
+      <Toolbar variant="regular" className={'toolbar'} style={{'backgroundColor': theme.palette.info.main}}>
         <div/>
         <Box color="white">
           <Typography variant="h6">Registrace do aplikace FitMe</Typography>
         </Box>
-        <IconButton color="white" onClick={close}><Close color="white"/></IconButton>
+        <IconButton onClick={() => onClose()}><Close fontSize="large" style={{color: 'white'}}/></IconButton>
       </Toolbar>
       <DialogContent>
         <form autoComplete="on">
-          <Box width="100%" display="flex" flexDirection="column" flexWrap="wrap" alignItems="center">
+          <Box
+            marginTop="20px"
+            paddingLeft="15px"
+            paddingTop="10px"
+            marginLeft="17.5%"
+            marginRight="17.5%"
+            bgcolor="WhiteSmoke">
             <FormControl component="fieldset">
-              <div>Gender</div>
-              <RadioGroup aria-label="gender" name="gender1" value={values.userType} onChange={handleChange}>
-                <FormControlLabel value="athlete" control={<Radio />} label="Sportovec" />
-                <FormControlLabel disabled value="owner" control={<Radio />} label="Sportoviště" />
-                <FormControlLabel disabled value="sportsground" control={<Radio />} label="Sportoviště" />
+              <div>Vyberte kategorii účtu</div>
+              <RadioGroup name="gender1" value={values.userType} onChange={updateValue('userType')}>
+                <FormControlLabel
+                  value="athlete"
+                  control={<Radio color="primary" />}
+                  label="Sportovec" />
+                <FormControlLabel
+                  disabled
+                  value="owner"
+                  control={<Radio color="primary" />}
+                  label="Majitel sportoviště" />
+                <FormControlLabel
+                  disabled
+                  value="sportsground"
+                  control={<Radio color="primary" />}
+                  label="Trenér" />
               </RadioGroup>
             </FormControl>
           </Box>
           <Box width="100%" display="flex" flexDirection="column" flexWrap="wrap" alignItems="center">
-            <Box width="70%">
+            <Box width="65%">
               <TextField
+                id="signup-firstname"
                 label="Jméno"
-                value={values.firstName}
-                required variant="filled"
-                fullWidth margin="normal"
-                autoComplete/>
+                name="name"
+                placeholder="Zadejte své jméno"
+                onChange={updateValue('firstname')}
+                onBlur={() => showError('firstname', true)}
+                error={showErrors.firstname && !name.test(values.firstname)}
+                helperText={showErrors.firstname && !name.test(values.firstname) &&
+                  'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků'}
+                variant="filled"
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true
+                }}/>
               <TextField
+                id="signup-lastname"
                 label="Příjmení"
-                value={values.lastName}
-                required variant="filled"
-                fullWidth margin="normal"
-                autoComplete/>
+                name="lastname"
+                placeholder="Zadejte své příjmení"
+                onChange={updateValue('lastname')}
+                onBlur={() => showError('lastname', true)}
+                error={showErrors.lastname && !name.test(values.lastname)}
+                helperText={showErrors.lastname && !name.test(values.lastname) &&
+                  'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků'}
+                variant="filled"
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true
+                }}/>
               <TextField
+                id="signup-email"
                 label="Email"
-                value={values.email}
-                required variant="filled"
-                fullWidth margin="normal"
-                autoComplete/>
+                name="email"
+                placeholder="Zadejte svůj email"
+                onChange={updateValue('email')}
+                onBlur={() => showError('email', true)}
+                error={showErrors.email && !email.test(values.email)}
+                helperText={showErrors.email && !email.test(values.email) && 'E-mail nemá správný formát.'}
+                variant="filled"
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true
+                }}/>
               <FormControl fullWidth variant="filled" margin="normal">
-                <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+                <InputLabel shrink htmlFor="filled-adornment-password">Password</InputLabel>
                 <FilledInput
-                  id="filled-adornment-password"
-                  type={values.showPassword ? 'text' : 'password'}
-                  value={values.password}
-                  required
-                  onChange={handleChange('password')}
+                  id="signup-password"
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  placeholder="Zadejte své heslo"
+                  onChange={updateValue('password')}
+                  onBlur={() => showError('password', true)}
+                  error={showErrors.password && !password.test(values.password)}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={() => setShowPassword(!showPassword)}
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
+                <FormHelperText error>
+                  {showErrors.password && !password.test(values.password) &&
+                  'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
+                </FormHelperText>
               </FormControl>
               <FormControl fullWidth variant="filled" margin="normal">
-                <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+                <InputLabel shrink htmlFor="filled-adornment-password">Password</InputLabel>
                 <FilledInput
-                  id="filled-adornment-password"
-                  type={values.showPassword ? 'text' : 'password'}
-                  value={values.passwordCheck}
-                  required
-                  onChange={handleChange('password')}
+                  id="signup-password-check"
+                  type={showPasswordCheck ? 'text' : 'password'}
+                  name="password-check"
+                  placeholder="Zadejte své heslo znovu"
+                  onChange={updateValue('passwordCheck')}
+                  onBlur={() => showError('passwordCheck', true)}
+                  error={showErrors.passwordCheck && values.password !== values.passwordCheck}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
+                        onClick={() => setShowPasswordCheck(!showPasswordCheck)}
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                        {showPasswordCheck ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   }
                 />
+                <FormHelperText error>
+                  {showErrors.passwordCheck && values.password !== values.passwordCheck && 'Hesla se neshodují.'}
+                </FormHelperText>
               </FormControl>
             </Box>
           </Box>
         </form>
       </DialogContent>
       <DialogActions>
-        <Box width="100%" display="flex" flexDirection="row" flexWrap="wrap" justifyContent="center">
+        <Box
+          marginTop="10px"
+          marginBottom="25px"
+          width="100%"
+          display="flex"
+          flexDirection="row"
+          flexWrap="wrap"
+          justifyContent="center">
           <Box width="60%">
-            <Button size="large" fullWidth variant="contained" color="primary">Registrovat</Button>
+            <Button onClick={() => onSave()} size="large" fullWidth variant="contained" color="primary">
+              Registrovat
+            </Button>
           </Box>
         </Box>
       </DialogActions>
