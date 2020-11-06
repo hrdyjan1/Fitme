@@ -1,6 +1,7 @@
 import React from 'react';
-import { createContextValue, Context, initialState } from './context';
-import { usePersistedAuth } from './usePersistedAuth';
+
+import { createContextValue, Context, initialState } from 'src/utils/auth/context';
+import { usePersistedAuth } from 'src/utils/auth/usePersistedAuth';
 
 function AuthProvider({ children }) {
   const [state, setState] = usePersistedAuth(initialState);
