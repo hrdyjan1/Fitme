@@ -10,12 +10,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function Button({
+export function DefaultButton({
   children,
   variant,
   color,
   disabled,
-  as: Component = 'button',
   ...rest
 }) {
   const classes = useStyles();
@@ -25,7 +24,6 @@ export function Button({
     variant='contained'
     color='primary'
     disabled={disabled}
-    type='button'
     {...rest}
     >
     {children}

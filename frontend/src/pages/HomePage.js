@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import SignUpDialog from 'src/components/SignUpDialog';
 import { useUserContext } from 'src/contexts/user';
-import { Button } from 'src/atoms/'
+import { DefaultButton } from 'src/atoms/'
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -29,14 +29,14 @@ function HeaderInfo({ onClick }) {
         {' '}
         {ver}
       </h3>
-      <Button variant="contained" color="primary" onClick={logout}>
+      <DefaultButton onClick={logout}>
         Odhlasit
-      </Button>
+      </DefaultButton>
     </>
   ) : (
-    <Button variant="contained" color="primary" onClick={onClick}>
+    <DefaultButton onClick={onClick}>
       Registrovat
-    </Button>
+    </DefaultButton>
   );
 }
 
