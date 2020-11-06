@@ -22,21 +22,27 @@ import {
 } from '@material-ui/core';
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
+import { useUserContext } from 'src/contexts/user';
 
 const SIGN_UP = gql`
   mutation SignUp($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
     signup(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
-      firstName
-      lastName
-      email
-      password
+        token
+        user {
+            id
+            email
+            verified
+            firstName
+            lastName
+      }
     }
   }
 `;
 
 export default function SignUpDialog(props) {
   const { show, close } = props;
-  const [signup] = useMutation(SIGN_UP);
+  const { set } = useUserContext();
+  const [signup, { loading }] = useMutation(SIGN_UP);
   const theme = useTheme();
   const [values, setValues] = React.useState({
     userType: 'athlete',
@@ -97,11 +103,21 @@ export default function SignUpDialog(props) {
         password: values.password,
       },
     }).then((response) => {
-      // TODO loading state, response data - verified user -> sign in
+      if (response.data) {
+        const user = response.data?.signup?.user;
+        const token = response.data?.signup?.token;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        set({ user, token });
+
+        resetDialog();
+        close();
+      } else {
+        alert(response.errors);
+      }
     }).catch((error) => {
-      // TODO handle error state
+      alert(error);
     });
-    resetDialog();
   };
 
   const onClose = () => {
@@ -273,7 +289,7 @@ export default function SignUpDialog(props) {
           justifyContent="center"
         >
           <Box width="60%">
-            <Button onClick={() => onSave()} size="large" fullWidth variant="contained" color="primary">
+            <Button onClick={() => onSave()} size="large" fullWidth variant="contained" color="primary" disabled={loading}>
               Registrovat
             </Button>
           </Box>

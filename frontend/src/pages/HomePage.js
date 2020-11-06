@@ -5,6 +5,7 @@ import {
   AppBar, Toolbar, Button, Typography, Box,
 } from '@material-ui/core';
 import SignUpDialog from 'src/components/SignUpDialog';
+import { useUserContext } from 'src/contexts/user';
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -15,6 +16,23 @@ const GET_PLACES = gql`
     }
   }
 `;
+
+function HeaderInfo({ onClick }) {
+  const { fullName, logout } = useUserContext();
+
+  return fullName ? (
+    <>
+      <h3>{fullName}</h3>
+      <Button variant="contained" color="primary" onClick={logout}>
+        Odhlasit
+      </Button>
+    </>
+  ) : (
+    <Button variant="contained" color="primary" onClick={onClick}>
+      Registrovat
+    </Button>
+  );
+}
 
 export function HomePage() {
   const { data } = useQuery(GET_PLACES);
@@ -28,9 +46,7 @@ export function HomePage() {
           <Typography variant="h6">
             <Box fontWeight="fontWeightBold">FitMe</Box>
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => { setShowSignUpDialog(true); }}>
-            Registrovat
-          </Button>
+          <HeaderInfo onClick={() => setShowSignUpDialog(true)} />
         </Toolbar>
       </AppBar>
       <div className="appWrapper">
