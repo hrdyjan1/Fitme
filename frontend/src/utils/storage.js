@@ -1,4 +1,4 @@
-const AUTH_KEY = 'app-auth';
+const AUTH_KEY = 'auth';
 
 function setStorage(state, item = AUTH_KEY, isObjectType = true) {
   return window.localStorage

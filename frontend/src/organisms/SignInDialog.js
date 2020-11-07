@@ -19,6 +19,7 @@ import {
 } from '@material-ui/core';
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
+import { useUser } from 'src/contexts/user';
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -27,7 +28,6 @@ const SIGN_IN = gql`
       user {
         id
         email
-        verified
         firstName
         lastName
       }
@@ -37,8 +37,9 @@ const SIGN_IN = gql`
 
 export default function SignInDialog(props) {
   const { show, close } = props;
-  const [signin, { loading }] = useMutation(SIGN_IN);
   const theme = useTheme();
+  const { login } = useUser();
+  const [signin, { loading }] = useMutation(SIGN_IN);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleMouseDownPassword = (event) => {
@@ -53,13 +54,13 @@ export default function SignInDialog(props) {
       },
     })
       .then((response) => {
-        if (response.data) {
-          // const user = response.data?.signin?.user;
-          // const token = response.data?.signin?.token;
-
+        const user = response.data?.signin?.user;
+        const token = response.data?.signin?.token;
+        if (user && token) {
+          login(token, user);
           close();
         } else {
-          alert(response.errors);
+          alert(response.errors || 'Chybi uzivatel nebo token.');
         }
       })
       .catch((error) => {
