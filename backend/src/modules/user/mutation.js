@@ -4,7 +4,6 @@ import { createToken } from '../../libs/token';
 import { uuidv4 } from '../../constants/uuid';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
 
-const address = 'http://localhost:3000/';
 const sendEmail = async (from, to, subject, text) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.elasticemail.com',
