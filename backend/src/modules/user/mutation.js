@@ -7,9 +7,12 @@ import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
 const address = 'http://localhost:3000/';
 const sendEmail = async (from, to, subject, text) => {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io',
+    host: 'smtp.elasticemail.com',
     port: 2525,
-    auth: { user: 'a6c5e91a9dbd75', pass: 'ab98f2fd76bb4e' },
+    auth: {
+      user: 'emai.fit.me@gmail.com',
+      pass: '5835125C8A5ED5CACDD56C0E403D6800D2C6',
+    },
   });
 
   return await transporter.sendMail({ from, to, subject, text });
@@ -28,10 +31,10 @@ export const verify = async (_, { token }, { dbConnection }) => {
         `UPDATE user SET verified = true WHERE verificationToken = ?;`,
         [token],
       );
-      return true
+      return true;
     }
   }
-  return false
+  return false;
 };
 
 export const signin = async (_, { email, password }, { dbConnection }) => {
@@ -53,7 +56,7 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
 export const signup = async (
   _,
   { firstName, lastName, email, password },
-  { dbConnection,req },
+  { dbConnection, req },
 ) => {
   await checkIfValidEmail(email, dbConnection);
   const id = uuidv4();
@@ -65,10 +68,9 @@ export const signup = async (
     [id, email, firstName, lastName, password, verificationToken, 0],
   );
 
-  
-  const emailText = `Link pro overeni http://${req.get('host')}/verificationToken=${verificationToken}`;
+  const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
   await sendEmail(
-    '"Fit me 🥇" <no-reply@fitme.com>',
+    '"Fit me 🥇" <emai.fit.me@gmail.com>',
     email,
     'Gratuluji',
     emailText,
