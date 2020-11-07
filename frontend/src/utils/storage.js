@@ -1,6 +1,3 @@
-import { print } from 'src/constants/functions';
-import { isObject } from 'src/constants/object';
-
 const AUTH_KEY = 'app-auth';
 
 function setStorage(state, item = AUTH_KEY, isObjectType = true) {
@@ -20,13 +17,10 @@ function getStorage(state, item = AUTH_KEY) {
   }
 
   try {
-    const data = isObject(rawData) ? JSON.parse(rawData) : rawData;
-    return data || state;
+    return JSON.parse(rawData);
   } catch (error) {
-    print(error, true);
+    return rawData || state;
   }
-
-  return state;
 }
 
 export { setStorage, getStorage };
