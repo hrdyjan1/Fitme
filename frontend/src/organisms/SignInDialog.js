@@ -1,12 +1,13 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { Field, Form, Formik } from 'formik';
+import {Field, Form, Formik} from 'formik'
 import { email, password } from 'src/constants/regex';
 import {
   IconButton,
   Box,
   Button,
   Dialog,
+  DialogActions,
   DialogContent,
   Toolbar,
   Typography,
@@ -15,10 +16,11 @@ import {
   FilledInput,
   InputAdornment,
   FormHelperText,
-  FormControl,
-} from '@material-ui/core';
+  FormControl
+} from '@material-ui/core'
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
+import { useUserContext } from 'src/contexts/user';
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -37,6 +39,7 @@ const SIGN_IN = gql`
 
 export default function SignInDialog(props) {
   const { show, close } = props;
+  const { set } = useUserContext();
   const [signin, { loading }] = useMutation(SIGN_IN);
   const theme = useTheme();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -55,6 +58,9 @@ export default function SignInDialog(props) {
       if (response.data) {
         const user = response.data?.signin?.user;
         const token = response.data?.signin?.token;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        set({ user, token });
 
         close();
       } else {
@@ -103,7 +109,7 @@ export default function SignInDialog(props) {
                     render={({ form }) => (
                       <TextField
                         id="signin-email"
-                        name="email"
+                        name={"email"}
                         placeholder="Zadejte svůj email"
                         label="E-mail"
                         onChange={formikBag.handleChange}
@@ -116,7 +122,7 @@ export default function SignInDialog(props) {
                         fullWidth
                         margin="normal"
                         InputLabelProps={{
-                          shrink: true,
+                          shrink: true
                         }}
                       />
                     )}
@@ -174,16 +180,14 @@ export default function SignInDialog(props) {
                         size="large"
                         fullWidth
                         variant="contained"
-                        color="primary"
-                        disabled={loading}
-                      >
+                        color="primary" disabled={loading}>
                         Přihlásit
                       </Button>
                     </Box>
                   </Box>
                 </Form>
-              )}
-            />
+                )}
+              />
           </Box>
         </Box>
       </DialogContent>
