@@ -1,13 +1,12 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import {Field, Form, Formik} from 'formik'
+import { Field, Form, Formik } from 'formik';
 import { email, password } from 'src/constants/regex';
 import {
   IconButton,
   Box,
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   Toolbar,
   Typography,
@@ -16,22 +15,21 @@ import {
   FilledInput,
   InputAdornment,
   FormHelperText,
-  FormControl
-} from '@material-ui/core'
+  FormControl,
+} from '@material-ui/core';
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
-import { useUserContext } from 'src/contexts/user';
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
-        token
-        user {
-            id
-            email
-            verified
-            firstName
-            lastName
+      token
+      user {
+        id
+        email
+        verified
+        firstName
+        lastName
       }
     }
   }
@@ -39,7 +37,6 @@ const SIGN_IN = gql`
 
 export default function SignInDialog(props) {
   const { show, close } = props;
-  const { set } = useUserContext();
   const [signin, { loading }] = useMutation(SIGN_IN);
   const theme = useTheme();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -54,21 +51,20 @@ export default function SignInDialog(props) {
         email: values.email,
         password: values.password,
       },
-    }).then((response) => {
-      if (response.data) {
-        const user = response.data?.signin?.user;
-        const token = response.data?.signin?.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        set({ user, token });
+    })
+      .then((response) => {
+        if (response.data) {
+          // const user = response.data?.signin?.user;
+          // const token = response.data?.signin?.token;
 
-        close();
-      } else {
-        alert(response.errors);
-      }
-    }).catch((error) => {
-      alert(error);
-    });
+          close();
+        } else {
+          alert(response.errors);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const onClose = () => {
@@ -77,15 +73,28 @@ export default function SignInDialog(props) {
 
   return (
     <Dialog fullWidth className="registration" open={show}>
-      <Toolbar variant="regular" className="toolbar" style={{ backgroundColor: theme.palette.info.main }}>
+      <Toolbar
+        variant="regular"
+        className="toolbar"
+        style={{ backgroundColor: theme.palette.info.main }}
+      >
         <div />
         <Box color="white">
           <Typography variant="h6">Přihlášení do aplikace FitMe</Typography>
         </Box>
-        <IconButton onClick={() => onClose()}><Close fontSize="large" style={{ color: 'white' }} /></IconButton>
+        <IconButton onClick={() => onClose()}>
+          <Close fontSize="large" style={{ color: 'white' }} />
+        </IconButton>
       </Toolbar>
       <DialogContent>
-        <Box marginTop="20px" width="100%" display="flex" flexDirection="column" flexWrap="wrap" alignItems="center">
+        <Box
+          marginTop="20px"
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          flexWrap="wrap"
+          alignItems="center"
+        >
           <Box width="65%">
             <Formik
               initialValues={{ email: '', password: '' }}
@@ -109,20 +118,22 @@ export default function SignInDialog(props) {
                     render={({ form }) => (
                       <TextField
                         id="signin-email"
-                        name={"email"}
+                        name="email"
                         placeholder="Zadejte svůj email"
                         label="E-mail"
                         onChange={formikBag.handleChange}
-                        error={
-                          Boolean(form.errors.email && form.touched.email)
-                        }
+                        error={Boolean(form.errors.email && form.touched.email)}
                         onBlur={formikBag.handleBlur}
-                        helperText={form.errors.email && form.touched.email && String(form.errors.email)}
+                        helperText={
+                          form.errors.email
+                          && form.touched.email
+                          && String(form.errors.email)
+                        }
                         variant="filled"
                         fullWidth
                         margin="normal"
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                       />
                     )}
@@ -133,18 +144,24 @@ export default function SignInDialog(props) {
                     name="password"
                     render={({ form }) => (
                       <FormControl fullWidth variant="filled" margin="normal">
-                        <InputLabel shrink htmlFor="filled-adornment-password">Password</InputLabel>
+                        <InputLabel shrink htmlFor="filled-adornment-password">
+                          Password
+                        </InputLabel>
                         <FilledInput
                           id="signup-password"
                           type={showPassword ? 'text' : 'password'}
                           name="password"
                           placeholder="Zadejte své heslo"
                           onChange={formikBag.handleChange}
-                          error={
-                            Boolean(form.errors.password && form.touched.password)
-                          }
+                          error={Boolean(
+                            form.errors.password && form.touched.password,
+                          )}
                           onBlur={formikBag.handleBlur}
-                          helperText={form.errors.password && form.touched.password && String(form.errors.password)}
+                          helperText={
+                            form.errors.password
+                            && form.touched.password
+                            && String(form.errors.password)
+                          }
                           endAdornment={(
                             <InputAdornment position="end">
                               <IconButton
@@ -153,14 +170,20 @@ export default function SignInDialog(props) {
                                 onMouseDown={handleMouseDownPassword}
                                 edge="end"
                               >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                                {showPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
                               </IconButton>
                             </InputAdornment>
                           )}
                         />
                         <FormHelperText error>
-                          {form.errors.password && form.touched.password && String(form.errors.password)
-                          && 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
+                          {form.errors.password
+                            && form.touched.password
+                            && String(form.errors.password)
+                            && 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
                         </FormHelperText>
                       </FormControl>
                     )}
@@ -180,14 +203,16 @@ export default function SignInDialog(props) {
                         size="large"
                         fullWidth
                         variant="contained"
-                        color="primary" disabled={loading}>
+                        color="primary"
+                        disabled={loading}
+                      >
                         Přihlásit
                       </Button>
                     </Box>
                   </Box>
                 </Form>
-                )}
-              />
+              )}
+            />
           </Box>
         </Box>
       </DialogContent>

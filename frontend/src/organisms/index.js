@@ -3,5 +3,5 @@ import SignUpDialog from './SignUpDialog';
 
 export {
   SignInDialog,
-  SignUpDialog
-}
+  SignUpDialog,
+};

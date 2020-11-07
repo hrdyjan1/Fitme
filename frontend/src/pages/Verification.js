@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import {
-  compose, head, match, substring,
+  compose, head, match, print, substring,
 } from 'src/constants/functions';
 
 const VERIFY = gql`
@@ -21,19 +21,17 @@ const pickUpToken = compose(
 function Verification({ token }) {
   const [verify, { data }] = useMutation(VERIFY);
 
-  console.log(token);
-
   React.useEffect(() => {
     verify({ variables: { token } })
       .then((r) => {
         if (r.data) {
-          console.log(r.data);
+          print(r.data);
         }
         if (r.errors) {
-          console.log(r.errors);
+          print(r.errors, true);
         }
       })
-      .catch((e) => alert(e));
+      .catch((e) => print(e, true));
   }, [token, verify]);
 
   if (data?.verify) {
