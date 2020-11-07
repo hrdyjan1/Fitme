@@ -1,3 +1,4 @@
+import { print } from 'src/constants/functions';
 import { isObject } from 'src/constants/object';
 
 const AUTH_KEY = 'app-auth';
@@ -22,7 +23,7 @@ function getStorage(state, item = AUTH_KEY) {
     const data = isObject(rawData) ? JSON.parse(rawData) : rawData;
     return data || state;
   } catch (error) {
-    console.warn(error, 'getStorageState');
+    print(error, true);
   }
 
   return state;

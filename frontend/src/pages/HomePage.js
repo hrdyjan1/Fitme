@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { isFilledArray } from 'src/constants/array';
 import {
-  AppBar, Toolbar, Button, Typography, Box,
+  AppBar, Toolbar, Typography, Box,
 } from '@material-ui/core';
-import { noop } from 'src/constants/functions';
+import { SignInDialog, SignUpDialog } from 'src/organisms';
+import { Buttons } from 'src/organisms/header/Buttons';
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -16,9 +17,19 @@ const GET_PLACES = gql`
   }
 `;
 
-function HomePage() {
+export function HomePage() {
   const { data } = useQuery(GET_PLACES);
-  const places = isFilledArray(data?.places) ? data.places : [];
+  const places = isFilledArray(data?.places) ? data?.places : null;
+  const [showSignInDialog, setShowSignInDialog] = useState(false);
+  const [showSignUpDialog, setShowSignUpDialog] = useState(false);
+
+  // Open ✅
+  const onSignInClick = () => setShowSignInDialog(true);
+  const onSignUpClick = () => setShowSignUpDialog(true);
+
+  // Close ❌
+  const closeSignIn = () => setShowSignInDialog(false);
+  const closeSignUp = () => setShowSignUpDialog(false);
 
   return (
     <div>
@@ -27,18 +38,18 @@ function HomePage() {
           <Typography variant="h6">
             <Box fontWeight="fontWeightBold">FitMe</Box>
           </Typography>
-          <Button variant="contained" color="primary" onClick={noop}>
-            Registrovat
-          </Button>
+          <Box>
+            <Buttons onSignInClick={onSignInClick} onSignUpClick={onSignUpClick} />
+          </Box>
         </Toolbar>
       </AppBar>
       <div className="appWrapper">
         <h1>Fit.me</h1>
         <h2>Sport places</h2>
-        {places && places.map((p) => <p>{p.name}</p>)}
+        {places && places.map((p) => <p>{p.name}</p>) }
       </div>
+      <SignInDialog show={showSignInDialog} close={closeSignIn} />
+      <SignUpDialog show={showSignUpDialog} close={closeSignUp} />
     </div>
   );
 }
-
-export { HomePage };
