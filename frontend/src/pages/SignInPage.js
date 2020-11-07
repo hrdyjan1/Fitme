@@ -1,10 +1,11 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { useAuth } from 'src/utils/auth';
+
 import { useUser } from 'src/contexts/user';
+import { print } from 'src/constants/functions';
 
 const SIGN_IN = gql`
-  mutation SignIn($email: String!, $password: String!) {
+  mutation SignInBackend($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
       token
       user {
@@ -17,27 +18,25 @@ const SIGN_IN = gql`
 `;
 
 function SignInPage() {
-  const { setUser } = useUser();
-  const { signin: localSignIn } = useAuth();
+  const { login } = useUser();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [outsideSignIn] = useMutation(SIGN_IN);
+  const [signInBackend] = useMutation(SIGN_IN);
 
   const changeEmail = (e) => setEmail(e.target.value);
   const changePassword = (e) => setPassword(e.target.value);
 
   const onClick = () => {
-    outsideSignIn({ variables: { email, password } }).then((r) => {
+    signInBackend({ variables: { email, password } }).then((r) => {
       const token = r.data?.signin?.token;
       const user = r.data?.signin?.user;
-      if (token) {
-        setUser(user);
-        localSignIn({ token });
+      if (token && user) {
+        login(token, user);
       } else {
-        console.warn(r.errors || 'Chybi token voe.');
+        print(r.errors || 'Chybi token nebo user.', true);
       }
     }).catch((e) => {
-      console.warn(e);
+      print(e, true);
     });
   };
 

@@ -1,6 +1,4 @@
-import { isObject } from 'src/constants/object';
-
-const AUTH_KEY = 'app-auth';
+const AUTH_KEY = 'auth';
 
 function setStorage(state, item = AUTH_KEY, isObjectType = true) {
   return window.localStorage
@@ -19,13 +17,10 @@ function getStorage(state, item = AUTH_KEY) {
   }
 
   try {
-    const data = isObject(rawData) ? JSON.parse(rawData) : rawData;
-    return data || state;
+    return JSON.parse(rawData);
   } catch (error) {
-    console.warn(error, 'getStorageState');
+    return rawData || state;
   }
-
-  return state;
 }
 
 export { setStorage, getStorage };

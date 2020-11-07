@@ -27,13 +27,6 @@ const SIGN_UP = gql`
   mutation SignUp($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
     signup(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         token
-        user {
-            id
-            email
-            verified
-            firstName
-            lastName
-      }
     }
   }
 `;
@@ -101,7 +94,8 @@ export default function SignUpDialog(props) {
         password: values.password,
       },
     }).then((response) => {
-      if (response.data) {
+      if (response.data?.signup?.token) {
+        alert('check email');
         resetDialog();
         close();
       } else {
