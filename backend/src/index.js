@@ -28,6 +28,8 @@ const typeDefs = gql`
     verified: Int!
     firstName: String!
     lastName: String!
+    locked: Int!
+    lockedToken: String!
   }
 
   type AuthInfo {
@@ -36,22 +38,32 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    # User
+    sendEmailForgotPass(email: String!): Boolean
+    changeForgotPass(password: String!, lockedToken: String!): Boolean
     verify(token: String!): Boolean!
     signin(email: String!, password: String!): AuthInfo!
-    insertPlace(
-      name: String!
-      description: String!
-      latitude: Float!
-      longitude: Float!
-    ): Boolean!
-    updatePlace(id: String!, name: String!, description: String!, latitude: Float!, longitude: Float!): Boolean!
-    removePlace(id: String!): Boolean!
     signup(
       firstName: String!
       lastName: String!
       email: String!
       password: String!
     ): AuthInfo!
+    # Place
+    insertPlace(
+      name: String!
+      description: String!
+      latitude: Float!
+      longitude: Float!
+    ): Boolean!
+    updatePlace(
+      id: String!
+      name: String!
+      description: String!
+      latitude: Float!
+      longitude: Float!
+    ): Boolean!
+    removePlace(id: String!): Boolean!
   }
 `;
 
