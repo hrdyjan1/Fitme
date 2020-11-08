@@ -1,18 +1,24 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { pickUpToken, Verification } from 'src/pages/Verification';
+import { pickUpVerToken, Verification } from 'src/pages/Verification';
+import { pickUpLockToken, ResetPassword } from 'src/pages/ResetPassword';
 
 function PageNotFound() {
   const location = useLocation();
 
-  const token = pickUpToken(location.pathname);
+  const verToken = pickUpVerToken(location.pathname);
+  const lockToken = pickUpLockToken(location.pathname);
 
-  return token ? <Verification token={token} /> : (
+  if (verToken) {
+    return <Verification token={verToken} />;
+  } if (lockToken) {
+    return <ResetPassword token={lockToken} />;
+  }
+  return (
     <div className="appWrapper">
       <h1>Error 404:</h1>
       <p>Page not found</p>
     </div>
-
   );
 }
 
