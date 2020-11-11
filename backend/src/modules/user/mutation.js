@@ -1,21 +1,7 @@
-import nodemailer from 'nodemailer';
-
-import { createToken } from '../../libs/token';
 import { uuidv4 } from '../../constants/uuid';
+import { createToken } from '../../libs/token';
+import { EMAIL, sendEmail } from '../../utils/email';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
-
-const sendEmail = async (from, to, subject, text) => {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.elasticemail.com',
-    port: 2525,
-    auth: {
-      user: 'emai.fit.me@gmail.com',
-      pass: '5835125C8A5ED5CACDD56C0E403D6800D2C6',
-    },
-  });
-
-  return await transporter.sendMail({ from, to, subject, text });
-};
 
 export const verify = async (_, { token }, { dbConnection }) => {
   const user = (
@@ -62,21 +48,53 @@ export const signup = async (
   const verificationToken = uuidv4();
 
   await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified)
-      VALUES (?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, password, verificationToken, 0],
+    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+    [id, email, firstName, lastName, password, verificationToken, 0, ''],
   );
 
   const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
-  await sendEmail(
-    '"Fit me 🥇" <emai.fit.me@gmail.com>',
-    email,
-    'Gratuluji',
-    emailText,
-  );
+  await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
   const token = createToken({ id });
 
   return { user, token };
+};
+
+export const sendEmailForgotPass = async (_, { email }, { dbConnection }) => {
+  const selectUserQuery = 'SELECT * FROM user WHERE email = ?;';
+  const lockedUserQuery = 'UPDATE user SET lockedToken = ? WHERE email = ?;';
+
+  const user = (await dbConnection.query(selectUserQuery, [email]))[0];
+
+  if (!user) {
+    throw new Error('Neexistujici uzivatel');
+  }
+
+  const lockedToken = uuidv4();
+  await dbConnection.query(lockedUserQuery, [lockedToken, email]);
+  const emailText = `(Micha)Link pro zmenu hesla: \n\n http://frontend.team01.vse.handson.pro/lockedToken=${lockedToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
+  await sendEmail(EMAIL.header, email, 'Zmena emailu', emailText);
+
+  return true;
+};
+
+export const changeForgotPass = async (_, args, { dbConnection }) => {
+  const { password, lockedToken } = args;
+
+  const resetQuery = 'UPDATE user SET lockedToken = "" WHERE lockedToken = ?;';
+  const selectUserQuery = 'SELECT * FROM user WHERE lockedToken = ?;';
+  const setPassQuery = 'UPDATE user SET password = ? WHERE lockedToken = ?;';
+
+  const user = (await dbConnection.query(selectUserQuery, [lockedToken]))[0];
+
+  if (!user) {
+    throw new Error('Neexistujici uzivatel');
+  }
+
+  await dbConnection.query(setPassQuery, [password, lockedToken]);
+  await dbConnection.query(resetQuery, [lockedToken]);
+
+  return true;
 };

@@ -1,22 +1,16 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import {
-  compose, head, match, print, substring,
+  compose, match, print, stringAfterEqual,
 } from 'src/constants/functions';
 
 const VERIFY = gql`
-  mutation verifyVoe($token: String!) {
+  mutation verify($token: String!) {
     verify(token: $token)
   }
 `;
 
-const pickUpToken = compose(
-  substring(1),
-  head,
-  match(/=(.+)/),
-  head,
-  match(/\/verificationToken=(.+)/),
-);
+const pickUpVerToken = compose(stringAfterEqual, match(/\/verificationToken=(.+)/));
 
 function Verification({ token }) {
   const [verify, { data }] = useMutation(VERIFY);
@@ -42,4 +36,4 @@ function Verification({ token }) {
   return <div />;
 }
 
-export { Verification, pickUpToken };
+export { Verification, pickUpVerToken };
