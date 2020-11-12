@@ -1,6 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import {
+  Menu, MenuItem, ListItemIcon, ListItemText,
+} from '@material-ui/core';
 import { ExitToApp, AccountBox } from '@material-ui/icons';
 
 const StyledMenu = withStyles({
@@ -36,7 +38,9 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-function UserMenu({onProfileClick, onLogoutClick, onClose, anchorEl }) {
+function UserMenu({
+  onProfileClick, onLogoutClick, onClose, anchorEl,
+}) {
   return (
     <StyledMenu
       id="user-dropdown-menu"
