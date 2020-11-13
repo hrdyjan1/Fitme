@@ -112,7 +112,7 @@ export default function SignUpDialog(props) {
   };
 
   return (
-    <Dialog fullWidth className="registration" open={show}>
+    <Dialog fullWidth className="registration" open={show} disableScrollLock>
       <Toolbar variant="regular" className="toolbar" style={{ backgroundColor: theme.palette.info.main }}>
         <div />
         <Box color="white">
