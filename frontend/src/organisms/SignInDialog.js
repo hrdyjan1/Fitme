@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Field, Form, Formik } from 'formik';
-import { email, password } from 'src/constants/regex';
+import { regex } from 'src/constants/regex'
 import {
   IconButton,
   Box,
@@ -102,10 +102,10 @@ export default function SignInDialog(props) {
               onSubmit={(values) => onSave(values)}
               validate={(values) => {
                 const errors = {};
-                if (!email.test(values.email)) {
+                if (!regex.email.test(values.email)) {
                   errors.email = 'Zadejte e-mail ve správném formátu';
                 }
-                if (!password.test(values.password)) {
+                if (!values.password) {
                   errors.password = 'Zadejte své heslo';
                 }
                 return errors;
@@ -184,7 +184,7 @@ export default function SignInDialog(props) {
                           {form.errors.password
                             && form.touched.password
                             && String(form.errors.password)
-                            && 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
+                            && 'Zadejte své heslo'}
                         </FormHelperText>
                       </FormControl>
                     )}

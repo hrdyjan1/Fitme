@@ -1,12 +1,9 @@
 import React from 'react'
+import { UserProfileTemplate } from 'src/templates'
 
 function UserProfilePage() {
 
-  return (
-    <div>
-      <h1>User profile page</h1>
-    </div>
-  );
+  return <UserProfileTemplate/>
 }
 
 export { UserProfilePage };
