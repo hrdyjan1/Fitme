@@ -1,13 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { route } from './constants/routes';
 
-import { HomePage, SignInPage, PageNotFound, UserProfilePage } from './pages';
-
-export const route = {
-  home: () => '/',
-  signin: () => '/signin',
-  profile: () => '/profile'
-};
+import {
+  HomePage, PageNotFound, SignInPage, UserProfilePage,
+} from './pages';
 
 export function Routes() {
   return (

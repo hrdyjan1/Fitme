@@ -11,5 +11,5 @@ export {
   ResetPassword,
   SignInPage,
   UserProfilePage,
-  Verification
+  Verification,
 };

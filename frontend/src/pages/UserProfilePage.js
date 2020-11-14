@@ -1,7 +1,6 @@
-import React from 'react'
+import React from 'react';
 
 function UserProfilePage() {
-
   return (
     <div>
       <h1>User profile page</h1>
