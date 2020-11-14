@@ -108,7 +108,7 @@ function ForgotPassDialog(props) {
                         color="primary"
                         disabled={loading}
                       >
-                        Přihlásit
+                        Odeslat
                       </Button>
                     </Box>
                   </Box>
