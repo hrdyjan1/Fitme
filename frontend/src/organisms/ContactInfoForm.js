@@ -4,59 +4,23 @@ import { Form, Formik } from 'formik'
 import { FormikTextField } from 'src/atoms/FormikTextField'
 import { CardForm } from 'src/organisms'
 import { regex } from 'src/constants/regex'
-import { useUser } from 'src/contexts/user'
-import { gql, useMutation } from '@apollo/client'
-import {validText} from '../constants/validTexts'
-import {useAuth} from '../utils/auth'
+import {validText} from 'src/constants/validTexts'
 
-const UPDATE_USER = gql`
-  mutation UpdateUser($token: String!, $id: Int!, $nickname: String!, $firstname: String!, $lastname: String!, $email: String!, $phone: String!) {
-    updateUser(token: $token, id: $id, nickname: $nickname, firstname: $firstname, lastname: $lastname, email: $email, phone: $phone)
-  }
-`;
-
-const CHANGE_PASSWORD = gql`
-  mutation UpdateUser($token: String!, $id: Int!, $nickname: String!, $firstname: String!, $lastname: String!, $email: String!, $phone: String!) {
-    updateUser(token: $token, id: $id, nickname: $nickname, firstname: $firstname, lastname: $lastname, email: $email, phone: $phone)
-  }
-`;
-
-function ContactInfoForm() {
-  const { user } = useUser();
-  const { auth } = useAuth();
-  const [ updateUser, { loading } ] = useMutation(UPDATE_USER);
+function ContactInfoForm({ user, error, loading, onSave }) {
 
   const validate = (values) => ({
-    nickname: !regex.name.test(values.nickname) && validText.street,
+    nickname: !regex.name.test(values.nickname) && validText.nickname,
     firstname: !regex.name.test(values.firstname) && validText.city,
     lastname: !regex.name.test(values.lastname) && validText.zip,
     email: !regex.email.test(values.email) && validText.email,
     phone: !regex.phone.test(values.phone) && validText.phone
   })
 
-  const onSave = (values) => {
-    updateUser({
-      variables: {
-        token: auth.token,
-        id: user.id,
-        nickname: values.nickname,
-        firstname: values.firstname,
-        lastname: values.lastname,
-        email: values.email,
-        phone: values.phone,
-      }
-    })
-    .then((response) => {
-      if (response.data) {
-        alert('Kontaktní údaje byly úspěšně uloženy.');
-      } else {
-        alert(response.errors || 'Kontaktní údaje nebyly uloženy.');
-      }
-    })
-    .catch((error) => {
-      alert(error);
-    });
-  };
+  const onSaveClick = (values, errors) => {
+    if (!Object.values(errors).some(error => !!error) && Object.values(values).some(value => !value)) {
+      onSave(values.values)
+    }
+  }
 
   return (
     <CardForm header="KONTAKTNÍ ÚDAJE">
@@ -114,7 +78,8 @@ function ContactInfoForm() {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={loading}
+                  disabled={loading || Object.values(formikBag.values).some(value => !value)}
+                  onClick={() => onSaveClick(formikBag.values, formikBag.errors)}
                 >
                   Uložit
                 </Button>

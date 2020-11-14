@@ -4,21 +4,9 @@ import { Form, Formik } from 'formik'
 import { FormikTextField } from 'src/atoms/FormikTextField'
 import { regex } from 'src/constants/regex'
 import { validText } from 'src/constants/validTexts'
-import { useUser } from 'src/contexts/user'
-import { gql, useMutation } from '@apollo/client'
-import { useAuth } from '../utils/auth'
 import {CardForm} from './CardForm'
 
-const UPDATE_USER = gql`
-  mutation UpdateUser($token: String!, $id: Int!, $street: String!, $city: String!, $zip: String!, $country: String!) {
-    updateUser(token: $token, id: $id, street: $street, city: $city, zip: $zip, country: $country)
-  }
-`;
-
-function AddressForm() {
-  const { user } = useUser();
-  const { auth } = useAuth();
-  const [ updateUser, { loading } ] = useMutation(UPDATE_USER);
+function AddressForm({ user, error, loading, onSave }) {
 
   const validate = (values) => ({
       street: !regex.street.test(values.street) && validText.street,
@@ -27,38 +15,21 @@ function AddressForm() {
       country: !regex.name.test(values.country) && validText.country
   })
 
-  const onSave = (values) => {
-    updateUser({
-      variables: {
-        token: auth.token,
-        id: user.id,
-        street: values.street,
-        city: values.city,
-        zip: values.zip,
-        country: values.country
-      }
-    })
-    .then((response) => {
-      if (response.data) {
-        alert('Kontaktní údaje byly úspěšně uloženy.');
-      } else {
-        alert(response.errors || 'Kontaktní údaje nebyly uloženy.');
-      }
-    })
-    .catch((error) => {
-      alert(error);
-    });
-  };
+  const onSaveClick = (values, errors) => {
+    if (!Object.values(errors).some(error => !!error) && Object.values(values).some(value => !value)) {
+      onSave(values.values)
+    }
+  }
 
   return (
     <CardForm header="ADRESA">
       <Formik
         enableReinitialize
         initialValues={{
-          street: '',
-          city: '',
-          zip: '',
-          country: ''
+          street: user.street,
+          city: user.city,
+          zip: user.zip,
+          country: user.country
         }}
         onSubmit={(values) => onSave(values)}
         validate={(values) => validate(values)}>
@@ -66,8 +37,8 @@ function AddressForm() {
           <Form>
             <FormikTextField
               name="street"
-              label="Ulice"
-              placeholder="Zadejte ulici"
+              label="Ulice a č.p."
+              placeholder="Zadejte ulici a č.p."
               formikBag={formikBag}/>
             <FormikTextField
               name="city"
@@ -100,7 +71,8 @@ function AddressForm() {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={loading}
+                  disabled={loading || Object.values(formikBag.values).some(value => !value)}
+                  onClick={() => onSaveClick(formikBag.values, formikBag.errors)}
                 >
                   Uložit
                 </Button>

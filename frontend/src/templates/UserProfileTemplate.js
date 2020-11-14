@@ -1,33 +1,30 @@
 import React from 'react'
-import { Card, Box } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import { ContactInfoForm, AddressForm, ChangePasswordForm } from 'src/organisms'
 
-function UserProfileTemplate() {
+function UserProfileTemplate(
+  { user, passwordError, passwordLoading, userError, userLoading, onSaveUser, onSavePassword }
+  ) {
   return (
     <div>
       <h2>Můj profil</h2>
-      <Box
-        display="flex"
-        flexDirection="row"
-        flexWrap="wrap"
-        justifyContent="space-evenly"
-        marginTop="20px">
-        <Box width="350px">
-          <Card>
-            <ContactInfoForm/>
-          </Card>
+      {user && <Box
+          display="flex"
+          flexDirection="row"
+          flexWrap="wrap"
+          justifyContent="space-evenly"
+          marginTop="20px">
+          <Box width="350px">
+            <ContactInfoForm user={user} error={userError} loading={userLoading} onSave={onSaveUser}/>
+          </Box>
+          <Box width="350px">
+            <AddressForm user={user} error={userError} loading={userLoading} onSave={onSaveUser}/>
+          </Box>
+          <Box width="350px">
+            <ChangePasswordForm error={passwordError} loading={passwordLoading} onSave={onSavePassword}/>
+          </Box>
         </Box>
-        <Box width="350px">
-          <Card>
-            <AddressForm/>
-          </Card>
-        </Box>
-        <Box width="350px">
-          <Card>
-            <ChangePasswordForm/>
-          </Card>
-        </Box>
-      </Box>
+      }
     </div>
   );
 }

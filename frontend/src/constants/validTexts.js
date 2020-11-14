@@ -1,5 +1,5 @@
 const validText = {
-  username: 'Přezdívka smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
+  nickname: 'Přezdívka smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   firstname: 'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   lastname: 'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   email: 'E-mail nemá správný formát.',

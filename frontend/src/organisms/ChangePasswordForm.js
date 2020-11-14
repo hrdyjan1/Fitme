@@ -3,59 +3,27 @@ import { Box, Button } from '@material-ui/core'
 import { Form, Formik } from 'formik'
 import { FormikPasswordField } from 'src/atoms'
 import { regex } from 'src/constants/regex'
-import { useUser } from 'src/contexts/user'
-import { gql, useMutation } from '@apollo/client'
-import {validText} from '../constants/validTexts'
-import {useAuth} from '../utils/auth'
+import {validText} from 'src/constants/validTexts'
 import {CardForm} from './CardForm'
 
-const UPDATE_USER = gql`
-  mutation UpdateUser($token: String!, $id: Int!, $oldPassword: String!, $newPassword: String!) {
-    updateUser(token: $token, id: $id, oldPassword: $oldPassword, newPassword: $newPassword)
-  }
-`;
-
-function ChangePasswordForm() {
-  const { user } = useUser();
-  const { auth } = useAuth();
-  const [ updateUser, { loading } ] = useMutation(UPDATE_USER);
+function ChangePasswordForm({ error, loading, onSave }) {
 
   const validate = (values) => ({
-    newPassword: !regex.password.test(values.street) && validText.password,
+    newPassword: !regex.password.test(values.password) && validText.password,
     newPasswordCheck: (values.password !== values.newPasswordCheck) && validText.passwordCheck,
   })
 
-  const onSave = (values) => {
-    updateUser({
-      variables: {
-        token: auth.token,
-        id: user.id,
-        oldPassword: values.oldPassword,
-        newPassword: values.city,
-      }
-    })
-    .then((response) => {
-      if (response.data) {
-        alert('Kontaktní údaje byly úspěšně uloženy.');
-      } else {
-        alert(response.errors || 'Kontaktní údaje nebyly uloženy.');
-      }
-    })
-    .catch((error) => {
-      alert(error);
-    });
-  };
+  const onSaveClick = (values, errors) => {
+    if (!Object.values(errors).some(error => !!error) && Object.values(values).some(value => !value)) {
+      onSave(values.values)
+    }
+  }
 
   return (
     <CardForm header="ZMĚNIT HESLO">
       <Formik
         enableReinitialize
-        initialValues={{
-          street: '',
-          city: '',
-          zip: '',
-          country: ''
-        }}
+        initialValues={{oldPassword: '', newPassword: '', newPasswordCheck: ''}}
         onSubmit={(values) => onSave(values)}
         validate={(values) => validate(values)}>
         {(formikBag) => (
@@ -91,7 +59,8 @@ function ChangePasswordForm() {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={loading}
+                  disabled={loading || Object.values(formikBag.values).some(value => !value)}
+                  onClick={() => onSaveClick(formikBag.values, formikBag.errors)}
                 >
                   Uložit
                 </Button>
