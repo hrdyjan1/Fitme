@@ -5,7 +5,7 @@ import {
   AppBar, Toolbar, Typography, Box,
 } from '@material-ui/core';
 import { SignInDialog, SignUpDialog } from 'src/organisms';
-import { Buttons } from 'src/organisms/header/Buttons';
+import { UserButtons } from 'src/molecules/header/UserButtons';
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -39,7 +39,7 @@ export function HomePage() {
             <Box fontWeight="fontWeightBold">FitMe</Box>
           </Typography>
           <Box>
-            <Buttons onSignInClick={onSignInClick} onSignUpClick={onSignUpClick} />
+            <UserButtons onSignInClick={onSignInClick} onSignUpClick={onSignUpClick} />
           </Box>
         </Toolbar>
       </AppBar>

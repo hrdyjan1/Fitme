@@ -73,7 +73,7 @@ export default function SignInDialog(props) {
   };
 
   return (
-    <Dialog fullWidth className="registration" open={show}>
+    <Dialog fullWidth className="registration" open={show} disableScrollLock>
       <Toolbar
         variant="regular"
         className="toolbar"
