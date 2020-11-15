@@ -1,9 +1,11 @@
 import argon2 from 'argon2';
 
 import { uuidv4 } from '../../constants/uuid';
+import { Cloudinary } from '../../utils/cloudinary';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
+import getUser from './helper';
 
 export const verify = async (_, { token }, { dbConnection }) => {
   const user = (
@@ -26,17 +28,12 @@ export const verify = async (_, { token }, { dbConnection }) => {
 
 export const signin = async (_, { email, password }, { dbConnection }) => {
   const user = (
-    await dbConnection.query(
-      `SELECT * FROM user WHERE email = ?`,
-      [email],
-    )
+    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [email])
   )[0];
 
   if (user) {
-
     const validPassword = await argon2.verify(user.password, password);
     if (validPassword) {
-
       if (user.verified === 0) {
         throw new Error('Váš email ještě nebyl ověřen.');
       }
@@ -110,4 +107,22 @@ export const changeForgotPass = async (_, args, { dbConnection }) => {
   await dbConnection.query(resetQuery, [lockedToken]);
 
   return true;
+};
+
+export const uploadProfileImage = async (_, { file }, ctx) => {
+  const { auth, dbConnection } = ctx;
+  try {
+    const id = await getUser(auth);
+    const updateImageURLQuery = 'UPDATE user SET imageURL = ? WHERE id = ?;';
+
+    if (id) {
+      const { url } = await Cloudinary.v2.uploader.upload(file);
+      await dbConnection.query(updateImageURLQuery, [url, id]);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
 };
