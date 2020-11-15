@@ -39,6 +39,7 @@ const typeDefs = gql`
 
   type Mutation {
     # User
+    uploadProfileImage(file: String!): Boolean
     sendEmailForgotPass(email: String!): Boolean
     changeForgotPass(password: String!, lockedToken: String!): Boolean
     verify(token: String!): Boolean!
@@ -110,7 +111,13 @@ const main = async () => {
     playground: true,
   });
 
-  apolloServer.applyMiddleware({ app, cors: false });
+  apolloServer.applyMiddleware({
+    app,
+    cors: false,
+    bodyParserConfig: {
+      limit: '10mb',
+    },
+  });
 
   const port = process.env.PORT || 4000;
 

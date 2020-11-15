@@ -1,10 +1,8 @@
-import argon2 from 'argon2';
-
 import { uuidv4 } from '../../constants/uuid';
+import { Cloudinary } from '../../utils/cloudinary';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
-import getUser from './helper';
 
 export const verify = async (_, { token }, { dbConnection }) => {
   const user = (
@@ -27,15 +25,18 @@ export const verify = async (_, { token }, { dbConnection }) => {
 
 export const signin = async (_, { email, password }, { dbConnection }) => {
   const user = (
-    await dbConnection.query(
-      `SELECT * FROM user WHERE email = ? AND password = ?`,
-      [email, password],
-    )
+    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [email])
   )[0];
 
   if (user) {
-    const token = createToken(user);
-    return { user: user, token: token };
+    const validPassword = await argon2.verify(user.password, password);
+    if (validPassword) {
+      if (user.verified === 0) {
+        throw new Error('Váš email ještě nebyl ověřen.');
+      }
+      const token = createToken(user);
+      return { user: user, token: token };
+    }
   }
 
   throw new Error('Invalidní hodnoty.');
@@ -49,11 +50,12 @@ export const signup = async (
   await checkIfValidEmail(email, dbConnection);
   const id = uuidv4();
   const verificationToken = uuidv4();
+  const hashedPassword = await argon2.hash(password);
 
   await dbConnection.query(
     `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, password, verificationToken, 0, ''],
+    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, ''],
   );
 
   const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
@@ -96,7 +98,9 @@ export const changeForgotPass = async (_, args, { dbConnection }) => {
     throw new Error('Neexistujici uzivatel');
   }
 
-  await dbConnection.query(setPassQuery, [password, lockedToken]);
+  const hashedPassword = await argon2.hash(password);
+
+  await dbConnection.query(setPassQuery, [hashedPassword, lockedToken]);
   await dbConnection.query(resetQuery, [lockedToken]);
 
   return true;
@@ -172,3 +176,21 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
 
   return true;
 }
+
+export const uploadProfileImage = async (_, { file }, ctx) => {
+  const { auth, dbConnection } = ctx;
+  try {
+    const id = await getUser(auth);
+    const updateImageURLQuery = 'UPDATE user SET imageURL = ? WHERE id = ?;';
+
+    if (id) {
+      const { url } = await Cloudinary.v2.uploader.upload(file);
+      await dbConnection.query(updateImageURLQuery, [url, id]);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
