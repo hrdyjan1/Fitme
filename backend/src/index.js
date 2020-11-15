@@ -49,6 +49,21 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): AuthInfo!
+    updateUser(
+      email: String
+      firstName: String
+      lastName: String
+      nickname: String
+      phoneNumber: String
+      street: String
+      city: String
+      zipCode: String
+      country: String
+    ): Boolean!
+    updatePassword(
+      password: String!
+      newPassword: String!
+    ): Boolean!
     # Place
     insertPlace(
       name: String!
