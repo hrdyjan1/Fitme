@@ -1,7 +1,10 @@
+import argon2 from 'argon2';
+
 import { uuidv4 } from '../../constants/uuid';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
+import getUser from './helper';
 
 export const verify = async (_, { token }, { dbConnection }) => {
   const user = (
@@ -98,3 +101,74 @@ export const changeForgotPass = async (_, args, { dbConnection }) => {
 
   return true;
 };
+
+export const updatePassword = async (_, args, { dbConnection, auth }) => {
+  const { password, newPassword } = args;
+
+  const selectUserQuery = 'SELECT password FROM user WHERE id = ?;';
+  const updatePasswordQuery = 'UPDATE user SET password = ? WHERE id = ?;';
+
+  try {
+    const id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  const user = (await dbConnection.query(selectUserQuery, [id]))[0];
+
+  if (!user) {
+    throw new Error('Neexistujici uzivatel');
+  }
+
+  const validPassword = await argon2.verify(user.password, password);
+  if (!validPassword) {
+    throw new Error('Původní zadané heslo není platné');
+  }
+
+  const newHashedPassword = await argon2.hash(newPassword);
+
+  await dbConnection.query(updatePasswordQuery, [newHashedPassword, id]);
+
+  return true;
+}
+
+export const updateUser = async (_, args, { dbConnection, auth }) => {
+  const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
+
+  const selectUserQuery = 'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
+  const updateAddressQuery = 'UPDATE user SET email = ?, firstName = ?, lastName = ?, nickname = ?, phoneNumber = ?, street = ?, city = ?, zipCode = ?, country = ? WHERE id = ?;';
+
+  try {
+    const id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  const user = (await dbConnection.query(selectUserQuery, [id]))[0];
+
+  if (!user) {
+    throw new Error('Neexistujici uzivatel');
+  }
+
+  function getDefinedValue(arg, dbValue) {
+    if (typeof arg !== ('undefined' || 'null')) {
+      return arg;
+    }
+    return dbValue;
+  }
+
+  await dbConnection.query(updateAddressQuery, [
+    getDefinedValue(email, user.email),
+    getDefinedValue(firstName, user.firstName),
+    getDefinedValue(lastName, user.lastName),
+    getDefinedValue(nickname, user.nickname),
+    getDefinedValue(phoneNumber, user.phoneNumber),
+    getDefinedValue(street, user.street),
+    getDefinedValue(city, user.city),
+    getDefinedValue(zipCode, user.zipCode),
+    getDefinedValue(country, user.country),
+    id
+  ]);
+
+  return true;
+}
