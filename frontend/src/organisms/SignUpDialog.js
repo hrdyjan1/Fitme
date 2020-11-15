@@ -22,26 +22,17 @@ import {
 } from '@material-ui/core';
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
-import { useUserContext } from 'src/contexts/user';
 
 const SIGN_UP = gql`
   mutation SignUp($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
     signup(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         token
-        user {
-            id
-            email
-            verified
-            firstName
-            lastName
-      }
     }
   }
 `;
 
 export default function SignUpDialog(props) {
   const { show, close } = props;
-  const { set } = useUserContext();
   const [signup, { loading }] = useMutation(SIGN_UP);
   const theme = useTheme();
   const [values, setValues] = React.useState({
@@ -103,13 +94,8 @@ export default function SignUpDialog(props) {
         password: values.password,
       },
     }).then((response) => {
-      if (response.data) {
-        const user = response.data?.signup?.user;
-        const token = response.data?.signup?.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        set({ user, token });
-
+      if (response.data?.signup?.token) {
+        alert('check email');
         resetDialog();
         close();
       } else {
@@ -126,7 +112,7 @@ export default function SignUpDialog(props) {
   };
 
   return (
-    <Dialog fullWidth className="registration" open={show}>
+    <Dialog fullWidth className="registration" open={show} disableScrollLock>
       <Toolbar variant="regular" className="toolbar" style={{ backgroundColor: theme.palette.info.main }}>
         <div />
         <Box color="white">

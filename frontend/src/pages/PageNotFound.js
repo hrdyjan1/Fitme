@@ -1,46 +1,19 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { pickUpVerToken, Verification } from 'src/pages/Verification';
+import { pickUpLockToken, ResetPassword } from 'src/pages/ResetPassword';
 
-// const VERIFY = gql`
-//   mutation verifyVoe($token: String!) {
-//     verify(token: $token)
-//   }
-// `;
+function PageNotFound() {
+  const location = useLocation();
 
-// function Verification({ token }) {
-//   const { set, user: u } = useUserContext();
-//   const [verify, { data }] = useMutation(VERIFY);
+  const verToken = pickUpVerToken(location.pathname);
+  const lockToken = pickUpLockToken(location.pathname);
 
-//   React.useEffect(() => {
-//     verify({ variables: { token } })
-//       .then((r) => {
-//         if (r.data) {
-//           console.log(r.data);
-//         }
-//         if (r.errors) {
-//           console.log(r.errors);
-//         }
-//       })
-//       .catch((e) => alert(e));
-//   }, [token, verify]);
-
-//   if (data?.verify) {
-//     const newUser = { ...u, user: { ...u.user, verified: 1 } };
-//     set(newUser);
-//     localStorage.setItem('user', JSON.stringify(newUser));
-//   }
-
-//   return data?.verify ? <p>Overeno</p> : <p>Problem s overenim</p>;
-// }
-
-export function PageNotFound() {
-//   const location = useLocation();
-
-  //   const isVerToken = location.pathname.includes('verificationToken');
-  //   if (isVerToken) {
-  //     const token = location.pathname.match(/=(.+)/)[1];
-  //     return <Verification token={token} />;
-  //   }
-
+  if (verToken) {
+    return <Verification token={verToken} />;
+  } if (lockToken) {
+    return <ResetPassword token={lockToken} />;
+  }
   return (
     <div className="appWrapper">
       <h1>Error 404:</h1>
@@ -48,3 +21,5 @@ export function PageNotFound() {
     </div>
   );
 }
+
+export { PageNotFound };

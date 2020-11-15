@@ -2,21 +2,21 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ScrollToTop } from 'src/utils/ScrollToTop';
-import { AuthProvider } from 'src/utils/auth';
 import { EnhancedAppoloProvider } from 'src/utils/apollo';
-import { Routes } from './Routes';
-import { User } from './contexts/user';
+import { Routes } from 'src/Routes';
+import { AuthProvider } from 'src/utils/auth/index';
+import { UserProvider } from 'src/contexts/user/index';
 
 export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <User>
-          <EnhancedAppoloProvider>
-            <ScrollToTop />
+        <EnhancedAppoloProvider>
+          <ScrollToTop />
+          <UserProvider>
             <Routes />
-          </EnhancedAppoloProvider>
-        </User>
+          </UserProvider>
+        </EnhancedAppoloProvider>
       </AuthProvider>
     </BrowserRouter>
   );
