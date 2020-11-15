@@ -9,6 +9,7 @@ import {
   from,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { createUploadLink } from 'apollo-upload-client';
 
 import { config } from 'src/config';
 import { route } from 'src/constants/routes';
@@ -23,7 +24,10 @@ const hasNetworkStatusCode = (error, code) => error && error.statusCode === code
 
 const httpLink = createHttpLink({
   uri: config.GRAPHQL_API,
+});
 
+const uploadLink = createUploadLink({
+  uri: config.GRAPHQL_API,
 });
 
 export function EnhancedAppoloProvider({ children }) {
@@ -56,7 +60,7 @@ export function EnhancedAppoloProvider({ children }) {
   });
 
   const client = new ApolloClient({
-    link: from([logoutLink, authLink, httpLink]),
+    link: from([logoutLink, authLink, httpLink, uploadLink]),
     cache: new InMemoryCache(),
     defaultOptions: {
       watchQuery: {
