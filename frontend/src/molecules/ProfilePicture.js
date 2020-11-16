@@ -1,7 +1,9 @@
-import React from 'react'
-import {Box, Card, CardMedia, Button} from '@material-ui/core'
+import React from 'react';
+import {
+  Box, Card, CardMedia, Button,
+} from '@material-ui/core';
 
-function ProfilePicture({ imageURL, loading,  onSave }) {
+function ProfilePicture({ imageURL, loading, onSave }) {
   const [imageSource, setImageSource] = React.useState();
   const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -10,13 +12,13 @@ function ProfilePicture({ imageURL, loading,  onSave }) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => setImageSource(reader.result);
-    setIsLoaded(true)
+    setIsLoaded(true);
   };
 
   const onSaveClick = () => {
-    onSave(imageSource)
-    setIsLoaded(false)
-  }
+    onSave(imageSource);
+    setIsLoaded(false);
+  };
 
   return (
     <Box width="300px" justifyText="center">
@@ -28,22 +30,25 @@ function ProfilePicture({ imageURL, loading,  onSave }) {
           width="200px"
         />
       </Card>
-      { !isLoaded && <Button
+      { !isLoaded && (
+      <Button
         component="label"
         color="primary"
         size="small"
         disabled={loading}
-        >
-          <input
-            hidden
-            accept="image/*"
-            id="contained-button-file"
-            type="file"
-            onChange={change}
-          />
-          Změnit profilovou fotku
-      </Button>}
-      { isLoaded && <Button
+      >
+        <input
+          hidden
+          accept="image/*"
+          id="contained-button-file"
+          type="file"
+          onChange={change}
+        />
+        Změnit profilovou fotku
+      </Button>
+      )}
+      { isLoaded && (
+      <Button
         color="primary"
         variant="contained"
         fullWidth
@@ -52,7 +57,8 @@ function ProfilePicture({ imageURL, loading,  onSave }) {
         disabled={loading}
       >
         Uložit
-      </Button>}
+      </Button>
+      )}
 
     </Box>
   );

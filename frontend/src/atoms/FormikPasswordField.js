@@ -5,12 +5,14 @@ import {
   FormHelperText,
   IconButton,
   InputAdornment,
-  InputLabel
-} from '@material-ui/core'
-import { Field } from 'formik'
-import {Visibility, VisibilityOff} from '@material-ui/icons'
+  InputLabel,
+} from '@material-ui/core';
+import { Field } from 'formik';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
-function FormikPasswordField({ name, label, placeholder, formikBag, validText }) {
+function FormikPasswordField({
+  name, label, placeholder, formikBag, validText,
+}) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleMouseDownPassword = (event) => {
@@ -61,4 +63,4 @@ function FormikPasswordField({ name, label, placeholder, formikBag, validText })
   );
 }
 
-export {FormikPasswordField}
+export { FormikPasswordField };

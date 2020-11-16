@@ -1,9 +1,10 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import {Field} from 'formik';
+import { Field } from 'formik';
 
-function FormikTextField({ name, label, placeholder, formikBag }) {
-
+function FormikTextField({
+  name, label, placeholder, formikBag,
+}) {
   return (
     <Field
       validateOnBlur
@@ -36,4 +37,4 @@ function FormikTextField({ name, label, placeholder, formikBag }) {
   );
 }
 
-export {FormikTextField}
+export { FormikTextField };

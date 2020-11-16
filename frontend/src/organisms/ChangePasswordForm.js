@@ -7,16 +7,15 @@ import { validText } from 'src/constants/validTexts';
 import { CardForm } from 'src/organisms';
 
 function ChangePasswordForm({ loading, onSave }) {
-
-  const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' }
+  const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' };
 
   const validate = (values) => {
-    const errors = {}
-    if (!values.oldPassword) errors.oldPassword = validText.noPassword
-    if (!regex.password.test(values.newPassword)) errors.newPassword = validText.password
-    if (values.newPassword !== values.newPasswordCheck)  errors.newPasswordCheck = validText.passwordCheck
-    return errors
-  }
+    const errors = {};
+    if (!values.oldPassword) errors.oldPassword = validText.noPassword;
+    if (!regex.password.test(values.newPassword)) errors.newPassword = validText.password;
+    if (values.newPassword !== values.newPasswordCheck) errors.newPasswordCheck = validText.passwordCheck;
+    return errors;
+  };
 
   return (
     <CardForm header="ZMĚNIT HESLO">
@@ -24,7 +23,8 @@ function ChangePasswordForm({ loading, onSave }) {
         enableReinitialize
         initialValues={initialValues}
         onSubmit={(values) => onSave(values)}
-        validate={(values) => validate(values)}>
+        validate={(values) => validate(values)}
+      >
         {(formikBag) => (
           <Form>
             <FormikPasswordField
@@ -32,19 +32,22 @@ function ChangePasswordForm({ loading, onSave }) {
               label="Staré heslo"
               placeholder="Zadejte vaše aktuální heslo"
               formikBag={formikBag}
-              validText={formikBag.errors.oldPassword}/>
+              validText={formikBag.errors.oldPassword}
+            />
             <FormikPasswordField
               name="newPassword"
               label="Nové heslo"
               placeholder="Zadejte město"
               formikBag={formikBag}
-              validText={formikBag.errors.newPassword}/>
+              validText={formikBag.errors.newPassword}
+            />
             <FormikPasswordField
               name="newPasswordCheck"
               label="Potvrzení nového hesla"
               placeholder="Zadejte nové heslo znovu"
               formikBag={formikBag}
-              validText={formikBag.errors.newPasswordCheck}/>
+              validText={formikBag.errors.newPasswordCheck}
+            />
             <Box
               marginTop="20px"
               marginBottom="30px"
@@ -61,7 +64,7 @@ function ChangePasswordForm({ loading, onSave }) {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={loading || Object.values(formikBag.values).some(value => !value)}
+                  disabled={loading || Object.values(formikBag.values).some((value) => !value)}
                 >
                   Uložit
                 </Button>

@@ -10,7 +10,7 @@ const validText = {
   country: 'Název státu smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   password: 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.',
   noPassword: 'Zadejte heslo.',
-  passwordCheck: 'Hesla se neshodují.'
+  passwordCheck: 'Hesla se neshodují.',
 
 };
 

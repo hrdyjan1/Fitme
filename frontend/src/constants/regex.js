@@ -10,7 +10,7 @@ const regex = {
   // 1 small letter,
   // 1 number
   // it may contain special characters
-  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-}
+  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+};
 
 export { regex };
