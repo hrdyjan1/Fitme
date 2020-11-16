@@ -20,6 +20,7 @@ import {
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useUser } from 'src/contexts/user';
+import { compose, showMessage } from 'src/constants/functions';
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -36,11 +37,13 @@ const SIGN_IN = gql`
 `;
 
 export default function SignInDialog(props) {
-  const { show, close } = props;
+  const { show, close, onForgotPassClick } = props;
   const theme = useTheme();
   const { login } = useUser();
   const [signin, { loading }] = useMutation(SIGN_IN);
   const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleShowingForgotPassword = compose(onForgotPassClick, close);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -60,11 +63,11 @@ export default function SignInDialog(props) {
           login(token, user);
           close();
         } else {
-          alert(response.errors || 'Chybi uzivatel nebo token.');
+          showMessage(response.errors || 'Chybi uzivatel nebo token.');
         }
       })
       .catch((error) => {
-        alert(error);
+        showMessage(error);
       });
   };
 
@@ -207,6 +210,18 @@ export default function SignInDialog(props) {
                 </Form>
               )}
             />
+            <Box width="97%" m="auto">
+              <Button
+                onClick={handleShowingForgotPassword}
+                type="submit"
+                size="large"
+                fullWidth
+                variant="contained"
+                color="secondary"
+              >
+                Zapomenute heslo
+              </Button>
+            </Box>
           </Box>
         </Box>
       </DialogContent>

@@ -8,7 +8,7 @@ import { useAuth } from 'src/utils/auth';
 import { useUser } from 'src/contexts/user';
 import { route } from 'src/constants/routes';
 
-function UserButtons({ onSignInClick, onSignUpClick, onForgotPassClick }) {
+function UserButtons({ onSignInClick, onSignUpClick }) {
   const history = useHistory();
   const { token } = useAuth();
   const { user, logout } = useUser();
@@ -44,11 +44,6 @@ function UserButtons({ onSignInClick, onSignUpClick, onForgotPassClick }) {
 
   ) : (
     <Box display="flex" flexDirection="row">
-      <Box marginRight="20px">
-        <Button variant="contained" color="primary" onClick={onForgotPassClick}>
-          Zapomenute heslo
-        </Button>
-      </Box>
       <Box marginRight="20px">
         <Button variant="contained" color="primary" onClick={onSignInClick}>
           Přihlásit

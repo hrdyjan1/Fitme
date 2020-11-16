@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 
 import { isFilledArray } from 'src/constants/array';
-import { red } from '@material-ui/core/colors';
 
 const GET_PLACES = gql`
   query GetPlaces {
