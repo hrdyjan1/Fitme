@@ -1,7 +1,11 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
+import { Box } from '@material-ui/core';
 import {
-  compose, match, print, stringAfterEqual,
+  compose,
+  match,
+  print,
+  stringAfterEqual,
 } from 'src/constants/functions';
 
 const VERIFY = gql`
@@ -10,7 +14,10 @@ const VERIFY = gql`
   }
 `;
 
-const pickUpVerToken = compose(stringAfterEqual, match(/\/verificationToken=(.+)/));
+const pickUpVerToken = compose(
+  stringAfterEqual,
+  match(/\/verificationToken=(.+)/),
+);
 
 function Verification({ token }) {
   const [verify, { data }] = useMutation(VERIFY);
@@ -29,9 +36,30 @@ function Verification({ token }) {
   }, [token, verify]);
 
   if (data?.verify) {
-    return <p>Overeno</p>;
-  } if (data?.verify === false) {
-    return <p>Uzivatel jiz overen nebo vase adresa jiz neni platna.</p>;
+    return (
+      <Box
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap"
+        justifyContent="space-evenly"
+        marginTop="80px"
+      >
+        <p>Váš účet pro aplikaci Fit.me byl úspěšně ověřen.</p>
+      </Box>
+    );
+  }
+  if (data?.verify === false) {
+    return (
+      <Box
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap"
+        justifyContent="space-evenly"
+        marginTop="80px"
+      >
+        <p>Uživatel již ověřen nebo vaše adresa již není platná.</p>
+      </Box>
+    );
   }
   return <div />;
 }

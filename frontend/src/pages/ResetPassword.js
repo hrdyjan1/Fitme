@@ -66,19 +66,6 @@ function ResetPassword({ token }) {
 
   return (
     <div>
-      <AppBar color="transparent" position="static" className="appBar">
-        <Toolbar variant="regular" className="toolbar">
-          <Typography variant="h6">
-            <Box fontWeight="fontWeightBold">FitMe</Box>
-          </Typography>
-          <Box>
-            <Button variant="contained" color="primary" onClick={goHomePage}>
-              Domovska stranka
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
       <Box
         marginTop="20px"
         width="100%"
