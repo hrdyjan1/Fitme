@@ -4,64 +4,55 @@ import { Form, Formik } from 'formik';
 import { FormikTextField } from 'src/atoms/FormikTextField';
 import { regex } from 'src/constants/regex';
 import { validText } from 'src/constants/validTexts';
-import { CardForm } from './CardForm';
+import { CardForm } from 'src/organisms';
 
 function AddressForm({ user, loading, onSave }) {
-  const validate = (values) => ({
-    street: !regex.street.test(values.street) && validText.street,
-    city: !regex.name.test(values.city) && validText.city,
-    zipCode: !regex.zipCode.test(values.zipCode) && validText.zipCode,
-    country: !regex.name.test(values.country) && validText.country,
-  });
 
-  const onSaveClick = (values, errors) => {
-    if (
-      !Object.values(errors).some((e) => !!e)
-      && Object.values(values).every((v) => !!v)
-    ) {
-      onSave(values);
-    }
-  };
+  const initialValues = {
+    street: user.street || '',
+    city: user.city || '',
+    zipCode: user.zipCode || '',
+    country: user.country || ''
+  }
+
+  const validate = (values) => {
+    const errors = {}
+    if (!regex.street.test(values.street)) errors.street = validText.street
+    if (!regex.name.test(values.city)) errors.city = validText.city
+    if (!regex.zipCode.test(values.zipCode)) errors.zipCode = validText.zipCode
+    if (!regex.name.test(values.country)) errors.country = validText.country
+    return errors
+  }
 
   return (
     <CardForm header="ADRESA">
       <Formik
         enableReinitialize
-        initialValues={{
-          street: user.street,
-          city: user.city,
-          zipCode: user.zipCode,
-          country: user.country,
-        }}
+        initialValues={initialValues}
         onSubmit={(values) => onSave(values)}
-        validate={(values) => validate(values)}
-      >
+        validate={(values) => validate(values)}>
         {(formikBag) => (
           <Form>
             <FormikTextField
               name="street"
               label="Ulice a č.p."
               placeholder="Zadejte ulici a č.p."
-              formikBag={formikBag}
-            />
+              formikBag={formikBag}/>
             <FormikTextField
               name="city"
               label="Město"
               placeholder="Zadejte město"
-              formikBag={formikBag}
-            />
+              formikBag={formikBag}/>
             <FormikTextField
               name="zipCode"
               label="PSČ"
               placeholder="Zadejte PSČ"
-              formikBag={formikBag}
-            />
+              formikBag={formikBag}/>
             <FormikTextField
               name="country"
               label="Stát"
               placeholder="Zadejte název státu"
-              formikBag={formikBag}
-            />
+              formikBag={formikBag}/>
             <Box
               marginTop="20px"
               marginBottom="30px"
@@ -78,11 +69,7 @@ function AddressForm({ user, loading, onSave }) {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={
-                    loading
-                    || Object.values(formikBag.values).some((value) => !value)
-                  }
-                  onClick={() => onSaveClick(formikBag.values, formikBag.errors)}
+                  disabled={loading || Object.values(formikBag.values).some(value => !value)}
                 >
                   Uložit
                 </Button>
