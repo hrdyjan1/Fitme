@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Typography, Box, Fab, Card, Button,
+  Box, Fab, Card, Button,
 } from '@material-ui/core';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 

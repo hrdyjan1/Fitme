@@ -154,15 +154,8 @@ export default function SignInDialog(props) {
                           name="password"
                           placeholder="Zadejte své heslo"
                           onChange={formikBag.handleChange}
-                          error={Boolean(
-                            form.errors.password && form.touched.password,
-                          )}
+                          error={Boolean(form.errors.password && form.touched.password)}
                           onBlur={formikBag.handleBlur}
-                          helperText={
-                            form.errors.password
-                            && form.touched.password
-                            && String(form.errors.password)
-                          }
                           endAdornment={(
                             <InputAdornment position="end">
                               <IconButton

@@ -16,11 +16,6 @@ const typeDefs = gql`
     latitude: Float!
     longitude: Float!
   }
-  type Query {
-    todo: String!
-    users: [User]!
-    places: [Place!]!
-  }
 
   type User {
     id: String!
@@ -31,10 +26,30 @@ const typeDefs = gql`
     locked: Int!
     lockedToken: String!
   }
+  
+  type UserDetail {
+    email: String
+    nickname: String
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    street: String
+    city: String
+    zipCode: String
+    country: String
+    imageURL: String
+  }
 
   type AuthInfo {
     token: String!
     user: User!
+  }
+  
+  type Query {
+    todo: String!
+    users: [User]!
+    user: UserDetail!
+    places: [Place!]!
   }
 
   type Mutation {

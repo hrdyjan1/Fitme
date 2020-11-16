@@ -11,7 +11,7 @@ import { Field } from 'formik';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 function FormikPasswordField({
-  name, label, placeholder, formikBag,
+  name, label, placeholder, formikBag, validText,
 }) {
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -30,17 +30,13 @@ function FormikPasswordField({
             {label}
           </InputLabel>
           <FilledInput
+            id={name}
             type={showPassword ? 'text' : 'password'}
-            name={name || 'password'}
+            name={name}
             placeholder={placeholder}
             onChange={formikBag.handleChange}
-            error={Boolean(form.errors.password && form.touched.password)}
+            error={Boolean(form.errors[name] && form.touched[name])}
             onBlur={formikBag.handleBlur}
-            helperText={
-              form.errors.password
-              && form.touched.password
-              && String(form.errors.password)
-            }
             endAdornment={(
               <InputAdornment position="end">
                 <IconButton
@@ -49,15 +45,17 @@ function FormikPasswordField({
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                  {showPassword ? (
+                    <Visibility />
+                  ) : (
+                    <VisibilityOff />
+                  )}
                 </IconButton>
               </InputAdornment>
             )}
           />
           <FormHelperText error>
-            {form.errors.password
-              && form.touched.password
-              && String(form.errors.password)}
+            {form.errors[name] && form.touched[name] && String(form.errors[name]) && validText}
           </FormHelperText>
         </FormControl>
       )}

@@ -7,34 +7,29 @@ import { regex } from 'src/constants/regex';
 import { validText } from 'src/constants/validTexts';
 
 function ContactInfoForm({ user, loading, onSave }) {
-  const validate = (values) => ({
-    nickname: !regex.name.test(values.nickname) && validText.nickname,
-    firstName: !regex.name.test(values.firstName) && validText.firstName,
-    lastName: !regex.name.test(values.lastName) && validText.lastName,
-    email: !regex.email.test(values.email) && validText.email,
-    phoneNumber: !regex.phoneNumber.test(values.phoneNumber) && validText.phoneNumber,
-  });
+  const initialValues = {
+    nickname: user.nickname || '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    email: user.email || '',
+    phoneNumber: user.phoneNumber || '',
+  };
 
-  const onSaveClick = (values, errors) => {
-    if (
-      !Object.values(errors).some((e) => !!e)
-      && Object.values(values).every((v) => !!v)
-    ) {
-      onSave(values);
-    }
+  const validate = (values) => {
+    const errors = {};
+    if (!regex.name.test(values.nickname)) errors.nickname = validText.nickname;
+    if (!regex.name.test(values.firstName)) errors.firstName = validText.firstName;
+    if (!regex.name.test(values.lastName)) errors.lastName = validText.lastName;
+    if (!regex.email.test(values.email)) errors.email = validText.email;
+    if (!regex.phoneNumber.test(values.phoneNumber)) errors.phoneNumber = validText.phoneNumber;
+    return errors;
   };
 
   return (
     <CardForm header="KONTAKTNÍ ÚDAJE">
       <Formik
         enableReinitialize
-        initialValues={{
-          nickname: user.nickname,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-        }}
+        initialValues={initialValues}
         onSubmit={(values) => onSave(values)}
         validate={(values) => validate(values)}
       >
@@ -86,11 +81,7 @@ function ContactInfoForm({ user, loading, onSave }) {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={
-                    loading
-                    || Object.values(formikBag.values).some((value) => !value)
-                  }
-                  onClick={() => onSaveClick(formikBag.values, formikBag.errors)}
+                  disabled={loading || Object.values(formikBag.values).some((value) => !value)}
                 >
                   Uložit
                 </Button>

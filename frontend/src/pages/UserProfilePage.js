@@ -1,31 +1,53 @@
 import React from 'react';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { UserProfileTemplate } from 'src/templates';
 import { useUser } from 'src/contexts/user';
-import { gql, useMutation } from '@apollo/client';
-import { print, showMessage } from 'src/constants/functions';
+
+const USER_QUERY = gql`
+  query User {
+    user {
+      nickname
+      firstName
+      lastName
+      email
+      phoneNumber
+      street
+      city
+      zipCode
+      country
+      imageURL
+    }
+  }
+`;
+
+const PROFILE_IMAGE_MUTATION = gql`
+  mutation UploadProfileImage($file: String!) {
+    uploadProfileImage(file: $file)
+  }
+`;
 
 const USER_MUTATION = gql`
   mutation UpdateUser(
-    $nickname: String
-    $firstName: String
-    $lastName: String
-    $email: String
-    $street: String
-    $city: String
-    $country: String
-    $zipCode: String
-    $phoneNumber: String
-  ) {
+      $nickname: String,
+      $firstName: String,
+      $lastName: String,
+      $email: String,
+      $phoneNumber: String,
+      $street: String,
+      $city: String,
+      $zipCode: String,
+      $country: String,
+    ) {
     updateUser(
-      email: $email
-      nickname: $nickname
-      firstName: $firstName
-      lastName: $lastName
-      street: $street
-      city: $city
+      nickname: $nickname,
+      firstName: $firstName,
+      lastName: $lastName,
+      email: $email,
+      phoneNumber: $phoneNumber,
+      street: $street,
+      city: $city,
+      zipCode: $zipCode,
       country: $country
-      zipCode: $zipCode
-      phoneNumber: $phoneNumber
     )
   }
 `;
@@ -36,35 +58,42 @@ const PASSWORD_MUTATION = gql`
   }
 `;
 
-const UPLOAD_PROFILE_IMAGE = gql`
-  mutation UploadProfileImage($file: String!) {
-    uploadProfileImage(file: $file)
-  }
-`;
-
 function UserProfilePage() {
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
 
-  const [userMutationRequest, userMutationRequestState] = useMutation(
-    USER_MUTATION,
-  );
-  const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION,
-  );
-  const [imageMutationRequest, imageMutationRequestState] = useMutation(UPLOAD_PROFILE_IMAGE);
+  const userFetcher = useQuery(USER_QUERY);
+  const [profileImageMutationRequest, profileImageMutationRequestState] = useMutation(PROFILE_IMAGE_MUTATION);
+  const [userMutationRequest, userMutationRequestState] = useMutation(USER_MUTATION);
+  const [passwordMutationRequest, passwordMutationRequestState] = useMutation(PASSWORD_MUTATION);
+
+  const updateProfileImage = async (image) => {
+    profileImageMutationRequest({ variables: { file: image } })
+      .then((response) => {
+        if (response.data) {
+          alert('Profilová fotka byla úspěšně aktualizována..');
+        } else {
+          alert(response.errors || 'Profilová nebyla aktualizována.');
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   const updateUser = async (values) => {
     userMutationRequest({ variables: values })
       .then((response) => {
-        setUser(values);
+        if (!values.street) {
+          setUser(values);
+        }
         if (response.data) {
-          showMessage('Údaje byly úspěšně aktualizovány.');
+          alert('Údaje byly úspěšně aktualizovány.');
         } else {
-          showMessage(response.errors || 'Kontaktní údaje nebyly aktualizovány.');
+          alert(response.errors || 'Kontaktní údaje nebyly aktualizovány.');
         }
       })
       .catch((error) => {
-        showMessage(error);
+        alert(error);
       });
   };
 
@@ -72,39 +101,25 @@ function UserProfilePage() {
     passwordMutationRequest({ variables: { ...values } })
       .then((response) => {
         if (response.data) {
-          showMessage('Heslo bylo změněno.');
+          alert('Heslo bylo změněno.');
         } else {
-          showMessage(response.errors || 'Heslo nebylo změněno.');
+          alert(response.errors || 'Heslo nebylo změněno.');
         }
       })
       .catch((error) => {
-        showMessage(error);
+        alert(error);
       });
-  };
-
-  const uploadImage = (imageSource) => {
-    try {
-      imageMutationRequest({ variables: { file: imageSource } }).then(
-        () => showMessage('Uspesne nahrani fotografie'),
-        () => showMessage('Zvolte prosim jiny soubor'),
-      );
-    } catch (error) {
-      print(error, true);
-    }
   };
 
   return (
     <UserProfileTemplate
-      user={user}
-      userError={userMutationRequestState.error}
+      user={userFetcher.data?.user}
       userLoading={userMutationRequestState.loading}
-      passwordError={passwordMutationRequestState.error}
       passwordLoading={passwordMutationRequestState.loading}
-      imageError={imageMutationRequestState.error}
-      imageLoading={imageMutationRequestState.loading}
+      profileImageLoading={profileImageMutationRequestState.loading}
       onSaveUser={updateUser}
       onSavePassword={updatePassword}
-      onSaveImage={uploadImage}
+      onSaveProfileImage={updateProfileImage}
     />
   );
 }

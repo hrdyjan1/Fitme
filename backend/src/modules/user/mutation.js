@@ -138,31 +138,18 @@ export const updatePassword = async (_, args, { dbConnection, auth }) => {
   await dbConnection.query(updatePasswordQuery, [newHashedPassword, id]);
 
   return true;
-};
+}
 
 export const updateUser = async (_, args, { dbConnection, auth }) => {
-  let id;
-  const {
-    email,
-    firstName,
-    lastName,
-    nickname,
-    phoneNumber,
-    street,
-    city,
-    zipCode,
-    country,
-  } = args;
+  const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
 
-  const selectUserQuery =
-    'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
-  const updateAddressQuery =
-    'UPDATE user SET email = ?, firstName = ?, lastName = ?, nickname = ?, phoneNumber = ?, street = ?, city = ?, zipCode = ?, country = ? WHERE id = ?;';
+  const selectUserQuery = 'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
+  const updateAddressQuery = 'UPDATE user SET email = ?, firstName = ?, lastName = ?, nickname = ?, phoneNumber = ?, street = ?, city = ?, zipCode = ?, country = ? WHERE id = ?;';
 
-
+  let id = null;
   try {
     id = await getUser(auth);
-  } catch (error) {
+  } catch  (error){
     throw new Error('Session neexistujícího uživatele');
   }
 
@@ -189,11 +176,11 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
     getDefinedValue(city, user.city),
     getDefinedValue(zipCode, user.zipCode),
     getDefinedValue(country, user.country),
-    id,
+    id
   ]);
 
   return true;
-};
+}
 
 export const uploadProfileImage = async (_, { file }, ctx) => {
   const { auth, dbConnection } = ctx;
