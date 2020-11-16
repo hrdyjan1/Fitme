@@ -28,7 +28,6 @@ function TopBar() {
   return (
     <div>
       <AppBar color="transparent" position="static" className="appBar">
-
         <Toolbar variant="regular" className="toolbar">
           <Button onClick={goHomePage}>
             <Typography variant="h6">
@@ -39,12 +38,15 @@ function TopBar() {
             <UserButtons
               onSignInClick={onSignInClick}
               onSignUpClick={onSignUpClick}
-              onForgotPassClick={onForgotPassClick}
             />
           </Box>
         </Toolbar>
       </AppBar>
-      <SignInDialog show={showSignInDialog} close={closeSignIn} />
+      <SignInDialog
+        show={showSignInDialog}
+        close={closeSignIn}
+        onForgotPassClick={onForgotPassClick}
+      />
       <SignUpDialog show={showSignUpDialog} close={closeSignUp} />
       <ForgotPassDialog show={showForgotPassDialog} close={closeForgotPass} />
     </div>
