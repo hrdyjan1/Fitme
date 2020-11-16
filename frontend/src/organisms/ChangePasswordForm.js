@@ -37,7 +37,7 @@ function ChangePasswordForm({ loading, onSave }) {
             <FormikPasswordField
               name="newPassword"
               label="Nové heslo"
-              placeholder="Zadejte město"
+              placeholder="Zadejte nové heslo"
               formikBag={formikBag}
               validText={formikBag.errors.newPassword}
             />
