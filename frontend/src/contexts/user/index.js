@@ -27,8 +27,8 @@ function UserProvider({ children }) {
     [reset, signout]);
 
   const value = React.useMemo(() => ({
-    user, fullName, login, logout,
-  }), [user, fullName, login, logout]);
+    user, setUser, fullName, login, logout,
+  }), [user, setUser, fullName, login, logout]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 

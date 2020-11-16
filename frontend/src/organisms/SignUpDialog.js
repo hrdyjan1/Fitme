@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { name, email, password } from 'src/constants/regex';
+import { regex } from 'src/constants/regex';
 import {
   TextField,
   FormControl,
@@ -162,8 +162,8 @@ export default function SignUpDialog(props) {
                 placeholder="Zadejte své jméno"
                 onChange={updateValue('firstname')}
                 onBlur={() => showError('firstname', true)}
-                error={showErrors.firstname && !name.test(values.firstname)}
-                helperText={showErrors.firstname && !name.test(values.firstname)
+                error={showErrors.firstname && !regex.name.test(values.firstname)}
+                helperText={showErrors.firstname && !regex.name.test(values.firstname)
                   && 'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků'}
                 variant="filled"
                 fullWidth
@@ -179,8 +179,8 @@ export default function SignUpDialog(props) {
                 placeholder="Zadejte své příjmení"
                 onChange={updateValue('lastname')}
                 onBlur={() => showError('lastname', true)}
-                error={showErrors.lastname && !name.test(values.lastname)}
-                helperText={showErrors.lastname && !name.test(values.lastname)
+                error={showErrors.lastname && !regex.name.test(values.lastname)}
+                helperText={showErrors.lastname && !regex.name.test(values.lastname)
                   && 'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků'}
                 variant="filled"
                 fullWidth
@@ -196,8 +196,8 @@ export default function SignUpDialog(props) {
                 placeholder="Zadejte svůj email"
                 onChange={updateValue('email')}
                 onBlur={() => showError('email', true)}
-                error={showErrors.email && !email.test(values.email)}
-                helperText={showErrors.email && !email.test(values.email) && 'E-mail nemá správný formát.'}
+                error={showErrors.email && !regex.email.test(values.email)}
+                helperText={showErrors.email && !regex.email.test(values.email) && 'E-mail nemá správný formát.'}
                 variant="filled"
                 fullWidth
                 margin="normal"
@@ -214,7 +214,7 @@ export default function SignUpDialog(props) {
                   placeholder="Zadejte své heslo"
                   onChange={updateValue('password')}
                   onBlur={() => showError('password', true)}
-                  error={showErrors.password && !password.test(values.password)}
+                  error={showErrors.password && !regex.password.test(values.password)}
                   endAdornment={(
                     <InputAdornment position="end">
                       <IconButton
@@ -229,7 +229,7 @@ export default function SignUpDialog(props) {
                   )}
                 />
                 <FormHelperText error>
-                  {showErrors.password && !password.test(values.password)
+                  {showErrors.password && !regex.password.test(values.password)
                   && 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
                 </FormHelperText>
               </FormControl>

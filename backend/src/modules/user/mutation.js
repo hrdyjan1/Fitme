@@ -109,6 +109,92 @@ export const changeForgotPass = async (_, args, { dbConnection }) => {
   return true;
 };
 
+export const updatePassword = async (_, args, { dbConnection, auth }) => {
+  const { oldPassword, newPassword } = args;
+
+  let id;
+  const selectUserQuery = 'SELECT password FROM user WHERE id = ?;';
+  const updatePasswordQuery = 'UPDATE user SET password = ? WHERE id = ?;';
+
+  try {
+    id = await getUser(auth);
+  } catch (error) {
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  const user = (await dbConnection.query(selectUserQuery, [id]))[0];
+
+  if (!user) {
+    throw new Error('Neexistujici uzivatel');
+  }
+
+  const validPassword = await argon2.verify(user.password, oldPassword);
+  if (!validPassword) {
+    throw new Error('Původní zadané heslo není platné');
+  }
+
+  const newHashedPassword = await argon2.hash(newPassword);
+
+  await dbConnection.query(updatePasswordQuery, [newHashedPassword, id]);
+
+  return true;
+};
+
+export const updateUser = async (_, args, { dbConnection, auth }) => {
+  let id;
+  const {
+    email,
+    firstName,
+    lastName,
+    nickname,
+    phoneNumber,
+    street,
+    city,
+    zipCode,
+    country,
+  } = args;
+
+  const selectUserQuery =
+    'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
+  const updateAddressQuery =
+    'UPDATE user SET email = ?, firstName = ?, lastName = ?, nickname = ?, phoneNumber = ?, street = ?, city = ?, zipCode = ?, country = ? WHERE id = ?;';
+
+
+  try {
+    id = await getUser(auth);
+  } catch (error) {
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  const user = (await dbConnection.query(selectUserQuery, [id]))[0];
+
+  if (!user) {
+    throw new Error('Neexistujici uzivatel');
+  }
+
+  function getDefinedValue(arg, dbValue) {
+    if (typeof arg !== ('undefined' || 'null')) {
+      return arg;
+    }
+    return dbValue;
+  }
+
+  await dbConnection.query(updateAddressQuery, [
+    getDefinedValue(email, user.email),
+    getDefinedValue(firstName, user.firstName),
+    getDefinedValue(lastName, user.lastName),
+    getDefinedValue(nickname, user.nickname),
+    getDefinedValue(phoneNumber, user.phoneNumber),
+    getDefinedValue(street, user.street),
+    getDefinedValue(city, user.city),
+    getDefinedValue(zipCode, user.zipCode),
+    getDefinedValue(country, user.country),
+    id,
+  ]);
+
+  return true;
+};
+
 export const uploadProfileImage = async (_, { file }, ctx) => {
   const { auth, dbConnection } = ctx;
   try {

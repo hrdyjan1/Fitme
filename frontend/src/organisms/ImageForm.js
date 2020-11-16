@@ -1,24 +1,12 @@
 import React from 'react';
 import {
-  Typography,
-  Box,
-  Fab,
-  Card,
-  Button,
+  Typography, Box, Fab, Card, Button,
 } from '@material-ui/core';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import { gql, useMutation } from '@apollo/client';
 
-import { print, showMessage } from 'src/constants/functions';
+import { CardForm } from 'src/organisms/CardForm';
 
-const UPLOAD_PROFILE_IMAGE = gql`
-  mutation UploadProfileImage($file: String!) {
-    uploadProfileImage(file: $file)
-  }
-`;
-
-function UploadImagePage() {
-  const [uploadFile, { loading }] = useMutation(UPLOAD_PROFILE_IMAGE);
+function ImageForm({ onSave, loading }) {
   const [imageSource, setImageSource] = React.useState();
 
   const change = (e) => {
@@ -28,19 +16,8 @@ function UploadImagePage() {
     reader.onloadend = () => setImageSource(reader.result);
   };
 
-  const upload = () => {
-    try {
-      uploadFile({ variables: { file: imageSource } }).then(
-        () => showMessage('Uspesne nahrani fotografie'),
-        () => showMessage('Zvolte prosim jiny soubor'),
-      );
-    } catch (error) {
-      print(error, true);
-    }
-  };
-
   return (
-    <div>
+    <CardForm header="ZMĚNA PROFILOVKY">
       <Box
         marginTop="20px"
         width="100%"
@@ -49,7 +26,6 @@ function UploadImagePage() {
         flexWrap="wrap"
         alignItems="center"
       >
-        <Typography variant="h6">Zmena obrazku</Typography>
         <label htmlFor="contained-button-file">
           <input
             hidden
@@ -61,6 +37,7 @@ function UploadImagePage() {
           <Fab component="span">
             <AddPhotoAlternateIcon />
           </Fab>
+          <span />
         </label>
         {imageSource && (
           <Card marginTop="50px" flexDirection="column" width="200px">
@@ -82,7 +59,7 @@ function UploadImagePage() {
               </Box>
               <Box width="80%" marginY="20px">
                 <Button
-                  onClick={upload}
+                  onClick={() => onSave(imageSource)}
                   size="large"
                   fullWidth
                   variant="contained"
@@ -96,8 +73,8 @@ function UploadImagePage() {
           </Card>
         )}
       </Box>
-    </div>
+    </CardForm>
   );
 }
 
-export { UploadImagePage };
+export { ImageForm };

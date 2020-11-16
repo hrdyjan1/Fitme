@@ -15,7 +15,7 @@ function PageNotFound() {
     return <ResetPassword token={lockToken} />;
   }
   return (
-    <div className="appWrapper">
+    <div className="app-wrapper">
       <h1>Error 404:</h1>
       <p>Page not found</p>
     </div>
