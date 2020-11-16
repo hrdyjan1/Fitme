@@ -37,7 +37,7 @@ function ContactInfoForm({ user, loading, onSave }) {
           <Form>
             <FormikTextField
               name="nickname"
-              label="přezdívka"
+              label="Přezdívka"
               placeholder="Zadejte svou přezdívku"
               formikBag={formikBag}
             />

@@ -41,7 +41,7 @@ function ForgotPassDialog(props) {
       >
         <div />
         <Box color="white">
-          <Typography variant="h6">Zapomenute heslo do aplikace FitMe</Typography>
+          <Typography variant="h6">Zapomenuté heslo do aplikace FitMe</Typography>
         </Box>
         <IconButton onClick={close}>
           <Close fontSize="large" style={{ color: 'white' }} />
