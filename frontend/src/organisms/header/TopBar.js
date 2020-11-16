@@ -17,7 +17,10 @@ function TopBar() {
 
   // Open ✅
   const onSignInClick = () => setShowSignInDialog(true);
-  const onSignUpClick = () => setShowSignUpDialog(true);
+  const onSignUpClick = () => {
+    setShowSignInDialog(false)
+    setShowSignUpDialog(true)
+  };
   const onForgotPassClick = () => setShowForgotPassDialog(true);
 
   // Close ❌
@@ -46,6 +49,7 @@ function TopBar() {
         show={showSignInDialog}
         close={closeSignIn}
         onForgotPassClick={onForgotPassClick}
+        onSignUpClick={onSignUpClick}
       />
       <SignUpDialog show={showSignUpDialog} close={closeSignUp} />
       <ForgotPassDialog show={showForgotPassDialog} close={closeForgotPass} />
