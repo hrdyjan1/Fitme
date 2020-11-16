@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
 import { showMessage } from 'src/constants/functions';
-import { email } from 'src/constants/regex';
+import { regex } from 'src/constants/regex';
 
 const initialFormValues = { email: '' };
 
 const validate = (values) => {
   const errors = {};
-  if (!email.test(values.email)) {
+  if (!regex.email.test(values.email)) {
     errors.email = 'Zadejte e-mail ve správném formátu';
   }
   return errors;

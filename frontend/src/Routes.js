@@ -1,10 +1,11 @@
 import React, {Fragment} from 'react'
 import { Route, Switch } from 'react-router-dom';
-import { route } from './constants/routes';
+import { route } from 'src/constants/routes';
 
 import {
   HomePage, PageNotFound, SignInPage, UserProfilePage, UploadImagePage,
 } from './pages';
+import { TopBar } from 'src/organisms/header/TopBar'
 
 export function Routes() {
   return (

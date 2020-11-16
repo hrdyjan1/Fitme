@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Box } from '@material-ui/core';
 
 import { UserMenu } from 'src/molecules/header/UserMenu';
-import { UserNameButton } from 'src/atoms/header/userNameButton';
+import { UserNameButton } from 'src/atoms/header/UserNameButton';
 import { useAuth } from 'src/utils/auth';
 import { useUser } from 'src/contexts/user';
 import { route } from 'src/constants/routes';

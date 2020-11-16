@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Box,
   Fab,
@@ -43,13 +41,6 @@ function UploadImagePage() {
 
   return (
     <div>
-      <AppBar color="transparent" position="static" className="appBar">
-        <Toolbar variant="regular" className="toolbar">
-          <Typography variant="h6">
-            <Box fontWeight="fontWeightBold">FitMe</Box>
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Box
         marginTop="20px"
         width="100%"

@@ -18,7 +18,7 @@ import {
   stringAfterEqual,
 } from 'src/constants/functions';
 import { route } from 'src/constants/routes';
-import { password as passwordRegex } from 'src/constants/regex';
+import { regex } from 'src/constants/regex';
 
 const CHANGE_PASSWORD = gql`
   mutation changeForgotPass($lockedToken: String!, $password: String!) {
@@ -32,7 +32,7 @@ const validate = (values) => {
   const errors = {};
   if (values.password.length < 8) {
     errors.password = 'Heslo musi mit minimalne 8 znaku';
-  } else if (!passwordRegex.test(values.password)) {
+  } else if (!regex.password.test(values.password)) {
     errors.password = 'Heslo musi obsahovat minimalne 1 velke pismeno, 1 male pismeno, 1 cislici,';
   }
 
