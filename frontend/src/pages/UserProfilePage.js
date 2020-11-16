@@ -20,6 +20,12 @@ const USER_QUERY = gql`
   }
 `;
 
+const PROFILE_IMAGE_MUTATION = gql`
+  mutation UploadProfileImage($file: String!) {
+    uploadProfileImage(file: $file)
+  }
+`;
+
 const USER_MUTATION = gql`
   mutation UpdateUser(
       $nickname: String,
@@ -47,22 +53,39 @@ const USER_MUTATION = gql`
 `;
 
 const PASSWORD_MUTATION = gql`
-  mutation UpdateUser($token: String!, $id: Int!, $password: String!, $newPassword: String!) {
-    updateUser(token: $token, id: $id, password: $password, newPassword: $newPassword)
+  mutation UpdatePassword($oldPassword: String!, $newPassword: String!) {
+    updatePassword(oldPassword: $oldPassword, newPassword: $newPassword)
   }
 `;
 
 function UserProfilePage() {
   const { setUser } = useUser();
 
-  const userState = useQuery(USER_QUERY);
+  const userFetcher = useQuery(USER_QUERY);
+  const [ profileImageMutationRequest, profileImageMutationRequestState] = useMutation(PROFILE_IMAGE_MUTATION);
   const [ userMutationRequest, userMutationRequestState] = useMutation(USER_MUTATION);
   const [ passwordMutationRequest, passwordMutationRequestState] = useMutation(PASSWORD_MUTATION);
+
+  const updateProfileImage = async (image) => {
+    profileImageMutationRequest({ variables: { file: image } })
+    .then(response => {
+      if (response.data) {
+        alert('Profilová fotka byla úspěšně aktualizována..');
+      } else {
+        alert(response.errors || 'Profilová nebyla aktualizována.');
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
+  };
 
   const updateUser = async (values) => {
     userMutationRequest({ variables: values })
     .then(response => {
-      setUser(values)
+      if (!values.street) {
+        setUser(values)
+      }
       if (response.data) {
         alert('Údaje byly úspěšně aktualizovány.');
       } else {
@@ -75,7 +98,7 @@ function UserProfilePage() {
   };
 
   const updatePassword = async (values) => {
-    passwordMutationRequest({ variables: values })
+    passwordMutationRequest({ variables: {...values } } )
     .then(response => {
       if (response.data) {
         alert('Heslo bylo změněno.');
@@ -89,13 +112,13 @@ function UserProfilePage() {
   };
 
   return <UserProfileTemplate
-    user={userState.data?.user}
-    userError={userMutationRequestState.error}
+    user={userFetcher.data?.user}
     userLoading={userMutationRequestState.loading}
-    passwordError={passwordMutationRequestState.error}
     passwordLoading={passwordMutationRequestState.loading}
+    profileImageLoading={profileImageMutationRequestState.loading}
     onSaveUser={updateUser}
     onSavePassword={updatePassword}
+    onSaveProfileImage={updateProfileImage}
   />
 }
 

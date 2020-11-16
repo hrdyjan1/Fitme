@@ -110,15 +110,15 @@ export const changeForgotPass = async (_, args, { dbConnection }) => {
 };
 
 export const updatePassword = async (_, args, { dbConnection, auth }) => {
-  const { password, newPassword } = args;
+  const { oldPassword, newPassword } = args;
 
+  let id;
   const selectUserQuery = 'SELECT password FROM user WHERE id = ?;';
   const updatePasswordQuery = 'UPDATE user SET password = ? WHERE id = ?;';
 
-  let id = null;
   try {
     id = await getUser(auth);
-  } catch  (error){
+  } catch (error) {
     throw new Error('Session neexistujícího uživatele');
   }
 
@@ -128,7 +128,7 @@ export const updatePassword = async (_, args, { dbConnection, auth }) => {
     throw new Error('Neexistujici uzivatel');
   }
 
-  const validPassword = await argon2.verify(user.password, password);
+  const validPassword = await argon2.verify(user.password, oldPassword);
   if (!validPassword) {
     throw new Error('Původní zadané heslo není platné');
   }

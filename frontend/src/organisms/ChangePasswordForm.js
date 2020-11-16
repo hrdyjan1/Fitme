@@ -8,11 +8,11 @@ import { CardForm } from 'src/organisms';
 
 function ChangePasswordForm({ loading, onSave }) {
 
-  const initialValues = { password: '', newPassword: '', newPasswordCheck: '' }
+  const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' }
 
   const validate = (values) => {
     const errors = {}
-    if (!values.password) errors.password = validText.noPassword
+    if (!values.oldPassword) errors.oldPassword = validText.noPassword
     if (!regex.password.test(values.newPassword)) errors.newPassword = validText.password
     if (values.newPassword !== values.newPasswordCheck)  errors.newPasswordCheck = validText.passwordCheck
     return errors
@@ -28,11 +28,11 @@ function ChangePasswordForm({ loading, onSave }) {
         {(formikBag) => (
           <Form>
             <FormikPasswordField
-              name="password"
+              name="oldPassword"
               label="Staré heslo"
               placeholder="Zadejte vaše aktuální heslo"
               formikBag={formikBag}
-              validText={formikBag.errors.password}/>
+              validText={formikBag.errors.oldPassword}/>
             <FormikPasswordField
               name="newPassword"
               label="Nové heslo"
