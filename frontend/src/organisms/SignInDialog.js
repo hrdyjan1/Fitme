@@ -219,7 +219,7 @@ export default function SignInDialog(props) {
                 variant="contained"
                 color="secondary"
               >
-                Zapomenute heslo
+                Zapomenuté heslo
               </Button>
             </Box>
           </Box>
