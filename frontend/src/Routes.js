@@ -1,16 +1,16 @@
-import React, {Fragment} from 'react'
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { route } from 'src/constants/routes';
 
+import { TopBar } from 'src/organisms/header/TopBar';
 import {
   HomePage, PageNotFound, SignInPage, UserProfilePage, UploadImagePage,
 } from './pages';
-import { TopBar } from 'src/organisms/header/TopBar'
 
 export function Routes() {
   return (
-    <Fragment>
-      <TopBar/>
+    <>
+      <TopBar />
       <div className="app-wrapper">
         <Switch>
           <Route path={route.home()} exact component={HomePage} />
@@ -20,6 +20,6 @@ export function Routes() {
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>
-    </Fragment>
+    </>
   );
 }

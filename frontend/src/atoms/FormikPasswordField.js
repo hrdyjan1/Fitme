@@ -5,12 +5,14 @@ import {
   FormHelperText,
   IconButton,
   InputAdornment,
-  InputLabel
-} from '@material-ui/core'
-import { Field } from 'formik'
-import {Visibility, VisibilityOff} from '@material-ui/icons'
+  InputLabel,
+} from '@material-ui/core';
+import { Field } from 'formik';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
-function FormikPasswordField({ name, label, placeholder, formikBag }) {
+function FormikPasswordField({
+  name, label, placeholder, formikBag,
+}) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleMouseDownPassword = (event) => {
@@ -29,12 +31,10 @@ function FormikPasswordField({ name, label, placeholder, formikBag }) {
           </InputLabel>
           <FilledInput
             type={showPassword ? 'text' : 'password'}
-            name="password"
+            name={name || 'password'}
             placeholder={placeholder}
             onChange={formikBag.handleChange}
-            error={Boolean(
-              form.errors.password && form.touched.password,
-            )}
+            error={Boolean(form.errors.password && form.touched.password)}
             onBlur={formikBag.handleBlur}
             helperText={
               form.errors.password
@@ -49,17 +49,15 @@ function FormikPasswordField({ name, label, placeholder, formikBag }) {
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {showPassword ? (
-                    <Visibility />
-                  ) : (
-                    <VisibilityOff />
-                  )}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             )}
           />
           <FormHelperText error>
-            {form.errors.password && form.touched.password && String(form.errors.password)}
+            {form.errors.password
+              && form.touched.password
+              && String(form.errors.password)}
           </FormHelperText>
         </FormControl>
       )}
@@ -67,4 +65,4 @@ function FormikPasswordField({ name, label, placeholder, formikBag }) {
   );
 }
 
-export {FormikPasswordField}
+export { FormikPasswordField };

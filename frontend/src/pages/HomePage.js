@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { isFilledArray } from 'src/constants/array';
+import { useUser } from 'src/contexts/user';
 
 const GET_PLACES = gql`
   query GetPlaces {
@@ -13,6 +14,8 @@ const GET_PLACES = gql`
 `;
 
 export function HomePage() {
+  const user = useUser();
+  console.log(user);
   const { data } = useQuery(GET_PLACES);
   const places = isFilledArray(data?.places) ? data?.places : null;
 

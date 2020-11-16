@@ -1,7 +1,7 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Field, Form, Formik } from 'formik';
-import { regex } from 'src/constants/regex'
+import { regex } from 'src/constants/regex';
 import {
   IconButton,
   Box,

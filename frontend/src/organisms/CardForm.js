@@ -1,8 +1,7 @@
-import React from 'react'
-import { Card } from '@material-ui/core'
+import React from 'react';
+import { Card } from '@material-ui/core';
 
-function CardForm( { header, ...props }) {
-
+function CardForm({ header, ...props }) {
   return (
     <Card>
       <div className="card-form__header">{header}</div>

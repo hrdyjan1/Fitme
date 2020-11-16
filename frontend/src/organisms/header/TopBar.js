@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import {
-  AppBar, Toolbar, Typography, Box,
+  AppBar, Toolbar, Typography, Box, Button,
 } from '@material-ui/core';
 import { SignInDialog, SignUpDialog, ForgotPassDialog } from 'src/organisms';
 import { UserButtons } from 'src/molecules/header/UserButtons';
+import { useHistory } from 'react-router-dom';
+import { route } from 'src/constants/routes';
 
 function TopBar() {
+  const history = useHistory();
   const [showSignInDialog, setShowSignInDialog] = useState(false);
   const [showSignUpDialog, setShowSignUpDialog] = useState(false);
   const [showForgotPassDialog, setShowForgotPassDialog] = useState(false);
+
+  const goHomePage = () => history.push(route.home());
 
   // Open ✅
   const onSignInClick = () => setShowSignInDialog(true);
@@ -23,10 +28,13 @@ function TopBar() {
   return (
     <div>
       <AppBar color="transparent" position="static" className="appBar">
+
         <Toolbar variant="regular" className="toolbar">
-          <Typography variant="h6">
-            <Box fontWeight="fontWeightBold">FitMe</Box>
-          </Typography>
+          <Button onClick={goHomePage}>
+            <Typography variant="h6">
+              <Box fontWeight="fontWeightBold">FitMe</Box>
+            </Typography>
+          </Button>
           <Box>
             <UserButtons
               onSignInClick={onSignInClick}
@@ -43,4 +51,4 @@ function TopBar() {
   );
 }
 
-export {TopBar};
+export { TopBar };

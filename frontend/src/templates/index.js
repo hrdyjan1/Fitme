@@ -1,5 +1,5 @@
-import { UserProfileTemplate} from './UserProfileTemplate'
+import { UserProfileTemplate } from './UserProfileTemplate';
 
 export {
-  UserProfileTemplate
-}
+  UserProfileTemplate,
+};

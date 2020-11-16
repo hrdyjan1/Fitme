@@ -61,10 +61,7 @@ const typeDefs = gql`
       zipCode: String
       country: String
     ): Boolean!
-    updatePassword(
-      password: String!
-      newPassword: String!
-    ): Boolean!
+    updatePassword(oldPassword: String!, newPassword: String!): Boolean!
     # Place
     insertPlace(
       name: String!
