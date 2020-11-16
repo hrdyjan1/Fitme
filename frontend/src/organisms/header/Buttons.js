@@ -21,7 +21,7 @@ function HeaderButtons({ onSignInClick, onSignUpClick, onForgotPassClick }) {
     <Box display="flex" flexDirection="row">
       <Box marginRight="20px">
         <Button variant="contained" color="primary" onClick={onForgotPassClick}>
-          Zapomenute heslo
+          Zapomenuté heslo
         </Button>
       </Box>
       <Box marginRight="20px">
