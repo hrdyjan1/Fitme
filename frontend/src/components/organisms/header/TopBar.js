@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {
   AppBar, Toolbar, Typography, Box, Button,
 } from '@material-ui/core';
-import { SignInDialog, SignUpDialog, ForgotPassDialog } from 'src/organisms';
-import { UserButtons } from 'src/molecules/header/UserButtons';
+import { SignInDialog, SignUpDialog, ForgotPassDialog } from 'src/components/organisms';
+import { UserButtons } from 'src/components/molecules/header/UserButtons';
 import { useHistory } from 'react-router-dom';
 import { route } from 'src/constants/routes';
 
@@ -18,8 +18,8 @@ function TopBar() {
   // Open ✅
   const onSignInClick = () => setShowSignInDialog(true);
   const onSignUpClick = () => {
-    setShowSignInDialog(false)
-    setShowSignUpDialog(true)
+    setShowSignInDialog(false);
+    setShowSignUpDialog(true);
   };
   const onForgotPassClick = () => setShowForgotPassDialog(true);
 

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Box } from '@material-ui/core';
 
-import { UserMenu } from 'src/molecules/header/UserMenu';
-import { UserNameButton } from 'src/atoms/header/UserNameButton';
 import { useAuth } from 'src/utils/auth';
 import { useUser } from 'src/contexts/user';
 import { route } from 'src/constants/routes';
+import { UserMenu } from 'src/components/molecules/header/UserMenu';
+import { UserNameButton } from 'src/components/atoms/header/UserNameButton';
 
 function UserButtons({ onSignInClick, onSignUpClick }) {
   const history = useHistory();

@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { route } from 'src/constants/routes';
 
-import { TopBar } from 'src/organisms/header/TopBar';
+import { TopBar } from 'src/components/organisms/header/TopBar';
+import { Navbar } from 'src/components/organisms/header/navbar';
 import {
   HomePage, PageNotFound, SignInPage, UserProfilePage, UploadImagePage,
 } from './pages';
@@ -10,6 +11,7 @@ import {
 export function Routes() {
   return (
     <>
+      <Navbar />
       <TopBar />
       <div className="app-wrapper">
         <Switch>

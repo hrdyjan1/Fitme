@@ -1,30 +1,32 @@
 import React from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { FormikTextField } from 'src/atoms/FormikTextField';
+import { FormikTextField } from 'src/components/atoms/FormikTextField';
+import { CardForm } from 'src/components/organisms/CardForm';
 import { regex } from 'src/constants/regex';
 import { validText } from 'src/constants/validTexts';
-import { CardForm } from 'src/organisms';
 
-function AddressForm({ user, loading, onSave }) {
+function ContactInfoForm({ user, loading, onSave }) {
   const initialValues = {
-    street: user.street || '',
-    city: user.city || '',
-    zipCode: user.zipCode || '',
-    country: user.country || '',
+    nickname: user.nickname || '',
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    email: user.email || '',
+    phoneNumber: user.phoneNumber || '',
   };
 
   const validate = (values) => {
     const errors = {};
-    if (!regex.street.test(values.street)) errors.street = validText.street;
-    if (!regex.name.test(values.city)) errors.city = validText.city;
-    if (!regex.zipCode.test(values.zipCode)) errors.zipCode = validText.zipCode;
-    if (!regex.name.test(values.country)) errors.country = validText.country;
+    if (!regex.name.test(values.nickname)) errors.nickname = validText.nickname;
+    if (!regex.name.test(values.firstName)) errors.firstName = validText.firstName;
+    if (!regex.name.test(values.lastName)) errors.lastName = validText.lastName;
+    if (!regex.email.test(values.email)) errors.email = validText.email;
+    if (!regex.phoneNumber.test(values.phoneNumber)) errors.phoneNumber = validText.phoneNumber;
     return errors;
   };
 
   return (
-    <CardForm header="ADRESA">
+    <CardForm header="KONTAKTNÍ ÚDAJE">
       <Formik
         enableReinitialize
         initialValues={initialValues}
@@ -34,27 +36,33 @@ function AddressForm({ user, loading, onSave }) {
         {(formikBag) => (
           <Form>
             <FormikTextField
-              name="street"
-              label="Ulice a č.p."
-              placeholder="Zadejte ulici a č.p."
+              name="nickname"
+              label="Přezdívka"
+              placeholder="Zadejte svou přezdívku"
               formikBag={formikBag}
             />
             <FormikTextField
-              name="city"
-              label="Město"
-              placeholder="Zadejte město"
+              name="firstName"
+              label="Jméno"
+              placeholder="Zadejte své jméno"
               formikBag={formikBag}
             />
             <FormikTextField
-              name="zipCode"
-              label="PSČ"
-              placeholder="Zadejte PSČ"
+              name="lastName"
+              label="Příjmení"
+              placeholder="Zadejte své příjmení"
               formikBag={formikBag}
             />
             <FormikTextField
-              name="country"
-              label="Stát"
-              placeholder="Zadejte název státu"
+              name="email"
+              label="E-mail"
+              placeholder="Zadejte svůj e-mail"
+              formikBag={formikBag}
+            />
+            <FormikTextField
+              name="phoneNumber"
+              label="Telefon"
+              placeholder="Zadejte své telefonní číslo"
               formikBag={formikBag}
             />
             <Box
@@ -86,4 +94,4 @@ function AddressForm({ user, loading, onSave }) {
   );
 }
 
-export { AddressForm };
+export { ContactInfoForm };

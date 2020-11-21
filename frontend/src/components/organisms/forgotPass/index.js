@@ -15,7 +15,7 @@ import useTheme from '@material-ui/core/styles/useTheme';
 
 import {
   initialFormValues, validate, FORGOT_PASS, handleInvalidEmail, handleValidEmail,
-} from 'src/organisms/forgotPass/helpers';
+} from 'src/components/organisms/forgotPass/helpers';
 import { useMutation } from '@apollo/client';
 
 function ForgotPassDialog(props) {
