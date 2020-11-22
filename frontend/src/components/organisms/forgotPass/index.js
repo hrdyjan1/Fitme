@@ -37,7 +37,7 @@ function ForgotPassDialog(props) {
       <Toolbar
         variant="regular"
         className="toolbar"
-        style={{ backgroundColor: theme.palette.info.main }}
+        style={{ backgroundColor: theme.palette.primary.main }}
       >
         <div />
         <Box color="white">

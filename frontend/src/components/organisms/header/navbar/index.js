@@ -1,38 +1,125 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { route } from 'src/constants/routes';
+import { compose } from 'src/constants/functions';
 import 'src/components/organisms/header/navbar/style.css';
-import { NAV } from 'src/components/organisms/header/navbar/helpers';
-import { Button } from 'src/components/organisms/header/navbar/components/Button';
+import { NAV, LINKS } from 'src/components/organisms/header/navbar/helpers';
+import {
+  Button,
+  STYLES,
+} from 'src/components/organisms/header/navbar/components/Button';
+import {
+  SignInDialog,
+  SignUpDialog,
+  ForgotPassDialog,
+} from 'src/components/organisms';
+import { useAuth } from 'src/utils/auth';
+import { useUser } from 'src/contexts/user';
 
 function Navbar() {
+  const { fullName, logout } = useUser();
+  const { token } = useAuth();
   const history = useHistory();
   const [active, setActive] = React.useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [showForgotPass, setShowForgotPass] = useState(false);
 
-  const click = () => setActive((a) => !a);
-  const onLinkClick = () => history.push(route.signin());
+  // Visible ✅
+  const setSignInVisible = () => setShowSignIn(true);
+  const setSignUpVisible = () => setShowSignUp(true);
+  const setForgotPassVisible = () => setShowForgotPass(true);
+
+  // Close ❌
+  const setSignInHidden = () => setShowSignIn(false);
+  const setSignUpHidden = () => setShowSignUp(false);
+  const setForgotPassHidden = () => setShowForgotPass(false);
+
+  const deactivate = () => setActive(false);
+  const toggleActive = () => setActive((a) => !a);
+  const historyPush = (path) => history.push(path);
+  const goHome = () => historyPush(route.home());
+  const goProfile = () => historyPush(route.profile());
 
   const ulClassName = active ? NAV.active.style : NAV.inactive.style;
+  const goLink = compose(deactivate, historyPush);
+  const goHomeDeactivate = compose(goHome, deactivate);
+  const goProfileDeactivate = compose(goProfile, deactivate);
+  const onLogout = compose(goHomeDeactivate, logout);
+  const onSignInClick = compose(
+    setSignInVisible,
+    setSignUpHidden,
+    setForgotPassHidden,
+    deactivate,
+  );
+  const onSignUpClick = compose(
+    setSignUpVisible,
+    setSignInHidden,
+    setForgotPassHidden,
+    deactivate,
+  );
+  const onForgotPassClick = compose(
+    setForgotPassVisible,
+    setSignInHidden,
+    setSignUpHidden,
+    deactivate,
+  );
 
   return (
     <nav className="NavbarItems">
-      <h1 className="navbar-logo">
+      <h1 className="navbar-logo" onClick={goHomeDeactivate} onKeyPress={goHomeDeactivate}>
         Fit.me
         <i className="fas fa-basketball-ball fa-logo" />
       </h1>
-      <div className="menu-icon" onClick={click} role="button" onKeyPress={click}>
+      <div
+        className="menu-icon"
+        onClick={toggleActive}
+        role="button"
+        onKeyPress={toggleActive}
+      >
         <i className="fas fa-bars" />
       </div>
       <ul className={ulClassName}>
-        {[1, 2, 3].map((l) => (
-          <li key={l}>
-            <div className="nav-links" onClick={onLinkClick} role="button" onKeyPress={onLinkClick}>Sign In</div>
-          </li>
-        ))}
-        <Button>Sign In</Button>
+        {LINKS.map((l) => {
+          const onLinkClick = () => goLink(l.path);
+          return (
+            <li key={l}>
+              <div
+                className="nav-links"
+                onClick={onLinkClick}
+                role="button"
+                onKeyPress={onLinkClick}
+              >
+                {l.name}
+              </div>
+            </li>
+          );
+        })}
+        {token ? (
+          <>
+            <Button onClick={goProfileDeactivate}>
+              <i className="fas fa-user" />
+              {fullName}
+            </Button>
+            <Button style={STYLES[1]} onClick={onLogout}>
+              Odhlásit se
+            </Button>
+          </>
+        ) : (
+          <Button onClick={onSignInClick}>Prihlasit se</Button>
+        )}
       </ul>
+      <SignInDialog
+        show={showSignIn}
+        close={setSignInHidden}
+        onForgotPassClick={onForgotPassClick}
+        onSignUpClick={onSignUpClick}
+      />
+      <SignUpDialog show={showSignUp} close={setSignUpHidden} />
+      <ForgotPassDialog show={showForgotPass} close={setForgotPassHidden} />
     </nav>
   );
 }

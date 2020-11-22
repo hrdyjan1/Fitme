@@ -11,12 +11,12 @@
   padding: 8px 20px;
   transition: all 0.3s ease-out;
   background: white;
-  color: #6568f4;
+  color: #1976d2;
   transition: 250ms;
 }
 
 .link-btn--primary {
-  background-color: #3acbf7;
+  background-color: #4791db;
 }
 
 .link-btn--outline {

@@ -1,3 +1,5 @@
+import { route } from 'src/constants/routes';
+
 const ICON = {
   close: {
     style: 'fas fa-times',
@@ -16,4 +18,15 @@ const NAV = {
   },
 };
 
-export { ICON, NAV };
+const LINKS = [
+  {
+    name: 'O nas',
+    path: route.about(),
+  },
+  {
+    name: 'Sportoviste',
+    path: route.sportPlaces(),
+  },
+];
+
+export { ICON, NAV, LINKS };
