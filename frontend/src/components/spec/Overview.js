@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Overview = (props) => {
-  const { className, ...rest } = props;
   const classes = useStyles();
+  const { className, ...rest } = props;
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
@@ -69,7 +69,6 @@ const Overview = (props) => {
           <Image
             src="/basket.jpg"
             className={clsx(classes.image, classes.imageLeft)}
-            lazy={false}
           />
         </Grid>
         <Grid
@@ -109,7 +108,7 @@ const Overview = (props) => {
           md={4}
           className={classes.imageRightContainer}
         >
-          <Image src="/basket.jpg" className={classes.image} lazy={false} />
+          <Image src="/basket.jpg" className={classes.image} />
         </Grid>
       </Grid>
     </div>

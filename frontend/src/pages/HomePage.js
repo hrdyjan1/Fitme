@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core';
 
 import { isFilledArray } from 'src/constants/array';
-import Hero from 'src/components/spec/Hero';
+import Hero from 'src/components/spec/hero/Hero';
 import Section from 'src/components/organisms/Section';
 import Overview from 'src/components/spec/Overview';
 import SportPlaces from 'src/components/spec/SportPlaces';

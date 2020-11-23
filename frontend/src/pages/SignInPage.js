@@ -2,7 +2,7 @@ import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 
 import { useUser } from 'src/contexts/user';
-import { print } from 'src/constants/functions';
+import { print } from 'src/constants/functions/basic';
 
 const SIGN_IN = gql`
   mutation SignInBackend($email: String!, $password: String!) {

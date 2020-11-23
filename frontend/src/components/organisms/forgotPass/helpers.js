@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { showMessage } from 'src/constants/functions';
 import { regex } from 'src/constants/regex';
 
 const initialFormValues = { email: '' };
@@ -18,8 +17,8 @@ const FORGOT_PASS = gql`
   }
 `;
 
-const handleValidEmail = () => showMessage('Zkontrolujte si email');
-const handleInvalidEmail = (error) => showMessage(error?.message || 'Chyba pri zmene hesla');
+const handleValidEmail = () => ('Zkontrolujte si email');
+const handleInvalidEmail = (error) => (error?.message || 'Chyba pri zmene hesla');
 
 export {
   initialFormValues, validate, FORGOT_PASS, handleInvalidEmail, handleValidEmail,

@@ -6,7 +6,7 @@ import {
   match,
   print,
   stringAfterEqual,
-} from 'src/constants/functions';
+} from 'src/constants/functions/basic';
 
 const VERIFY = gql`
   mutation verify($token: String!) {

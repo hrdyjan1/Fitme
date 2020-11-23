@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/sectionHeader';
-// import { IconAlternate } from 'src/components/molecules/sectionHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -97,10 +96,6 @@ const SportPlaces = (props) => {
                   src="https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg"
                   alt={item.name}
                   className={classes.image}
-                  lazyProps={{
-                    width: '100%',
-                    height: '100%',
-                  }}
                 />
               </CardMedia>
               <CardContent className={classes.cardContent}>
@@ -113,10 +108,7 @@ const SportPlaces = (props) => {
                 </Typography>
                 <div className={classes.ratingContainer}>{rating(3)}</div>
                 <div className={classes.priceCta}>
-                  <Typography
-                    color="dark"
-                    variant="subtitle1"
-                  >
+                  <Typography variant="subtitle1">
                     {item.description}
                   </Typography>
                 </div>

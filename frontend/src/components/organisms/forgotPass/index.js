@@ -17,19 +17,21 @@ import {
   initialFormValues, validate, FORGOT_PASS, handleInvalidEmail, handleValidEmail,
 } from 'src/components/organisms/forgotPass/helpers';
 import { useMutation } from '@apollo/client';
+import { useNotification } from 'src/contexts/notification';
+import { compose } from 'src/constants/functions/basic';
 
-function ForgotPassDialog(props) {
+function ForgotPassDialog({ show, close }) {
   const theme = useTheme();
-  const { show, close } = props;
+  const { showMessage, showErrorMessage } = useNotification();
   const [changePass, { loading }] = useMutation(FORGOT_PASS);
 
   const onSubmit = ({ email }) => {
     changePass({ variables: { email } }).then((res) => {
       if (res.data?.sendEmailForgotPass) {
-        handleValidEmail();
+        showMessage(handleValidEmail());
       }
       close();
-    }, handleInvalidEmail);
+    }, compose(showErrorMessage, handleInvalidEmail));
   };
 
   return (

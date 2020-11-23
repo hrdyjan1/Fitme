@@ -1,5 +1,5 @@
 import React from 'react';
-import { noop } from 'src/constants/functions';
+import { noop } from 'src/constants/functions/basic';
 
 const initialState = {
   token: null,

@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
+      flexWrap: 'wrap',
     },
   },
   menuItem: {
@@ -128,7 +129,7 @@ const Footer = ({ pages, className, ...rest }) => {
           </Typography>
         </ListItem>
         {item.pages.map((page) => (
-          <ListItem disableGutters key={page} className={classes.menuGroupItem}>
+          <ListItem disableGutters key={page.title} className={classes.menuGroupItem}>
             {page.href.includes('http') ? (
               <Typography
                 variant="body2"
@@ -142,7 +143,7 @@ const Footer = ({ pages, className, ...rest }) => {
               <Typography
                 variant="body2"
                 component="p"
-                onClick={() => goHome()}
+                onClick={goHome}
                 className={clsx(classes.navLink, classes.navLinkInternal, 'submenu-item')}
               >
                 {page.title}
@@ -172,7 +173,7 @@ const Footer = ({ pages, className, ...rest }) => {
     <div {...rest} className={clsx(classes.root, className)}>
       <div className={classes.footerContainer}>
         <Grid container spacing={4}>
-          <Grid item xs={12} md={2} justify="center">
+          <Grid item xs={12} md={2}>
             <List disablePadding>
               <ListItem
                 disableGutters

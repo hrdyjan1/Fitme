@@ -2,7 +2,7 @@ import React from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { UserProfileTemplate } from 'src/templates';
 import { useUser } from 'src/contexts/user';
-import { showMessage } from 'src/constants/functions';
+import { useNotification } from 'src/contexts/notification';
 
 const USER_QUERY = gql`
   query User {
@@ -61,7 +61,7 @@ const PASSWORD_MUTATION = gql`
 
 function UserProfilePage() {
   const { setUser } = useUser();
-
+  const { showMessage, showErrorMessage } = useNotification();
   const userFetcher = useQuery(USER_QUERY);
   const [
     profileImageMutationRequest,
@@ -80,11 +80,11 @@ function UserProfilePage() {
         if (response.data) {
           showMessage('Profilová fotka byla úspěšně aktualizována..');
         } else {
-          showMessage(response.errors || 'Profilová nebyla aktualizována.');
+          showErrorMessage(String(response.errors) || 'Profilová nebyla aktualizována.');
         }
       })
       .catch((error) => {
-        showMessage(error);
+        showErrorMessage(String(error.message));
       });
   };
 
@@ -97,11 +97,11 @@ function UserProfilePage() {
         if (response.data) {
           showMessage('Údaje byly úspěšně aktualizovány.');
         } else {
-          showMessage(response.errors || 'Kontaktní údaje nebyly aktualizovány.');
+          showErrorMessage(String(response.errors) || 'Kontaktní údaje nebyly aktualizovány.');
         }
       })
       .catch((error) => {
-        showMessage(error);
+        showErrorMessage(String(error.message));
       });
   };
 
@@ -111,11 +111,11 @@ function UserProfilePage() {
         if (response.data) {
           showMessage('Heslo bylo změněno.');
         } else {
-          showMessage(response.errors || 'Heslo nebylo změněno.');
+          showErrorMessage(String(response.errors) || 'Heslo nebylo změněno.');
         }
       })
       .catch((error) => {
-        showMessage(error);
+        showErrorMessage(error.message);
       });
   };
 
