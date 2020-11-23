@@ -22,7 +22,7 @@ import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useUser } from 'src/contexts/user';
 import { compose, showMessage } from 'src/constants/functions';
-import {route} from '../constants/routes'
+import { route } from 'src/constants/routes';
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -39,7 +39,9 @@ const SIGN_IN = gql`
 `;
 
 export default function SignInDialog(props) {
-  const { show, close, onForgotPassClick, onSignUpClick } = props;
+  const {
+    show, close, onForgotPassClick, onSignUpClick,
+  } = props;
   const history = useHistory();
   const theme = useTheme();
   const { login } = useUser();
@@ -84,7 +86,7 @@ export default function SignInDialog(props) {
       <Toolbar
         variant="regular"
         className="toolbar"
-        style={{ backgroundColor: theme.palette.info.main }}
+        style={{ backgroundColor: theme.palette.primary.main }}
       >
         <div />
         <Box color="white">

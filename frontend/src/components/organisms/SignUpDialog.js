@@ -22,11 +22,22 @@ import {
 } from '@material-ui/core';
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
+import { showMessage } from 'src/constants/functions';
 
 const SIGN_UP = gql`
-  mutation SignUp($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-    signup(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
-        token
+  mutation SignUp(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+  ) {
+    signup(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+    ) {
+      token
     }
   }
 `;
@@ -93,17 +104,19 @@ export default function SignUpDialog(props) {
         email: values.email,
         password: values.password,
       },
-    }).then((response) => {
-      if (response.data?.signup?.token) {
-        alert('check email');
-        resetDialog();
-        close();
-      } else {
-        alert(response.errors);
-      }
-    }).catch((error) => {
-      alert(error);
-    });
+    })
+      .then((response) => {
+        if (response.data?.signup?.token) {
+          showMessage('check email');
+          resetDialog();
+          close();
+        } else {
+          showMessage(response.errors);
+        }
+      })
+      .catch((error) => {
+        showMessage(error);
+      });
   };
 
   const onClose = () => {
@@ -113,12 +126,18 @@ export default function SignUpDialog(props) {
 
   return (
     <Dialog fullWidth className="registration" open={show} disableScrollLock>
-      <Toolbar variant="regular" className="toolbar" style={{ backgroundColor: theme.palette.info.main }}>
+      <Toolbar
+        variant="regular"
+        className="toolbar"
+        style={{ backgroundColor: theme.palette.primary.main }}
+      >
         <div />
         <Box color="white">
           <Typography variant="h6">Registrace do aplikace FitMe</Typography>
         </Box>
-        <IconButton onClick={() => onClose()}><Close fontSize="large" style={{ color: 'white' }} /></IconButton>
+        <IconButton onClick={() => onClose()}>
+          <Close fontSize="large" style={{ color: 'white' }} />
+        </IconButton>
       </Toolbar>
       <DialogContent>
         <form autoComplete="on">
@@ -132,7 +151,11 @@ export default function SignUpDialog(props) {
           >
             <FormControl component="fieldset">
               <div>Vyberte kategorii účtu</div>
-              <RadioGroup name="gender1" value={values.userType} onChange={updateValue('userType')}>
+              <RadioGroup
+                name="gender1"
+                value={values.userType}
+                onChange={updateValue('userType')}
+              >
                 <FormControlLabel
                   value="athlete"
                   control={<Radio color="primary" />}
@@ -153,7 +176,13 @@ export default function SignUpDialog(props) {
               </RadioGroup>
             </FormControl>
           </Box>
-          <Box width="100%" display="flex" flexDirection="column" flexWrap="wrap" alignItems="center">
+          <Box
+            width="100%"
+            display="flex"
+            flexDirection="column"
+            flexWrap="wrap"
+            alignItems="center"
+          >
             <Box width="65%">
               <TextField
                 id="signup-firstname"
@@ -162,9 +191,14 @@ export default function SignUpDialog(props) {
                 placeholder="Zadejte své jméno"
                 onChange={updateValue('firstname')}
                 onBlur={() => showError('firstname', true)}
-                error={showErrors.firstname && !regex.name.test(values.firstname)}
-                helperText={showErrors.firstname && !regex.name.test(values.firstname)
-                  && 'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků'}
+                error={
+                  showErrors.firstname && !regex.name.test(values.firstname)
+                }
+                helperText={
+                  showErrors.firstname
+                  && !regex.name.test(values.firstname)
+                  && 'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků'
+                }
                 variant="filled"
                 fullWidth
                 margin="normal"
@@ -180,8 +214,11 @@ export default function SignUpDialog(props) {
                 onChange={updateValue('lastname')}
                 onBlur={() => showError('lastname', true)}
                 error={showErrors.lastname && !regex.name.test(values.lastname)}
-                helperText={showErrors.lastname && !regex.name.test(values.lastname)
-                  && 'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků'}
+                helperText={
+                  showErrors.lastname
+                  && !regex.name.test(values.lastname)
+                  && 'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků'
+                }
                 variant="filled"
                 fullWidth
                 margin="normal"
@@ -197,7 +234,11 @@ export default function SignUpDialog(props) {
                 onChange={updateValue('email')}
                 onBlur={() => showError('email', true)}
                 error={showErrors.email && !regex.email.test(values.email)}
-                helperText={showErrors.email && !regex.email.test(values.email) && 'E-mail nemá správný formát.'}
+                helperText={
+                  showErrors.email
+                  && !regex.email.test(values.email)
+                  && 'E-mail nemá správný formát.'
+                }
                 variant="filled"
                 fullWidth
                 margin="normal"
@@ -206,7 +247,9 @@ export default function SignUpDialog(props) {
                 }}
               />
               <FormControl fullWidth variant="filled" margin="normal">
-                <InputLabel shrink htmlFor="filled-adornment-password">Password</InputLabel>
+                <InputLabel shrink htmlFor="filled-adornment-password">
+                  Password
+                </InputLabel>
                 <FilledInput
                   id="signup-password"
                   type={showPassword ? 'text' : 'password'}
@@ -214,7 +257,9 @@ export default function SignUpDialog(props) {
                   placeholder="Zadejte své heslo"
                   onChange={updateValue('password')}
                   onBlur={() => showError('password', true)}
-                  error={showErrors.password && !regex.password.test(values.password)}
+                  error={
+                    showErrors.password && !regex.password.test(values.password)
+                  }
                   endAdornment={(
                     <InputAdornment position="end">
                       <IconButton
@@ -229,12 +274,15 @@ export default function SignUpDialog(props) {
                   )}
                 />
                 <FormHelperText error>
-                  {showErrors.password && !regex.password.test(values.password)
-                  && 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
+                  {showErrors.password
+                    && !regex.password.test(values.password)
+                    && 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.'}
                 </FormHelperText>
               </FormControl>
               <FormControl fullWidth variant="filled" margin="normal">
-                <InputLabel shrink htmlFor="filled-adornment-password">Password</InputLabel>
+                <InputLabel shrink htmlFor="filled-adornment-password">
+                  Password
+                </InputLabel>
                 <FilledInput
                   id="signup-password-check"
                   type={showPasswordCheck ? 'text' : 'password'}
@@ -242,7 +290,10 @@ export default function SignUpDialog(props) {
                   placeholder="Zadejte své heslo znovu"
                   onChange={updateValue('passwordCheck')}
                   onBlur={() => showError('passwordCheck', true)}
-                  error={showErrors.passwordCheck && values.password !== values.passwordCheck}
+                  error={
+                    showErrors.passwordCheck
+                    && values.password !== values.passwordCheck
+                  }
                   endAdornment={(
                     <InputAdornment position="end">
                       <IconButton
@@ -257,7 +308,9 @@ export default function SignUpDialog(props) {
                   )}
                 />
                 <FormHelperText error>
-                  {showErrors.passwordCheck && values.password !== values.passwordCheck && 'Hesla se neshodují.'}
+                  {showErrors.passwordCheck
+                    && values.password !== values.passwordCheck
+                    && 'Hesla se neshodují.'}
                 </FormHelperText>
               </FormControl>
             </Box>
@@ -275,7 +328,14 @@ export default function SignUpDialog(props) {
           justifyContent="center"
         >
           <Box width="60%">
-            <Button onClick={() => onSave()} size="large" fullWidth variant="contained" color="primary" disabled={loading}>
+            <Button
+              onClick={() => onSave()}
+              size="large"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={loading}
+            >
               Registrovat
             </Button>
           </Box>

@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 
-import { CardForm } from 'src/organisms/CardForm';
+import { CardForm } from 'src/components/organisms/CardForm';
 
 function ImageForm({ onSave, loading }) {
   const [imageSource, setImageSource] = React.useState();

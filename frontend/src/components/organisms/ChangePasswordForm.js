@@ -1,10 +1,11 @@
 import React from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { FormikPasswordField } from 'src/atoms';
+import { FormikPasswordField } from 'src/components/atoms';
 import { regex } from 'src/constants/regex';
 import { validText } from 'src/constants/validTexts';
-import { CardForm } from 'src/organisms';
+// import { CardForm } from 'src/components/organisms';
+import { CardForm } from 'src/components/organisms/CardForm';
 
 function ChangePasswordForm({ loading, onSave }) {
   const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' };
@@ -13,7 +14,9 @@ function ChangePasswordForm({ loading, onSave }) {
     const errors = {};
     if (!values.oldPassword) errors.oldPassword = validText.noPassword;
     if (!regex.password.test(values.newPassword)) errors.newPassword = validText.password;
-    if (values.newPassword !== values.newPasswordCheck) errors.newPasswordCheck = validText.passwordCheck;
+    if (values.newPassword !== values.newPasswordCheck) {
+      errors.newPasswordCheck = validText.passwordCheck;
+    }
     return errors;
   };
 
