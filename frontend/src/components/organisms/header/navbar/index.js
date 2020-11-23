@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { route } from 'src/constants/routes';
-import { compose } from 'src/constants/functions';
+import { compose } from 'src/constants/functions/basic';
 import 'src/components/organisms/header/navbar/style.css';
 import { NAV, LINKS } from 'src/components/organisms/header/navbar/helpers';
 import {
@@ -86,7 +86,7 @@ function Navbar() {
         {LINKS.map((l) => {
           const onLinkClick = () => goLink(l.path);
           return (
-            <li key={l}>
+            <li key={l.name}>
               <div
                 className="nav-links"
                 onClick={onLinkClick}

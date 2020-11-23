@@ -2,7 +2,7 @@ function print(text, warn) {
   (warn ? console.warn : console.log)(text);
 }
 
-function showMessage(text) {
+function alertMessage(text) {
   alert(text);
 }
 
@@ -21,5 +21,5 @@ const compose = (...fns) => (...args) => fns.reduceRight((res, fn) => [fn(...res
 const stringAfterEqual = compose(substring(1), head, match(/=(.+)/), head);
 
 export {
-  noop, print, showMessage, compose, curry, match, head, substring, stringAfterEqual,
+  noop, print, alertMessage, compose, curry, match, head, substring, stringAfterEqual,
 };

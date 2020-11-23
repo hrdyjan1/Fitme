@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose } from 'src/constants/functions';
+import { compose } from 'src/constants/functions/basic';
 
 import { initialState } from 'src/contexts/user/helpers';
 import { useAuth } from 'src/utils/auth';

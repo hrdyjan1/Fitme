@@ -3,8 +3,10 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Grid, Typography } from '@material-ui/core';
+
 import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/sectionHeader';
+import { PARTNERS } from './helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -31,6 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Subtitle() {
+  return (
+    <Typography color="textSecondary">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean fermentum
+      risus id tortor. Sed elit dui, pellentesque a, faucibus vel, interdum nec,
+      diam. Aliquam ante. Nulla turpis magna, cursus sit amet, suscipit a,
+      interdum id, felis. Pellentesque habitant morbi tristique senectus et
+      netus et malesuada fames ac turpis egestas. Integer malesuada. Maecenas
+      sollicitudin. Sed elit dui, pellentesque a, faucibus vel, interdum nec,
+      diam.
+    </Typography>
+  );
+}
+
 const Hero = (props) => {
   const { className, ...rest } = props;
   const classes = useStyles();
@@ -51,18 +67,7 @@ const Hero = (props) => {
         <Grid item xs={12} md={6} data-aos="fade-up">
           <SectionHeader
             title="Vitejte v aplikaci Fit.me, misto urcene pro sport."
-            subtitle={(
-              <Typography variant="subtitle1" color="textSecondary">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                fermentum risus id tortor. Sed elit dui, pellentesque a,
-                faucibus vel, interdum nec, diam. Aliquam ante. Nulla turpis
-                magna, cursus sit amet, suscipit a, interdum id, felis.
-                Pellentesque habitant morbi tristique senectus et netus et
-                malesuada fames ac turpis egestas. Integer malesuada. Maecenas
-                sollicitudin. Sed elit dui, pellentesque a, faucibus vel,
-                interdum nec, diam.
-              </Typography>
-            )}
+            subtitle={<Subtitle />}
             align="left"
             data-aos="fade-up"
             titleVariant="h3"
@@ -77,18 +82,18 @@ const Hero = (props) => {
               Spolupracujeme s:
             </Typography>
             <Grid container justify="flex-start">
-              {Array(5).fill(0).map((partner, i) => (
+              {PARTNERS.map((partner) => (
                 <Grid
                   item
                   container
                   justify="center"
                   xs={6}
                   sm={2}
-                  key={partner}
+                  key={partner.id}
                 >
                   <Image
-                    src={`/sport${i % 2 === 0 ? '' : '2'}.png`}
-                    alt={partner.name}
+                    src={partner.url}
+                    alt={partner.alt}
                     className={classes.promoLogo}
                   />
                 </Grid>

@@ -7,11 +7,11 @@ import { Box, Button, TextField } from '@material-ui/core';
 import {
   compose,
   match,
-  showMessage,
   stringAfterEqual,
-} from 'src/constants/functions';
+} from 'src/constants/functions/basic';
 import { route } from 'src/constants/routes';
 import { regex } from 'src/constants/regex';
+import { useNotification } from 'src/contexts/notification';
 
 const CHANGE_PASSWORD = gql`
   mutation changeForgotPass($lockedToken: String!, $password: String!) {
@@ -39,6 +39,7 @@ const pickUpLockToken = compose(stringAfterEqual, match(/\/lockedToken=(.+)/));
 
 function ResetPassword({ token }) {
   const history = useHistory();
+  const { showMessage, showErrorMessage } = useNotification();
   const [resetPassword, { loading }] = useMutation(CHANGE_PASSWORD);
 
   const goHomePage = () => history.push(route.home());
@@ -51,10 +52,10 @@ function ResetPassword({ token }) {
           goHomePage();
         }
         if (r.errors) {
-          showMessage(r.errors);
+          showErrorMessage(String(r.errors));
         }
       })
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showErrorMessage(String(e).message));
   };
 
   return (

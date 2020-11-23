@@ -9,7 +9,7 @@ import {
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { gql, useMutation } from '@apollo/client';
 
-import { print, showMessage } from 'src/constants/functions';
+import { SEVERITY, useNotification } from 'src/contexts/notification';
 
 const UPLOAD_PROFILE_IMAGE = gql`
   mutation UploadProfileImage($file: String!) {
@@ -18,8 +18,9 @@ const UPLOAD_PROFILE_IMAGE = gql`
 `;
 
 function UploadImagePage() {
-  const [uploadFile, { loading }] = useMutation(UPLOAD_PROFILE_IMAGE);
+  const { showMessage } = useNotification();
   const [imageSource, setImageSource] = React.useState();
+  const [uploadFile, { loading }] = useMutation(UPLOAD_PROFILE_IMAGE);
 
   const change = (e) => {
     const file = e.target.files[0];
@@ -32,10 +33,10 @@ function UploadImagePage() {
     try {
       uploadFile({ variables: { file: imageSource } }).then(
         () => showMessage('Uspesne nahrani fotografie'),
-        () => showMessage('Zvolte prosim jiny soubor'),
+        () => showMessage('Zvolte prosim jiny soubor', SEVERITY.WARNING),
       );
     } catch (error) {
-      print(error, true);
+      showMessage(String(error.message), SEVERITY.ERROR);
     }
   };
 

@@ -1,4 +1,4 @@
-import { noop } from 'src/constants/functions';
+import { noop } from 'src/constants/functions/basic';
 
 const initialState = {
   fullName: null,

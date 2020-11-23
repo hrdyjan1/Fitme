@@ -21,7 +21,8 @@ import {
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useUser } from 'src/contexts/user';
-import { compose, showMessage } from 'src/constants/functions';
+import { SEVERITY, useNotification } from 'src/contexts/notification';
+import { compose } from 'src/constants/functions/basic';
 import { route } from 'src/constants/routes';
 
 const SIGN_IN = gql`
@@ -38,13 +39,16 @@ const SIGN_IN = gql`
   }
 `;
 
-export default function SignInDialog(props) {
-  const {
-    show, close, onForgotPassClick, onSignUpClick,
-  } = props;
-  const history = useHistory();
+export default function SignInDialog({
+  show,
+  close,
+  onSignUpClick,
+  onForgotPassClick,
+}) {
   const theme = useTheme();
   const { login } = useUser();
+  const history = useHistory();
+  const { showMessage } = useNotification();
   const [signin, { loading }] = useMutation(SIGN_IN);
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -69,11 +73,11 @@ export default function SignInDialog(props) {
           close();
           history.push(route.profile());
         } else {
-          showMessage(response.errors || 'Chybi uzivatel nebo token.');
+          showMessage(String(response.errors) || 'Chybi uzivatel nebo token.', SEVERITY.ERROR);
         }
       })
       .catch((error) => {
-        showMessage(error);
+        showMessage(String(error.message), SEVERITY.ERROR);
       });
   };
 
@@ -163,7 +167,9 @@ export default function SignInDialog(props) {
                           name="password"
                           placeholder="Zadejte své heslo"
                           onChange={formikBag.handleChange}
-                          error={Boolean(form.errors.password && form.touched.password)}
+                          error={Boolean(
+                            form.errors.password && form.touched.password,
+                          )}
                           onBlur={formikBag.handleBlur}
                           endAdornment={(
                             <InputAdornment position="end">

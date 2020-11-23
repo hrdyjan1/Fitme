@@ -1,6 +1,5 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { regex } from 'src/constants/regex';
 import {
   TextField,
   FormControl,
@@ -22,7 +21,9 @@ import {
 } from '@material-ui/core';
 import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
-import { showMessage } from 'src/constants/functions';
+
+import { regex } from 'src/constants/regex';
+import { SEVERITY, useNotification } from 'src/contexts/notification';
 
 const SIGN_UP = gql`
   mutation SignUp(
@@ -42,10 +43,10 @@ const SIGN_UP = gql`
   }
 `;
 
-export default function SignUpDialog(props) {
-  const { show, close } = props;
-  const [signup, { loading }] = useMutation(SIGN_UP);
+export default function SignUpDialog({ show, close }) {
   const theme = useTheme();
+  const { showMessage } = useNotification();
+  const [signup, { loading }] = useMutation(SIGN_UP);
   const [values, setValues] = React.useState({
     userType: 'athlete',
     firstname: '',
@@ -107,15 +108,15 @@ export default function SignUpDialog(props) {
     })
       .then((response) => {
         if (response.data?.signup?.token) {
-          showMessage('check email');
+          showMessage('Nyní si zkonrtolujte email.');
           resetDialog();
           close();
         } else {
-          showMessage(response.errors);
+          showMessage(String(response.errors), SEVERITY.ERROR);
         }
       })
       .catch((error) => {
-        showMessage(error);
+        showMessage(String(error.message), SEVERITY.ERROR);
       });
   };
 
