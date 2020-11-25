@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Subtitle() {
   return (
-    <Typography color="textSecondary">
+    <Typography color="textSecondary" align="justify">
       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean fermentum
       risus id tortor. Sed elit dui, pellentesque a, faucibus vel, interdum nec,
       diam. Aliquam ante. Nulla turpis magna, cursus sit amet, suscipit a,

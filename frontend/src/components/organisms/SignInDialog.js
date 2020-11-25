@@ -71,7 +71,7 @@ export default function SignInDialog({
         if (user && token) {
           login(token, user);
           close();
-          history.push(route.profile());
+          history.push(route.home());
         } else {
           showMessage(String(response.errors) || 'Chybi uzivatel nebo token.', SEVERITY.ERROR);
         }

@@ -1,17 +1,15 @@
 import { HomePage } from './HomePage';
+import { Verification } from './Verification';
 import { PageNotFound } from './PageNotFound';
 import { ResetPassword } from './ResetPassword';
-import { SignInPage } from './SignInPage';
 import { UserProfilePage } from './UserProfilePage';
-import { Verification } from './Verification';
-import { UploadImagePage } from './UploadImagePage';
+import { SportPlacesPage } from './SportPlacesPage';
 
 export {
   HomePage,
-  SignInPage,
   Verification,
   PageNotFound,
   ResetPassword,
   UserProfilePage,
-  UploadImagePage,
+  SportPlacesPage,
 };
