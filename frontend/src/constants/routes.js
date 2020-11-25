@@ -62,11 +62,9 @@ const pages = {
 
 const route = {
   home: () => '/',
-  signin: () => '/signin',
-  profile: () => '/profile',
   about: () => '/about',
+  profile: () => '/profile',
   sportPlaces: () => '/sportPlaces',
-  uploadImage: () => '/uploadImage',
 };
 
 export { route, pages };

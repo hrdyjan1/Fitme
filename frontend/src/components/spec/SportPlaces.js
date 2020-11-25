@@ -14,6 +14,8 @@ import {
 } from '@material-ui/core';
 import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/sectionHeader';
+import { useHistory } from 'react-router-dom';
+import { route } from 'src/constants/routes';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -54,9 +56,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SportPlaces = (props) => {
-  const { data, className, ...rest } = props;
+const SportPlaces = ({
+  data, className, showAll, ...rest
+}) => {
   const classes = useStyles();
+  const history = useHistory();
+  const goToSportPlaces = () => history.push(route.sportPlaces());
+  const maxPlaceToSee = showAll ? data.length : 6;
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
@@ -88,7 +94,7 @@ const SportPlaces = (props) => {
         titleVariant="h4"
       />
       <Grid container spacing={isMd ? 4 : 2}>
-        {data.slice(0, 6).map((item) => (
+        {data.slice(0, maxPlaceToSee).map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
             <Card className={classes.card}>
               <CardMedia className={classes.cardMedia}>
@@ -116,11 +122,13 @@ const SportPlaces = (props) => {
             </Card>
           </Grid>
         ))}
-        <Grid item xs={12} container justify="center" data-aos="fade-up">
-          <Button variant="outlined" color="primary">
-            Vsechny sportoviste
-          </Button>
-        </Grid>
+        {!showAll && (
+          <Grid item xs={12} container justify="center" data-aos="fade-up">
+            <Button variant="outlined" color="primary" onClick={goToSportPlaces}>
+              Vsechny sportoviste
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </div>
   );

@@ -5,7 +5,10 @@ import { route, pages } from 'src/constants/routes';
 import { Footer } from 'src/components/spec/Footer';
 import { Navbar } from 'src/components/organisms/header/navbar';
 import {
-  HomePage, PageNotFound, SignInPage, UserProfilePage, UploadImagePage,
+  HomePage,
+  PageNotFound,
+  UserProfilePage,
+  SportPlacesPage,
 } from './pages';
 
 export function Routes() {
@@ -15,9 +18,8 @@ export function Routes() {
       <div className="app-wrapper">
         <Switch>
           <Route path={route.home()} exact component={HomePage} />
-          <Route path={route.signin()} exact component={SignInPage} />
           <Route path={route.profile()} exact component={UserProfilePage} />
-          <Route path={route.uploadImage()} exact component={UploadImagePage} />
+          <Route path={route.sportPlaces()} exact component={SportPlacesPage} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>
