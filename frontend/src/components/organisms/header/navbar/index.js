@@ -14,28 +14,32 @@ import {
 import {
   SignInDialog,
   SignUpDialog,
+  LogoutDialog,
   ForgotPassDialog,
 } from 'src/components/organisms';
 import { useAuth } from 'src/utils/auth';
 import { useUser } from 'src/contexts/user';
 
 function Navbar() {
-  const { fullName, logout } = useUser();
   const { token } = useAuth();
   const history = useHistory();
-  const [active, setActive] = React.useState(false);
+  const { fullName } = useUser();
+  const [active, setActive] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
   const [showForgotPass, setShowForgotPass] = useState(false);
 
   // Visible ✅
   const setSignInVisible = () => setShowSignIn(true);
   const setSignUpVisible = () => setShowSignUp(true);
+  const setLogoutVisible = () => setShowLogout(true);
   const setForgotPassVisible = () => setShowForgotPass(true);
 
   // Close ❌
   const setSignInHidden = () => setShowSignIn(false);
   const setSignUpHidden = () => setShowSignUp(false);
+  const setLogoutHidden = () => setShowLogout(false);
   const setForgotPassHidden = () => setShowForgotPass(false);
 
   const deactivate = () => setActive(false);
@@ -48,7 +52,7 @@ function Navbar() {
   const goLink = compose(deactivate, historyPush);
   const goHomeDeactivate = compose(goHome, deactivate);
   const goProfileDeactivate = compose(goProfile, deactivate);
-  const onLogout = compose(goHomeDeactivate, logout);
+  const onLogoutClick = compose(goHomeDeactivate, setLogoutVisible);
   const onSignInClick = compose(
     setSignInVisible,
     setSignUpHidden,
@@ -104,7 +108,7 @@ function Navbar() {
               <i className="fas fa-user" />
               {fullName}
             </Button>
-            <Button style={STYLES[1]} onClick={onLogout}>
+            <Button style={STYLES[1]} onClick={onLogoutClick}>
               Odhlásit se
             </Button>
           </>
@@ -120,6 +124,7 @@ function Navbar() {
       />
       <SignUpDialog show={showSignUp} close={setSignUpHidden} />
       <ForgotPassDialog show={showForgotPass} close={setForgotPassHidden} />
+      <LogoutDialog show={showLogout} close={setLogoutHidden} />
     </nav>
   );
 }

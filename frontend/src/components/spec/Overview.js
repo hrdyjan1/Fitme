@@ -98,6 +98,7 @@ const Overview = (props) => {
               </Button>,
             ]}
             align="center"
+            subtitleProps={{ align: 'justify' }}
             disableGutter
           />
         </Grid>

@@ -16,7 +16,7 @@ function Alert({ ...rest }) {
   return <MuiAlert elevation={6} variant="filled" {...rest} />;
 }
 
-function NotificationProvider({ children, autoHideDuration = 2000 }) {
+function NotificationProvider({ children, autoHideDuration = 3000 }) {
   const [isOpen, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState(SEVERITY.SUCCESS);
