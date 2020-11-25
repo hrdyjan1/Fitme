@@ -20,10 +20,6 @@ const NAV = {
 
 const LINKS = [
   {
-    name: 'O nas',
-    path: route.about(),
-  },
-  {
     name: 'Sportoviste',
     path: route.sportPlaces(),
   },

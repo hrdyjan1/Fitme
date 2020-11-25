@@ -62,7 +62,6 @@ const pages = {
 
 const route = {
   home: () => '/',
-  about: () => '/about',
   profile: () => '/profile',
   sportPlaces: () => '/sportPlaces',
 };
