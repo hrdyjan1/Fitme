@@ -6,14 +6,20 @@ import {
   useMediaQuery,
   Grid,
   Typography,
-  FormControlLabel,
-  Checkbox,
+  TextField,
   Button,
   Divider,
+  Chip,
+  Box,
 } from '@material-ui/core';
+import { noop } from 'src/constants/functions/basic';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
+  inputTitle: {
+    fontWeight: 700,
+    marginBottom: theme.spacing(1),
+  },
   titleCta: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -34,84 +40,97 @@ const Notifications = (props) => {
     <div className={clsx(classes.root, className)} {...rest}>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
-          <div className={classes.titleCta}>
-            <Typography variant="h6" color="textPrimary">
-              Notifications
-            </Typography>
-            <Button variant="outlined" color="primary">
-              Reset all
-            </Button>
-          </div>
+          <Typography variant="h6" color="textPrimary">
+            Přidávání a odebírání tagů
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography variant="h6" gutterBottom>
-            System settings
-          </Typography>
-          <Typography variant="caption" gutterBottom>
-            You will recieve emails in your business email address
-          </Typography>
-          <div>
-            <div>
-              <FormControlLabel
-                control={<Checkbox defaultChecked color="primary" />}
-                label="E-mail alerts"
-              />
-            </div>
-            <div>
-              <FormControlLabel
-                control={<Checkbox defaultChecked color="primary" />}
-                label="Push notifications"
-              />
-            </div>
-            <div>
-              <FormControlLabel
-                control={<Checkbox defaultChecked color="primary" />}
-                label="Text messages"
-              />
-            </div>
-            <div>
-              <FormControlLabel
-                control={<Checkbox defaultChecked={false} color="primary" />}
-                label="Phone calles"
-              />
-            </div>
-          </div>
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+          <Chip
+            size="small"
+            label="Primary Clickable"
+            clickable
+            color="primary"
+            onDelete={noop}
+          />
+
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography variant="h6" gutterBottom>
-            Chat settings
-          </Typography>
-          <Typography variant="caption" gutterBottom>
-            You will recieve emails in your business email address
-          </Typography>
           <div>
-            <div>
-              <FormControlLabel
-                control={<Checkbox defaultChecked={false} color="primary" />}
-                label="E-mail alerts"
-              />
-            </div>
-            <div>
-              <FormControlLabel
-                control={<Checkbox defaultChecked color="primary" />}
-                label="Push notifications"
-              />
-            </div>
+            <Typography
+              variant="subtitle1"
+              color="textPrimary"
+              className={classes.inputTitle}
+            >
+              Tag
+            </Typography>
+            <TextField
+              placeholder="Jméno tagu"
+              variant="outlined"
+              size="medium"
+              name="tag"
+              fullWidth
+              type="text"
+            />
           </div>
+          <Box marginY={4}>
+            <Grid item container justify="center">
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                size="large"
+              >
+                Přidat
+              </Button>
+            </Grid>
+          </Box>
         </Grid>
-        <Grid item container justify="flex-start" xs={12}>
-          <Button
-            variant="contained"
-            type="submit"
-            color="primary"
-            size="large"
-          >
-            save
-          </Button>
-        </Grid>
+
       </Grid>
     </div>
   );

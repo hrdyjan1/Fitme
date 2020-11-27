@@ -8,7 +8,7 @@ import {
 import CardBase from 'src/components/organisms/cardBase';
 import SectionAlternate from 'src/components/organisms/sectionAlternate';
 import {
-  Hero, General, Security, Notifications, Billing,
+  Hero, General, Security, Notifications, Billing, Gallery,
 } from './components';
 
 const useStyles = makeStyles((theme) => ({
@@ -139,7 +139,7 @@ const Account = () => {
                 <General />
               </TabPanel>
               <TabPanel value={pageId} index="photos">
-                <General />
+                <Gallery />
               </TabPanel>
               <TabPanel value={pageId} index="security">
                 <Security />

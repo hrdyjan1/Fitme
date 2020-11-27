@@ -91,6 +91,23 @@ const General = (props) => {
           />
         </Grid>
         <Grid item xs={12}>
+          <Typography
+            variant="subtitle1"
+            color="textPrimary"
+            className={classes.inputTitle}
+          >
+            Adresa
+          </Typography>
+          <TextField
+            placeholder="Adresa 123, Město"
+            variant="outlined"
+            size="medium"
+            name="address"
+            fullWidth
+            type="email"
+          />
+        </Grid>
+        <Grid item xs={12}>
           <Divider />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -164,14 +181,14 @@ const General = (props) => {
             type="text"
           />
         </Grid>
-        <Grid item container justify="flex-start" xs={12}>
+        <Grid item container justify="center" xs={12}>
           <Button
             variant="contained"
             type="submit"
             color="primary"
             size="large"
           >
-            save
+            Uložit
           </Button>
         </Grid>
       </Grid>

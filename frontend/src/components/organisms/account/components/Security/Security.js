@@ -42,14 +42,9 @@ const Security = (props) => {
     <div className={clsx(classes.root, className)} {...rest}>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
-          <div className={classes.titleCta}>
-            <Typography variant="h6" color="textPrimary">
-              Change Password
-            </Typography>
-            <Button variant="outlined" color="primary">
-              Log out
-            </Button>
-          </div>
+          <Typography variant="h6" color="textPrimary">
+            Změna hesla
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Divider />
@@ -60,10 +55,10 @@ const Security = (props) => {
             color="textPrimary"
             className={classes.inputTitle}
           >
-            Current password
+            Aktuální heslo
           </Typography>
           <TextField
-            placeholder="Old password"
+            placeholder=""
             variant="outlined"
             size="medium"
             name="fullname"
@@ -77,10 +72,10 @@ const Security = (props) => {
             color="textPrimary"
             className={classes.inputTitle}
           >
-            New password
+            Nové heslo
           </Typography>
           <TextField
-            placeholder="New password"
+            placeholder=""
             variant="outlined"
             size="medium"
             name="fullname"
@@ -94,10 +89,10 @@ const Security = (props) => {
             color="textPrimary"
             className={classes.inputTitle}
           >
-            Repeat password
+            Heslo znova
           </Typography>
           <TextField
-            placeholder="Repeat password"
+            placeholder=""
             variant="outlined"
             size="medium"
             name="fullname"
@@ -105,50 +100,14 @@ const Security = (props) => {
             type="password"
           />
         </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Switch color="primary" defaultChecked />}
-            label={(
-              <Typography
-                variant="subtitle1"
-                color="textPrimary"
-                className={classes.switchTitle}
-              >
-                Public Profile
-              </Typography>
-            )}
-            labelPlacement="end"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Switch color="primary" />}
-            label={(
-              <Typography
-                variant="subtitle1"
-                color="textPrimary"
-                className={classes.switchTitle}
-              >
-                Expose your email
-              </Typography>
-            )}
-            labelPlacement="end"
-          />
-        </Grid>
-        <Grid item container justify="flex-start" xs={12}>
+        <Grid item container justify="center" xs={12}>
           <Button
             variant="contained"
             type="submit"
             color="primary"
             size="large"
           >
-            save
+            Uložit
           </Button>
         </Grid>
       </Grid>

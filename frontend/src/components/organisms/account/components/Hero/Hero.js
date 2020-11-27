@@ -28,7 +28,7 @@ const Hero = (props) => {
     <div className={clsx(classes.root, className)} {...rest}>
       <Section className={classes.section}>
         <SectionHeader
-          title="Nastavení sportoviště"
+          title="Editace sportoviště"
           subtitle="Zde si můžete změnit veškeré údaje o vašem sportovišti."
           align="left"
           disableGutter
