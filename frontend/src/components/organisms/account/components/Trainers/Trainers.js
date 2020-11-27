@@ -11,11 +11,8 @@ import {
   Divider,
   Box,
   ListItem,
-  ListItemAvatar,
   Avatar,
-  ListItemText,
 } from '@material-ui/core';
-import { Image } from 'src/components/atoms/image';
 import CardBase from 'src/components/organisms/cardBase';
 
 const useStyles = makeStyles((theme) => ({
