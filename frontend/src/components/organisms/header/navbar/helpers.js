@@ -23,6 +23,10 @@ const LINKS = [
     name: 'Sportoviste',
     path: route.sportPlaces(),
   },
+  {
+    name: 'Uprava sportoviste',
+    path: route.editSportPlace(),
+  },
 ];
 
 export { ICON, NAV, LINKS };
