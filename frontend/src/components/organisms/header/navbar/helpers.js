@@ -20,8 +20,12 @@ const NAV = {
 
 const LINKS = [
   {
-    name: 'Sportoviste',
+    name: 'Sportoviště',
     path: route.sportPlaces(),
+  },
+  {
+    name: 'Editace sportoviště',
+    path: route.editSportPlace(),
   },
 ];
 

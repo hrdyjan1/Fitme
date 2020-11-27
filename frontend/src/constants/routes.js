@@ -64,6 +64,7 @@ const route = {
   home: () => '/',
   profile: () => '/profile',
   sportPlaces: () => '/sportPlaces',
+  editSportPlace: () => '/editSportPlace',
 };
 
 export { route, pages };
