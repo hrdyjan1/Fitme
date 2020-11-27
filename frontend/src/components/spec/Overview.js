@@ -82,19 +82,18 @@ const Overview = (props) => {
           <SectionHeader
             title={(
               <span className={clsx(classes.textWhite, classes.title)}>
-                Sportoviste na jednom miste
+                Sportoviště na jednom místě
               </span>
             )}
             subtitle={(
               <span className={classes.textWhite}>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                fermentum risus id tortor. Sed elit dui, pellentesque a,
-                faucibus vel, interdum nec, diam. Aliquam ante.
+                Máme více než 2 700+ sportovních a relaxačních zařízení v naší partnerské síti. Existuje více než 500+ měst a obcí, kde můžete najít našeho Sportovního partnera. Dohromady již 190 000+
+                lidí používá Aplikaci Fitme.
               </span>
             )}
             ctaGroup={[
               <Button variant="contained" color="primary" size="large">
-                Learn more
+                Více informací
               </Button>,
             ]}
             align="center"

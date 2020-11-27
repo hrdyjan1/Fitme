@@ -36,13 +36,11 @@ const useStyles = makeStyles((theme) => ({
 function Subtitle() {
   return (
     <Typography color="textSecondary" align="justify">
-      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean fermentum
-      risus id tortor. Sed elit dui, pellentesque a, faucibus vel, interdum nec,
-      diam. Aliquam ante. Nulla turpis magna, cursus sit amet, suscipit a,
-      interdum id, felis. Pellentesque habitant morbi tristique senectus et
-      netus et malesuada fames ac turpis egestas. Integer malesuada. Maecenas
-      sollicitudin. Sed elit dui, pellentesque a, faucibus vel, interdum nec,
-      diam.
+      My Fitme je portál, díky kterému máš možnost najít téměř všechny
+      sportoviště na jednom místě online.Kromě toho také uvidíš stav tvého
+      profilu ať už jsi sportovec či sportoviště. Pokud patříš ke sportovištím
+      nebo sportovcům, který by s nám chtěl více spolupracovat, tak se neboj
+      ozvat. My se s vámi rádi seznámíme a předáme vám veškeré detaily o Fitme.
     </Typography>
   );
 }

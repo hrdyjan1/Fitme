@@ -71,42 +71,42 @@ export const data = [
   {
     title: 'UI/UX Designer',
     authorPhoto: {
-      src: 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg',
+      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Kate Segelson',
   },
   {
     title: 'Web Backend Developer',
     authorPhoto: {
-      src: 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg',
+      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Alex Johnson',
   },
   {
     title: 'Web Frontend Developer',
     authorPhoto: {
-      src: 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg',
+      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Valeria Kogan',
   },
   {
     title: 'CEO / Co-Founder',
     authorPhoto: {
-      src: 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg',
+      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Akachi Luccini',
   },
   {
     title: 'CTO / Co-Founder',
     authorPhoto: {
-      src: 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg',
+      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Jack Smith',
   },
   {
     title: 'Consultant',
     authorPhoto: {
-      src: 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg',
+      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Veronica Adams',
   },

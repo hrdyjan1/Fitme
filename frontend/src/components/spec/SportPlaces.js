@@ -89,8 +89,8 @@ const SportPlaces = ({
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title="Sportoviste"
-        subtitle="Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+        title="Sportoviště"
+        subtitle="Zde seznam sporotvišť, které doporučujeme."
         titleVariant="h4"
       />
       <Grid container spacing={isMd ? 4 : 2}>
