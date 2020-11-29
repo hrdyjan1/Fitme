@@ -113,7 +113,7 @@ function Navbar() {
             </Button>
           </>
         ) : (
-          <Button onClick={onSignInClick}>Prihlasit se</Button>
+          <Button onClick={onSignInClick}>Přihlásit se</Button>
         )}
       </ul>
       <SignInDialog

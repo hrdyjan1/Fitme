@@ -249,7 +249,7 @@ export default function SignUpDialog({ show, close }) {
               />
               <FormControl fullWidth variant="filled" margin="normal">
                 <InputLabel shrink htmlFor="filled-adornment-password">
-                  Password
+                  Heslo
                 </InputLabel>
                 <FilledInput
                   id="signup-password"
@@ -282,7 +282,7 @@ export default function SignUpDialog({ show, close }) {
               </FormControl>
               <FormControl fullWidth variant="filled" margin="normal">
                 <InputLabel shrink htmlFor="filled-adornment-password">
-                  Password
+                  Potvrdit heslo
                 </InputLabel>
                 <FilledInput
                   id="signup-password-check"

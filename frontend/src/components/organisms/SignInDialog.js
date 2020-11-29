@@ -159,7 +159,7 @@ export default function SignInDialog({
                     render={({ form }) => (
                       <FormControl fullWidth variant="filled" margin="normal">
                         <InputLabel shrink htmlFor="filled-adornment-password">
-                          Password
+                          Heslo
                         </InputLabel>
                         <FilledInput
                           id="signup-password"
