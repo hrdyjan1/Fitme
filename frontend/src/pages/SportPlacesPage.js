@@ -17,6 +17,7 @@ const GET_PLACES = gql`
 
 function SportPlacesPage() {
   const { data } = useQuery(GET_PLACES);
+  //change that null values can be queried...
   const places = isFilledArray(data?.places) ? data?.places : null;
 
   return (

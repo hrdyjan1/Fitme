@@ -56,9 +56,21 @@ export const signup = async (
   const hashedPassword = await argon2.hash(password);
 
   await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, ''],
+    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', "athlete"],
+  );
+
+  await dbConnection.query(
+    `INSERT INTO Address (uid)
+      VALUES (?);`,
+    [id],
+  );
+
+  await dbConnection.query(
+    `INSERT INTO athlete (uid)
+      VALUES (?);`,
+    [id],
   );
 
   const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
@@ -143,8 +155,11 @@ export const updatePassword = async (_, args, { dbConnection, auth }) => {
 export const updateUser = async (_, args, { dbConnection, auth }) => {
   const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
 
-  const selectUserQuery = 'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
-  const updateAddressQuery = 'UPDATE user SET email = ?, firstName = ?, lastName = ?, nickname = ?, phoneNumber = ?, street = ?, city = ?, zipCode = ?, country = ? WHERE id = ?;';
+  // const selectUserQuery = 'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
+  const selectUserQuery = 'SELECT email, firstName, lastName, ath.nickname, phoneNumber, a.street, a.city, a.zipCode, a.country FROM `user` u JOIN Address a ON u.id = a.uid JOIN athlete ath ON u.id = ath.uid WHERE id = ?;';
+  const updateUserQuery = 'UPDATE user SET email = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE id = ?;';
+  const updateAddressQuery = 'UPDATE Address SET street = ?, city = ?, zipCode = ?, country = ? WHERE uid = ?;';
+  const updateAthleteQuery = 'UPDATE athlete SET nickname = ? WHERE uid = ?;';
 
   let id = null;
   try {
@@ -166,16 +181,23 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
     return dbValue;
   }
 
-  await dbConnection.query(updateAddressQuery, [
+  await dbConnection.query(updateUserQuery, [
     getDefinedValue(email, user.email),
     getDefinedValue(firstName, user.firstName),
-    getDefinedValue(lastName, user.lastName),
-    getDefinedValue(nickname, user.nickname),
     getDefinedValue(phoneNumber, user.phoneNumber),
+    id
+  ]);
+
+  await dbConnection.query(updateAddressQuery, [
     getDefinedValue(street, user.street),
     getDefinedValue(city, user.city),
     getDefinedValue(zipCode, user.zipCode),
     getDefinedValue(country, user.country),
+    id
+  ]);
+
+  await dbConnection.query(updateAthleteQuery, [
+    getDefinedValue(nickname, user.nickname),
     id
   ]);
 

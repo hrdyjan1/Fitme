@@ -11,12 +11,24 @@ dotenv.config();
 const typeDefs = gql`
   type Place {
     id: String!
+    email: String!
+    verified: Int!
+    firstName: String!
+    lastName: String!
+    locked: Int!
+    lockedToken: String!
     name: String!
     description: String!
     latitude: Float!
     longitude: Float!
+    pictures: [Picture]!
   }
 
+  type Picture {
+    imageId: Int!
+    imageUrl: String!
+  }
+  
   type User {
     id: String!
     email: String!
@@ -25,6 +37,7 @@ const typeDefs = gql`
     lastName: String!
     locked: Int!
     lockedToken: String!
+    type: String!
   }
   
   type UserDetail {
@@ -39,6 +52,32 @@ const typeDefs = gql`
     country: String
     imageURL: String
   }
+  #DEPRECATED
+#  type PlaceDetail {
+#    email: String
+#    firstName: String
+#    lastName: String
+#    phoneNumber: String
+#    street: String
+#    city: String
+#    zipCode: String
+#    country: String
+#  }
+
+  type PlaceDetail {
+    id: String!
+    email: String!
+    verified: Int!
+    firstName: String!
+    lastName: String!
+    locked: Int!
+    lockedToken: String!
+    name: String!
+    description: String!
+    latitude: Float!
+    longitude: Float!
+    pictureList: [Picture]!
+  }
 
   type AuthInfo {
     token: String!
@@ -50,6 +89,7 @@ const typeDefs = gql`
     users: [User]!
     user: UserDetail!
     places: [Place!]!
+    place: PlaceDetail!
   }
 
   type Mutation {
@@ -78,6 +118,14 @@ const typeDefs = gql`
     ): Boolean!
     updatePassword(oldPassword: String!, newPassword: String!): Boolean!
     # Place
+    signupPlace(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+      ico: Int!
+      name: String!
+    ): AuthInfo!
     insertPlace(
       name: String!
       description: String!
