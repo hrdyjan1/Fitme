@@ -12,7 +12,7 @@ function HeaderButtons({ onSignInClick, onSignUpClick, onForgotPassClick }) {
     <Box display="flex" flexDirection="row">
       <Box>
         <Button variant="contained" color="primary" onClick={logout}>
-          Odhlasit
+          Odhlásit
         </Button>
       </Box>
     </Box>

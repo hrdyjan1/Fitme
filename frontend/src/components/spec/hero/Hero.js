@@ -39,8 +39,8 @@ function Subtitle() {
       My Fitme je portál, díky kterému máš možnost najít téměř všechny
       sportoviště na jednom místě online.Kromě toho také uvidíš stav tvého
       profilu ať už jsi sportovec či sportoviště. Pokud patříš ke sportovištím
-      nebo sportovcům, který by s nám chtěl více spolupracovat, tak se neboj
-      ozvat. My se s vámi rádi seznámíme a předáme vám veškeré detaily o Fitme.
+      nebo sportovcům, které by s námi chtěli více spolupracovat, tak se neboj
+      ozvat. My se s Vámi rádi seznámíme a předáme Vám veškeré detaily o Fitme.
     </Typography>
   );
 }
