@@ -64,7 +64,7 @@ const Hero = (props) => {
       >
         <Grid item xs={12} md={6} data-aos="fade-up">
           <SectionHeader
-            title="Vitejte v aplikaci Fit.me, misto urcene pro sport."
+            title="Vítejte v aplikaci Fit.me, místo určené pro sport."
             subtitle={<Subtitle />}
             align="left"
             data-aos="fade-up"
