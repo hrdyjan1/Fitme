@@ -66,42 +66,42 @@ const useStyles = makeStyles((theme) => ({
 
 export const data = [
   {
-    title: 'UI/UX Designer',
+    title: 'Fitness trenérka',
     authorPhoto: {
       src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Kate Segelson',
   },
   {
-    title: 'Web Backend Developer',
+    title: 'Zumba lektor',
     authorPhoto: {
       src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Alex Johnson',
   },
   {
-    title: 'Web Frontend Developer',
+    title: 'Badminton specialistka',
     authorPhoto: {
       src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Valeria Kogan',
   },
   {
-    title: 'CEO / Co-Founder',
+    title: 'Hatha Yoga Coach',
     authorPhoto: {
       src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Akachi Luccini',
   },
   {
-    title: 'CTO / Co-Founder',
+    title: 'Fitness tréner',
     authorPhoto: {
       src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Jack Smith',
   },
   {
-    title: 'Consultant',
+    title: 'Výživová poradkyně',
     authorPhoto: {
       src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
@@ -155,7 +155,7 @@ const Billing = (props) => {
                     </Grid>
                     <Grid item sm={12}>
                       <Box marginY={2}>
-                        <Typography>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum, beatae a labore nam velit quisquam placeat ab nobis, aliquid praesentium atque cupiditate?</Typography>
+                        <Typography>Tréner/ka působící na našem sportovišti poskytující prvotřídní rady, jak s treéninkem tak v oblasti výživy.</Typography>
                       </Box>
                     </Grid>
                   </Grid>

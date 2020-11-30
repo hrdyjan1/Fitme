@@ -41,7 +41,7 @@ const Notifications = (props) => {
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
           <Typography variant="h6" color="textPrimary">
-            Přidávání a odebírání tagů
+            Přidávání a odebírání sportovních disciplín
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -50,49 +50,49 @@ const Notifications = (props) => {
         <Grid item xs={12} md={6}>
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Basketball"
             clickable
             color="primary"
             onDelete={noop}
           />
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Streetball"
             clickable
             color="primary"
             onDelete={noop}
           />
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Košíková"
             clickable
             color="primary"
             onDelete={noop}
           />
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Posilovna"
             clickable
             color="primary"
             onDelete={noop}
           />
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Bazén"
             clickable
             color="primary"
             onDelete={noop}
           />
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Lezecká stěna"
             clickable
             color="primary"
             onDelete={noop}
           />
           <Chip
             size="small"
-            label="Primary Clickable"
+            label="Zumba"
             clickable
             color="primary"
             onDelete={noop}
@@ -106,10 +106,10 @@ const Notifications = (props) => {
               color="textPrimary"
               className={classes.inputTitle}
             >
-              Tag
+              Sportovní disciplína
             </Typography>
             <TextField
-              placeholder="Jméno tagu"
+              placeholder="Jméno disciplíny"
               variant="outlined"
               size="medium"
               name="tag"

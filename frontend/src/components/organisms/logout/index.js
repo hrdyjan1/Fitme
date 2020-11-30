@@ -15,7 +15,7 @@ import { useUser } from 'src/contexts/user';
 import { compose } from 'src/constants/functions/basic';
 import { useNotification } from 'src/contexts/notification';
 
-const SUCCESS_MESSAGE = 'Prave jste se uspesne odhlasil.';
+const SUCCESS_MESSAGE = 'Právě jste se úspěšně odhlásili.';
 
 function LogoutDialog({ show, close }) {
   const theme = useTheme();
