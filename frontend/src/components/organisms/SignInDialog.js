@@ -48,6 +48,9 @@ export default function SignInDialog({
   const [signin, { loading }] = useMutation(SIGN_IN);
 
   const handleShowingForgotPassword = compose(onForgotPassClick, close);
+  const showUserProfile = (user) => {
+    user.type === 'place' ? history.push(route.editSportPlace()) : history.push(route.profile());
+  }
 
   const onSave = (values) => {
     signin({
@@ -63,7 +66,7 @@ export default function SignInDialog({
         if (user && token) {
           login(token, user);
           close();
-          history.push(route.home());
+          showUserProfile(user)
         } else {
           showMessage(String(response.errors) || 'Chybi uzivatel nebo token.', SEVERITY.ERROR);
         }
