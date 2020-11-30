@@ -3,6 +3,7 @@ import { CardForm } from './CardForm';
 import { ImageForm } from './ImageForm';
 import SignInDialog from './SignInDialog';
 import SignUpDialog from './SignUpDialog';
+import { SignUpForm } from './SignUpForm'
 import ForgotPassDialog from './forgotPass';
 import { AddressForm } from './AddressForm';
 import { ContactInfoForm } from './ContactInfoForm';
@@ -14,6 +15,7 @@ export {
   AddressForm,
   SignInDialog,
   SignUpDialog,
+  SignUpForm,
   LogoutDialog,
   ContactInfoForm,
   ForgotPassDialog,
