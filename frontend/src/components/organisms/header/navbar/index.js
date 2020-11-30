@@ -55,6 +55,7 @@ function Navbar() {
   const goLink = compose(deactivate, historyPush);
   const goHomeDeactivate = compose(goHome, deactivate);
   const goProfileDeactivate = compose(goProfile, deactivate);
+  const onUserNameClick = () => isUserPlaceOwner() ? goEditSportPlace() : goProfileDeactivate();
   const onLogoutClick = compose(goHomeDeactivate, setLogoutVisible);
   const onSignInClick = compose(
     setSignInVisible,
@@ -100,21 +101,9 @@ function Navbar() {
             Sportoviště
           </div>
         </li>
-        { isUserPlaceOwner() && (
-          <li key="placeEdit">
-            <div
-              className="nav-links"
-              onClick={goEditSportPlace}
-              role="button"
-              onKeyPress={goEditSportPlace}
-            >
-              Editace sportoviště
-            </div>
-          </li>
-        )}
         {token ? (
           <>
-            <Button onClick={goProfileDeactivate}>
+            <Button onClick={onUserNameClick}>
               <i className="fas fa-user" />
               {fullName}
             </Button>
