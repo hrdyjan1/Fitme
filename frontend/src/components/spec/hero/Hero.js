@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
 function Subtitle() {
   return (
     <Typography color="textSecondary" align="justify">
-      My Fitme je portál, díky kterému máš možnost najít téměř všechny
-      sportoviště na jednom místě online.Kromě toho také uvidíš stav tvého
-      profilu ať už jsi sportovec či sportoviště. Pokud patříš ke sportovištím
-      nebo sportovcům, které by s námi chtěli více spolupracovat, tak se neboj
-      ozvat. My se s Vámi rádi seznámíme a předáme Vám veškeré detaily o Fitme.
+      Fit.me je portál, díky kterému máš možnost najít téměř všechny
+      sportoviště na jednom místě online. Kromě toho také uvidíš stav svého
+      profilu ať už jsi sportovec či majitel sportoviště. Pokud patříš ke sportovištím
+      nebo sportovcům, kteří by s námi chtěli více spolupracovat, tak se neboj
+      ozvat. My se s Tebou rádi seznámíme a předáme Ti veškeré detaily o Fitme.
     </Typography>
   );
 }
@@ -64,7 +64,7 @@ const Hero = (props) => {
       >
         <Grid item xs={12} md={6} data-aos="fade-up">
           <SectionHeader
-            title="Vítejte v aplikaci Fit.me, místo určené pro sport."
+            title="Vítejte v aplikaci Fit.me, na místě určeném pro sport."
             subtitle={<Subtitle />}
             align="left"
             data-aos="fade-up"
