@@ -7,13 +7,13 @@ import { regex } from 'src/constants/regex';
 import { validText } from 'src/constants/validTexts';
 
 function ContactInfoForm({ user, loading, onSave }) {
-  const initialValues = {
+  const [initialValues, setInitialValues] = React.useState({
     nickname: user.nickname || '',
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     email: user.email || '',
     phoneNumber: user.phoneNumber || '',
-  };
+  });
 
   const validate = (values) => {
     const errors = {};
@@ -25,12 +25,18 @@ function ContactInfoForm({ user, loading, onSave }) {
     return errors;
   };
 
+  const onSubmit = (values) => {
+    onSave(values).then(() => {
+      setInitialValues(values)
+    })
+  }
+
   return (
     <CardForm header="KONTAKTNÍ ÚDAJE">
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        onSubmit={(values) => onSave(values)}
+        onSubmit={(values) => onSubmit(values)}
         validate={(values) => validate(values)}
       >
         {(formikBag) => (

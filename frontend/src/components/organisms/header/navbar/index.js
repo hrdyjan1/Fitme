@@ -105,7 +105,7 @@ function Navbar() {
           <>
             <Button onClick={onUserNameClick}>
               <i className="fas fa-user" />
-              {fullName}
+              {user.firstName} {user.lastName}
             </Button>
             <Button style={STYLES[1]} onClick={onLogoutClick}>
               Odhlásit se

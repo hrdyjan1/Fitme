@@ -6,7 +6,7 @@ const regex = {
   street: /^[A-ZĚŠČŘŽÝÁÍÉ\d\s][a-zěščřžýáíé\d\s]{1,50}$/,
   organization: /^[A-ZĚŠČŘŽÝÁÍÉ\d\s][a-zěščřžýáíé\d\s]{1,50}$/i,
   ico: /^\d{8}$/,
-  zipCode: /^\d{3}\s?\d{2}?$/,
+  zipCode: /^\d{3}\d{2}?$/,
   // 8 characters,
   // 1 capital letter,
   // 1 small letter,

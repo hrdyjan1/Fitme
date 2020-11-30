@@ -8,12 +8,12 @@ import { CardForm } from 'src/components/organisms/CardForm';
 import { FormikTextField } from 'src/components/atoms';
 
 function AddressForm({ user, loading, onSave }) {
-  const initialValues = {
+  const [initialValues, setInitialValues] = React.useState({
     street: user.street || '',
     city: user.city || '',
     zipCode: user.zipCode || '',
     country: user.country || '',
-  };
+  });
 
   const validate = (values) => {
     const errors = {};
@@ -24,12 +24,18 @@ function AddressForm({ user, loading, onSave }) {
     return errors;
   };
 
+  const onSubmit = (values) => {
+    onSave(values).then(() => {
+      setInitialValues(values)
+    })
+  }
+
   return (
     <CardForm header="ADRESA">
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        onSubmit={(values) => onSave(values)}
+        onSubmit={(values) => onSubmit(values)}
         validate={(values) => validate(values)}
       >
         {(formikBag) => (
