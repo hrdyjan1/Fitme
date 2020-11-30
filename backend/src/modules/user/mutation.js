@@ -184,6 +184,7 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
   await dbConnection.query(updateUserQuery, [
     getDefinedValue(email, user.email),
     getDefinedValue(firstName, user.firstName),
+    getDefinedValue(firstName, user.lastName),
     getDefinedValue(phoneNumber, user.phoneNumber),
     id
   ]);
