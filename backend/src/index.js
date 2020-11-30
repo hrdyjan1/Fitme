@@ -10,18 +10,11 @@ dotenv.config();
 
 const typeDefs = gql`
   type Place {
-    id: String!
-    email: String!
-    verified: Int!
-    firstName: String!
-    lastName: String!
-    locked: Int!
-    lockedToken: String!
+    id: String
     name: String!
-    description: String!
-    latitude: Float!
-    longitude: Float!
-    pictures: [Picture]!
+    description: String
+    latitude: Float
+    longitude: Float
   }
 
   type Picture {
