@@ -61,7 +61,7 @@ export const signup = async (
     [id, email, firstName, lastName, hashedPassword, verificationToken, 0, ''],
   );
 
-  const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
+  const emailText = `Dobrý den, gratulujeme. \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
   await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
@@ -82,7 +82,7 @@ export const sendEmailForgotPass = async (_, { email }, { dbConnection }) => {
 
   const lockedToken = uuidv4();
   await dbConnection.query(lockedUserQuery, [lockedToken, email]);
-  const emailText = `(Micha)Link pro zmenu hesla: \n\n http://frontend.team01.vse.handson.pro/lockedToken=${lockedToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
+  const emailText = `Dobrý den. Link pro změnu hesla: \n\n http://frontend.team01.vse.handson.pro/lockedToken=${lockedToken} \n\n\n Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
   await sendEmail(EMAIL.header, email, 'Zmena emailu', emailText);
 
   return true;
