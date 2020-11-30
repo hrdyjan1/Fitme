@@ -123,7 +123,7 @@ const typeDefs = gql`
       lastName: String!
       email: String!
       password: String!
-      ico: Int!
+      ico: String!
       name: String!
     ): AuthInfo!
     insertPlace(
