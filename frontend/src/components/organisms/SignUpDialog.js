@@ -79,7 +79,7 @@ export default function SignUpDialog({ show, close }) {
       },
     })
     .then((response) => {
-      if (response.data?.signupPlace?.token) {
+      if (response.data?.signup?.token) {
         showMessage('Nyní si zkontrolujte email.');
         close();
       } else {
@@ -103,7 +103,7 @@ export default function SignUpDialog({ show, close }) {
       },
     })
     .then((response) => {
-      if (response.data?.signup?.token) {
+      if (response.data?.signupPlace?.token) {
         showMessage('Nyní si zkontrolujte email.');
         close();
       } else {
