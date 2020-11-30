@@ -36,7 +36,7 @@ const SIGN_UP_PLACE = gql`
   mutation SignUpPlace(
     $firstName: String!
     $lastName: String!
-    $place: String!
+    $name: String!
     $ico: String!
     $email: String!
     $password: String!
@@ -44,7 +44,7 @@ const SIGN_UP_PLACE = gql`
     signupPlace(
       firstName: $firstName
       lastName: $lastName
-      name: $place
+      name: $name
       ico: $ico
       email: $email
       password: $password
@@ -79,7 +79,7 @@ export default function SignUpDialog({ show, close }) {
       },
     })
     .then((response) => {
-      if (response.data?.signup?.token) {
+      if (response.data?.signupPlace?.token) {
         showMessage('Nyní si zkontrolujte email.');
         close();
       } else {
@@ -96,7 +96,7 @@ export default function SignUpDialog({ show, close }) {
       variables: {
         firstName: values.firstName,
         lastName: values.lastName,
-        place: values.organization,
+        name: values.organization,
         ico: values.ico,
         email: values.email,
         password: values.password
