@@ -8,7 +8,7 @@ import SportPlaces from 'src/components/spec/SportPlaces';
 const GET_PLACES = gql`
   query GetPlaces {
     places {
-      id
+      uid
       name
       description
     }
