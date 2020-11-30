@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { regex } from 'src/constants/regex';
 import {
   IconButton,
@@ -10,15 +10,9 @@ import {
   Dialog,
   DialogContent,
   Toolbar,
-  Typography,
-  TextField,
-  InputLabel,
-  FilledInput,
-  InputAdornment,
-  FormHelperText,
-  FormControl,
+  Typography
 } from '@material-ui/core';
-import { Close, Visibility, VisibilityOff } from '@material-ui/icons';
+import { Close } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useUser } from 'src/contexts/user';
 import { SEVERITY, useNotification } from 'src/contexts/notification';
@@ -34,7 +28,8 @@ const SIGN_IN = gql`
         id
         email
         firstName
-        lastName
+        lastName,
+        type
       }
     }
   }
@@ -51,13 +46,8 @@ export default function SignInDialog({
   const history = useHistory();
   const { showMessage } = useNotification();
   const [signin, { loading }] = useMutation(SIGN_IN);
-  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleShowingForgotPassword = compose(onForgotPassClick, close);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   const onSave = (values) => {
     signin({
@@ -67,6 +57,7 @@ export default function SignInDialog({
       },
     })
       .then((response) => {
+        console.log(JSON.stringify(response.data))
         const user = response.data?.signin?.user;
         const token = response.data?.signin?.token;
         if (user && token) {
@@ -124,7 +115,7 @@ export default function SignInDialog({
                 }
                 return errors;
               }}
-              render={(formikBag) => (
+              render={() => (
                 <Form>
                   <FormikTextField name="email" label="E-mail" placeholder="Zadejte svůj e-mail" />
                   <FormikPasswordField name="password" label="Heslo" placeholder="Zadeje své heslo" />
