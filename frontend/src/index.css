@@ -33,6 +33,7 @@ code {
 }
 
 .card-form__content {
+  font-size: 14px;
   padding-left: 15px;
   padding-right: 15px;
 }
