@@ -18,7 +18,7 @@ import { useUser } from 'src/contexts/user';
 import { SEVERITY, useNotification } from 'src/contexts/notification';
 import { compose } from 'src/constants/functions/basic';
 import { route } from 'src/constants/routes';
-import {FormikPasswordField, FormikTextField} from '../atoms'
+import { FormikPasswordField, FormikTextField } from '../atoms'
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {

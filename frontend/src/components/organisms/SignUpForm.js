@@ -26,11 +26,16 @@ function SignUpForm({onSave, loading}) {
     if (!regex.name.test(values.lastName)) {
       errors.lastName = validText.lastName
     }
-    if ((values.userType === 'place') && !regex.organization.test(values.organization)) {
-      errors.organization = validText.organization
-    }
-    if ((values.userType === 'place') && !regex.ico.test(values.ico)) {
-      errors.ico = validText.ico
+    if (values.userType === 'place') {
+      if (!regex.organization.test(values.organization)) {
+        errors.organization = validText.organization
+      }
+      if (!regex.ico.test(values.ico)) {
+        errors.ico = validText.ico
+      }
+    } else {
+      delete errors.organization
+      delete errors.ico
     }
     if (!regex.email.test(values.email)) {
       errors.email = validText.email
