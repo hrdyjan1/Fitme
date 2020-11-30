@@ -41,10 +41,10 @@ const SIGN_UP_PLACE = gql`
     $email: String!
     $password: String!
   ) {
-    signup(
+    signupPlace(
       firstName: $firstName
       lastName: $lastName
-      place: $place
+      name: $place
       ico: $ico
       email: $email
       password: $password
