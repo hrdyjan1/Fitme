@@ -38,25 +38,21 @@ function AddressForm({ user, loading, onSave }) {
               name="street"
               label="Ulice a č.p."
               placeholder="Zadejte ulici a č.p."
-              formikBag={formikBag}
             />
             <FormikTextField
               name="city"
               label="Město"
               placeholder="Zadejte město"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="zipCode"
               label="PSČ"
               placeholder="Zadejte PSČ"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="country"
               label="Stát"
               placeholder="Zadejte název státu"
-              formikBag={formikBag}
             />
             <Box
               marginTop="20px"

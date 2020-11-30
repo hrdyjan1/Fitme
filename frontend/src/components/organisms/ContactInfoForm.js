@@ -39,31 +39,26 @@ function ContactInfoForm({ user, loading, onSave }) {
               name="nickname"
               label="Přezdívka"
               placeholder="Zadejte svou přezdívku"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="firstName"
               label="Jméno"
               placeholder="Zadejte své jméno"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="lastName"
               label="Příjmení"
               placeholder="Zadejte své příjmení"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="email"
               label="E-mail"
               placeholder="Zadejte svůj e-mail"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="phoneNumber"
               label="Telefon"
               placeholder="Zadejte své telefonní číslo"
-              formikBag={formikBag}
             />
             <Box
               marginTop="20px"

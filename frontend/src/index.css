@@ -36,3 +36,10 @@ code {
   padding-left: 15px;
   padding-right: 15px;
 }
+
+.input__label {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}

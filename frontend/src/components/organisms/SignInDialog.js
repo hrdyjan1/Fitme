@@ -24,6 +24,7 @@ import { useUser } from 'src/contexts/user';
 import { SEVERITY, useNotification } from 'src/contexts/notification';
 import { compose } from 'src/constants/functions/basic';
 import { route } from 'src/constants/routes';
+import {FormikPasswordField, FormikTextField} from '../atoms'
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -125,80 +126,10 @@ export default function SignInDialog({
               }}
               render={(formikBag) => (
                 <Form>
-                  <Field
-                    validateOnBlur
-                    validateOnChange
-                    name="email"
-                    render={({ form }) => (
-                      <TextField
-                        id="signin-email"
-                        name="email"
-                        placeholder="Zadejte svůj email"
-                        label="E-mail"
-                        onChange={formikBag.handleChange}
-                        error={Boolean(form.errors.email && form.touched.email)}
-                        onBlur={formikBag.handleBlur}
-                        helperText={
-                          form.errors.email
-                          && form.touched.email
-                          && String(form.errors.email)
-                        }
-                        variant="filled"
-                        fullWidth
-                        margin="normal"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-                    )}
-                  />
-                  <Field
-                    validateOnBlur
-                    validateOnChange
-                    name="password"
-                    render={({ form }) => (
-                      <FormControl fullWidth variant="filled" margin="normal">
-                        <InputLabel shrink htmlFor="filled-adornment-password">
-                          Password
-                        </InputLabel>
-                        <FilledInput
-                          id="signup-password"
-                          type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          placeholder="Zadejte své heslo"
-                          onChange={formikBag.handleChange}
-                          error={Boolean(
-                            form.errors.password && form.touched.password,
-                          )}
-                          onBlur={formikBag.handleBlur}
-                          endAdornment={(
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => setShowPassword(!showPassword)}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {showPassword ? (
-                                  <Visibility />
-                                ) : (
-                                  <VisibilityOff />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          )}
-                        />
-                        <FormHelperText error>
-                          {form.errors.password
-                            && form.touched.password
-                            && String(form.errors.password)
-                            && 'Zadejte své heslo'}
-                        </FormHelperText>
-                      </FormControl>
-                    )}
-                  />
+                  <FormikTextField name="email" label="E-mail" placeholder="Zadejte svůj e-mail" />
+                  <FormikPasswordField name="password" label="Heslo" placeholder="Zadeje své heslo" />
                   <Box
-                    marginTop="20px"
+                    marginTop="30px"
                     marginBottom="30px"
                     width="100%"
                     display="flex"
@@ -206,7 +137,7 @@ export default function SignInDialog({
                     flexWrap="wrap"
                     justifyContent="center"
                   >
-                    <Box width="97%">
+                    <Box width="200px">
                       <Button
                         type="submit"
                         size="large"

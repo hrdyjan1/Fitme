@@ -34,22 +34,16 @@ function ChangePasswordForm({ loading, onSave }) {
               name="oldPassword"
               label="Staré heslo"
               placeholder="Zadejte vaše aktuální heslo"
-              formikBag={formikBag}
-              validText={formikBag.errors.oldPassword}
             />
             <FormikPasswordField
               name="newPassword"
               label="Nové heslo"
               placeholder="Zadejte nové heslo"
-              formikBag={formikBag}
-              validText={formikBag.errors.newPassword}
             />
             <FormikPasswordField
               name="newPasswordCheck"
               label="Potvrzení nového hesla"
               placeholder="Zadejte nové heslo znovu"
-              formikBag={formikBag}
-              validText={formikBag.errors.newPasswordCheck}
             />
             <Box
               marginTop="20px"
