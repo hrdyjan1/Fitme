@@ -7,13 +7,13 @@ import { regex } from 'src/constants/regex';
 import { validText } from 'src/constants/validTexts';
 
 function ContactInfoForm({ user, loading, onSave }) {
-  const initialValues = {
+  const [initialValues, setInitialValues] = React.useState({
     nickname: user.nickname || '',
     firstName: user.firstName || '',
     lastName: user.lastName || '',
     email: user.email || '',
     phoneNumber: user.phoneNumber || '',
-  };
+  });
 
   const validate = (values) => {
     const errors = {};
@@ -25,12 +25,18 @@ function ContactInfoForm({ user, loading, onSave }) {
     return errors;
   };
 
+  const onSubmit = (values) => {
+    onSave(values).then(() => {
+      setInitialValues(values)
+    })
+  }
+
   return (
     <CardForm header="KONTAKTNÍ ÚDAJE">
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        onSubmit={(values) => onSave(values)}
+        onSubmit={(values) => onSubmit(values)}
         validate={(values) => validate(values)}
       >
         {(formikBag) => (
@@ -39,31 +45,26 @@ function ContactInfoForm({ user, loading, onSave }) {
               name="nickname"
               label="Přezdívka"
               placeholder="Zadejte svou přezdívku"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="firstName"
               label="Jméno"
               placeholder="Zadejte své jméno"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="lastName"
               label="Příjmení"
               placeholder="Zadejte své příjmení"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="email"
               label="E-mail"
               placeholder="Zadejte svůj e-mail"
-              formikBag={formikBag}
             />
             <FormikTextField
               name="phoneNumber"
               label="Telefon"
               placeholder="Zadejte své telefonní číslo"
-              formikBag={formikBag}
             />
             <Box
               marginTop="20px"

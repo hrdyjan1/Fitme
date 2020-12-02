@@ -90,7 +90,7 @@ const SportPlaces = ({
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title="Sportoviště"
-        subtitle="Zde seznam sporotvišť, které doporučujeme."
+        subtitle="Zde je seznam sportovišť, které doporučujeme."
         titleVariant="h4"
       />
       <Grid container spacing={isMd ? 4 : 2}>
@@ -125,7 +125,7 @@ const SportPlaces = ({
         {!showAll && (
           <Grid item xs={12} container justify="center" data-aos="fade-up">
             <Button variant="outlined" color="primary" onClick={goToSportPlaces}>
-              Vsechny sportoviste
+              Všechny sportoviště
             </Button>
           </Grid>
         )}

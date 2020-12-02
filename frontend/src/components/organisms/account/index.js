@@ -80,7 +80,7 @@ const subPages = [
   },
   {
     id: 'tags',
-    title: 'Tagy',
+    title: 'Nabízené disciplíny',
   },
   {
     id: 'trainers',

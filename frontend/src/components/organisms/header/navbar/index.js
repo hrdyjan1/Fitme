@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { route } from 'src/constants/routes';
 import { compose } from 'src/constants/functions/basic';
 import 'src/components/organisms/header/navbar/style.css';
-import { NAV, LINKS } from 'src/components/organisms/header/navbar/helpers';
+import { NAV } from 'src/components/organisms/header/navbar/helpers';
 import {
   Button,
   STYLES,
@@ -23,7 +23,7 @@ import { useUser } from 'src/contexts/user';
 function Navbar() {
   const { token } = useAuth();
   const history = useHistory();
-  const { fullName } = useUser();
+  const { fullName, user } = useUser();
   const [active, setActive] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
@@ -47,11 +47,15 @@ function Navbar() {
   const historyPush = (path) => history.push(path);
   const goHome = () => historyPush(route.home());
   const goProfile = () => historyPush(route.profile());
+  const goSportPlaces = () => historyPush(route.sportPlaces());
+  const goEditSportPlace= () => historyPush(route.editSportPlace());
 
+  const isUserPlaceOwner = () => user.type === 'place'
   const ulClassName = active ? NAV.active.style : NAV.inactive.style;
   const goLink = compose(deactivate, historyPush);
   const goHomeDeactivate = compose(goHome, deactivate);
   const goProfileDeactivate = compose(goProfile, deactivate);
+  const onUserNameClick = () => isUserPlaceOwner() ? goEditSportPlace() : goProfileDeactivate();
   const onLogoutClick = compose(goHomeDeactivate, setLogoutVisible);
   const onSignInClick = compose(
     setSignInVisible,
@@ -87,26 +91,21 @@ function Navbar() {
         <i className="fas fa-bars" />
       </div>
       <ul className={ulClassName}>
-        {LINKS.map((l) => {
-          const onLinkClick = () => goLink(l.path);
-          return (
-            <li key={l.name}>
-              <div
-                className="nav-links"
-                onClick={onLinkClick}
-                role="button"
-                onKeyPress={onLinkClick}
-              >
-                {l.name}
-              </div>
-            </li>
-          );
-        })}
+        <li key="places">
+          <div
+            className="nav-links"
+            onClick={goSportPlaces}
+            role="button"
+            onKeyPress={goSportPlaces}
+          >
+            Sportoviště
+          </div>
+        </li>
         {token ? (
           <>
-            <Button onClick={goProfileDeactivate}>
+            <Button onClick={onUserNameClick}>
               <i className="fas fa-user" />
-              {fullName}
+              {user.firstName} {user.lastName}
             </Button>
             <Button style={STYLES[1]} onClick={onLogoutClick}>
               Odhlásit se

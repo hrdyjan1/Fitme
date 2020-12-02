@@ -7,6 +7,7 @@ const initialState = {
     email: null,
     firstName: null,
     lastName: null,
+    type: null
   },
   login: noop,
   logout: noop,
