@@ -119,6 +119,13 @@ const typeDefs = gql`
       ico: String!
       name: String!
     ): AuthInfo!
+    signupTrainer(
+      firstName: String!
+      lastName: String!
+      email: String!
+      ico: String!
+      password: String!
+    ): AuthInfo!
     insertPlace(
       name: String!
       description: String!
