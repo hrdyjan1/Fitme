@@ -54,20 +54,33 @@ const SIGN_UP_PLACE = gql`
   }
 `;
 
+const SIGN_UP_TRAINER = gql`
+  mutation SignUpTrainer(
+    $firstName: String!
+    $lastName: String!
+    $ico: String!
+    $email: String!
+    $password: String!
+  ) {
+    signupTrainer(
+      firstName: $firstName
+      lastName: $lastName
+      ico: $ico
+      email: $email
+      password: $password
+    ) {
+      token
+    }
+  }
+`;
 
-export default function SignUpDialog({ show, close }) {
+
+export function SignUpDialog({ show, close }) {
   const theme = useTheme();
   const [signupAthlete, { loadingAthlete }] = useMutation(SIGN_UP);
   const [signupPlace, { loadingPlace }] = useMutation(SIGN_UP_PLACE);
+  const [signupTrainer, { loadingTrainer }] = useMutation(SIGN_UP_TRAINER);
   const { showMessage } = useNotification();
-
-  const onSave = (values) => {
-    if (values.userType === 'athlete') {
-      onSaveAthlete(values)
-    } else if (values.userType === 'place') {
-      onSavePlace(values)
-    }
-  };
 
   const onSaveAthlete = (values) => {
     signupAthlete({
@@ -89,7 +102,7 @@ export default function SignUpDialog({ show, close }) {
     .catch((error) => {
       showMessage(String(error.message), SEVERITY.ERROR);
     });
-  }
+  };
 
   const onSavePlace = (values) => {
     signupPlace({
@@ -113,8 +126,40 @@ export default function SignUpDialog({ show, close }) {
     .catch((error) => {
       showMessage(String(error.message), SEVERITY.ERROR);
     });
-  }
+  };
 
+  const onSaveTrainer = (values) => {
+    signupTrainer({
+      variables: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        ico: values.ico,
+        email: values.email,
+        password: values.password
+      },
+    })
+    .then((response) => {
+      if (response.data?.signupTrainer?.token) {
+        showMessage('Nyní si zkontrolujte email.');
+        close();
+      } else {
+        showMessage(String(response.errors), SEVERITY.ERROR);
+      }
+    })
+    .catch((error) => {
+      showMessage(String(error.message), SEVERITY.ERROR);
+    });
+  };
+
+  const onSave = (values) => {
+    if (values.userType === 'athlete') {
+      onSaveAthlete(values)
+    } else if (values.userType === 'place') {
+      onSavePlace(values)
+    } else if (values.userType === 'trainer') {
+      onSaveTrainer(values)
+    }
+  };
   const onClose = () => {
     close();
   };
@@ -136,7 +181,7 @@ export default function SignUpDialog({ show, close }) {
       </Toolbar>
       <DialogContent>
         <Box textAlign="center" justifyContent="center" >
-          <SignUpForm onSave={onSave} loading={loadingAthlete || loadingPlace}/>
+          <SignUpForm onSave={onSave} loading={loadingAthlete || loadingPlace || loadingTrainer}/>
         </Box>
       </DialogContent>
     </Dialog>

@@ -19,7 +19,6 @@ function UserTypesRadioButtons({ name }) {
           label="Majitel sportoviště"
         />
         <FormControlLabel
-          disabled
           value="trainer"
           control={<Radio color="primary" />}
           label="Trenér"

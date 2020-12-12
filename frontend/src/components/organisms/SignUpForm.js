@@ -1,12 +1,14 @@
 import React from 'react';
+import * as yup from 'yup';
+import { yupValidation } from 'src/constants/yupValidation'
 import { Form, Formik } from 'formik'
 import { FormikPasswordField, FormikTextField } from '../atoms'
 import { UserTypesRadioButtons } from 'src/components/molecules'
-import { regex } from 'src/constants/regex'
-import { validText } from 'src/constants/validTexts'
-import {Box, Button} from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 
 function SignUpForm({onSave, loading}) {
+  const USER_TYPE_PLACE_OWNER = 'place'
+  const USER_TYPE_TRAINER = 'trainer'
   const initialValues = {
     userType: 'athlete',
     firstName: '',
@@ -18,43 +20,28 @@ function SignUpForm({onSave, loading}) {
     passwordCheck: ''
   };
 
-  const validate = (values) => {
-    const errors = {};
-    if (!regex.name.test(values.firstName)) {
-      errors.firstName = validText.firstName
-    }
-    if (!regex.name.test(values.lastName)) {
-      errors.lastName = validText.lastName
-    }
-    if (values.userType === 'place') {
-      if (!regex.organization.test(values.organization)) {
-        errors.organization = validText.organization
-      }
-      if (!regex.ico.test(values.ico)) {
-        errors.ico = validText.ico
-      }
-    } else {
-      delete errors.organization
-      delete errors.ico
-    }
-    if (!regex.email.test(values.email)) {
-      errors.email = validText.email
-    }
-    if (!regex.password.test(values.password)) {
-      errors.password = validText.password
-    }
-    if (values.passwordCheck !== values.password) {
-      errors.passwordCheck = validText.passwordCheck;
-    }
-    return errors;
-  };
+  const isUserPlaceOwner = (user) => user === USER_TYPE_PLACE_OWNER
+  const isUserTrainer = (user) => user === USER_TYPE_TRAINER
+
+  const validationSchema = yup.object().shape({
+    userType: yup.string(),
+    firstName: yupValidation.firstName,
+    lastName: yupValidation.lastName,
+    organization: yup.string().when('userType', { is: USER_TYPE_PLACE_OWNER, then: yupValidation.organization }),
+    ico: yup.string()
+      .when('userType', { is: USER_TYPE_PLACE_OWNER, then: yupValidation.ico })
+      .when('userType', { is: USER_TYPE_TRAINER, then: yupValidation.ico }),
+    email: yupValidation.email,
+    password: yupValidation.password,
+    passwordCheck: yupValidation.passwordCheck('password')
+  });
 
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
+      validationSchema={validationSchema}
       onSubmit={(values) => onSave(values)}
-      validate={(values) => validate(values)}
     >
       {(formik) => (
         <Form>
@@ -69,19 +56,19 @@ function SignUpForm({onSave, loading}) {
             label="Příjmení"
             placeholder="Zadejte své příjmení"
           />
-          { formik.values.userType === 'place' && (
-            <>
-              <FormikTextField
-                name="organization"
-                label="Název organizace"
-                placeholder="Zadejte název organizace"
-              />
-              <FormikTextField
+          { isUserPlaceOwner(formik.values.userType) && (
+            <FormikTextField
+              name="organization"
+              label="Název organizace"
+              placeholder="Zadejte název organizace"
+            />
+          )}
+          {(isUserPlaceOwner(formik.values.userType) || isUserTrainer(formik.values.userType)) && (
+            <FormikTextField
               name="ico"
               label="IČO"
               placeholder="Zadejte IČO"
-              />
-            </>
+            />
           )}
           <FormikTextField
             name="email"

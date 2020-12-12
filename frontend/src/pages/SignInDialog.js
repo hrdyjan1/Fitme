@@ -1,8 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { Form, Formik } from 'formik';
-import { regex } from 'src/constants/regex';
 import {
   IconButton,
   Box,
@@ -18,7 +16,7 @@ import { useUser } from 'src/contexts/user';
 import { SEVERITY, useNotification } from 'src/contexts/notification';
 import { compose } from 'src/constants/functions/basic';
 import { route } from 'src/constants/routes';
-import { FormikPasswordField, FormikTextField } from '../atoms'
+import { SignInForm } from 'src/components/organisms'
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -35,7 +33,7 @@ const SIGN_IN = gql`
   }
 `;
 
-export default function SignInDialog({
+export function SignInDialog({
   show,
   close,
   onSignUpClick,
@@ -105,48 +103,7 @@ export default function SignInDialog({
           alignItems="center"
         >
           <Box width="65%">
-            <Formik
-              initialValues={{ email: '', password: '' }}
-              onSubmit={(values) => onSave(values)}
-              validate={(values) => {
-                const errors = {};
-                if (!regex.email.test(values.email)) {
-                  errors.email = 'Zadejte e-mail ve správném formátu';
-                }
-                if (!values.password) {
-                  errors.password = 'Zadejte své heslo';
-                }
-                return errors;
-              }}
-              render={() => (
-                <Form>
-                  <FormikTextField name="email" label="E-mail" placeholder="Zadejte svůj e-mail" />
-                  <FormikPasswordField name="password" label="Heslo" placeholder="Zadeje své heslo" />
-                  <Box
-                    marginTop="30px"
-                    marginBottom="30px"
-                    width="100%"
-                    display="flex"
-                    flexDirection="row"
-                    flexWrap="wrap"
-                    justifyContent="center"
-                  >
-                    <Box width="200px">
-                      <Button
-                        type="submit"
-                        size="large"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        disabled={loading}
-                      >
-                        Přihlásit
-                      </Button>
-                    </Box>
-                  </Box>
-                </Form>
-              )}
-            />
+            <SignInForm onSave={onSave} loading={loading}/>
           </Box>
           <Box width="97%" m="auto">
             <Button

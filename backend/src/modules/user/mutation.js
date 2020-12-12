@@ -82,6 +82,43 @@ export const signup = async (
   return { user, token };
 };
 
+export const signupTrainer = async (
+  _,
+  { firstName, lastName, ico, email, password },
+  { dbConnection, req },
+) => {
+  await checkIfValidEmail(email, dbConnection);
+  const id = uuidv4();
+  const verificationToken = uuidv4();
+  const hashedPassword = await argon2.hash(password);
+
+  await dbConnection.query(
+    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', 'trainer'],
+  );
+
+  await dbConnection.query(
+    `INSERT INTO Address (uid)
+      VALUES (?);`,
+    [id],
+  );
+
+  await dbConnection.query(
+    `INSERT INTO trainer (uid, ico)
+      VALUES (?, ?);`,
+    [id, ico],
+  );
+
+  const emailText = `Dobrý den, gratulujeme. \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
+  await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
+
+  const user = { id, email, firstName, lastName, ico, verified: 0 };
+  const token = createToken({ id });
+
+  return { user, token };
+};
+
 export const sendEmailForgotPass = async (_, { email }, { dbConnection }) => {
   const selectUserQuery = 'SELECT * FROM user WHERE email = ?;';
   const lockedUserQuery = 'UPDATE user SET lockedToken = ? WHERE email = ?;';

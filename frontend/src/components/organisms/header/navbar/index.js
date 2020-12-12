@@ -14,6 +14,8 @@ import {
 import {
   SignInDialog,
   SignUpDialog,
+} from 'src/pages'
+import {
   LogoutDialog,
   ForgotPassDialog,
 } from 'src/components/organisms';

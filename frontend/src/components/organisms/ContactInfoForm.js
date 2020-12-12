@@ -3,8 +3,8 @@ import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { FormikTextField } from 'src/components/atoms/FormikTextField';
 import { CardForm } from 'src/components/organisms/CardForm';
-import { regex } from 'src/constants/regex';
-import { validText } from 'src/constants/validTexts';
+import * as yup from 'yup'
+import {yupValidation} from '../../constants/yupValidation'
 
 function ContactInfoForm({ user, loading, onSave }) {
   const [initialValues, setInitialValues] = React.useState({
@@ -15,15 +15,13 @@ function ContactInfoForm({ user, loading, onSave }) {
     phoneNumber: user.phoneNumber || '',
   });
 
-  const validate = (values) => {
-    const errors = {};
-    if (!regex.name.test(values.nickname)) errors.nickname = validText.nickname;
-    if (!regex.name.test(values.firstName)) errors.firstName = validText.firstName;
-    if (!regex.name.test(values.lastName)) errors.lastName = validText.lastName;
-    if (!regex.email.test(values.email)) errors.email = validText.email;
-    if (!regex.phoneNumber.test(values.phoneNumber)) errors.phoneNumber = validText.phoneNumber;
-    return errors;
-  };
+  const validationSchema = yup.object().shape({
+    nickname: yupValidation.nickname,
+    firstName: yupValidation.firstName,
+    lastName: yupValidation.lastName,
+    email: yupValidation.email,
+    phoneNumber: yupValidation.phoneNumber,
+  });
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
@@ -36,8 +34,8 @@ function ContactInfoForm({ user, loading, onSave }) {
       <Formik
         enableReinitialize
         initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={(values) => onSubmit(values)}
-        validate={(values) => validate(values)}
       >
         {(formikBag) => (
           <Form>
