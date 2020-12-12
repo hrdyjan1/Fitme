@@ -33,7 +33,7 @@ function SignUpForm({onSave, loading}) {
       .when('userType', { is: USER_TYPE_TRAINER, then: yupValidation.ico }),
     email: yupValidation.email,
     password: yupValidation.password,
-    passwordCheck: yupValidation.passwordCheck
+    passwordCheck: yupValidation.passwordCheck('password')
   });
 
   return (

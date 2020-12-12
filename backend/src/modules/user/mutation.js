@@ -105,7 +105,7 @@ export const signupTrainer = async (
   );
 
   await dbConnection.query(
-    `INSERT INTO trainer (id, ico)
+    `INSERT INTO trainer (uid, ico)
       VALUES (?, ?);`,
     [id, ico],
   );

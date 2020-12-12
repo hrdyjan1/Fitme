@@ -12,7 +12,7 @@ function ChangePasswordForm({ loading, onSave }) {
   const validationSchema = yup.object().shape({
     oldPassword: yupValidation.required,
     newPassword: yupValidation.password,
-    newPasswordCheck: yupValidation.passwordCheck
+    newPasswordCheck: yupValidation.passwordCheck('newPassword')
   });
 
   return (
