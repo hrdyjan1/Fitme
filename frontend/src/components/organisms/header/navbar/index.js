@@ -50,13 +50,13 @@ function Navbar() {
   const goHome = () => historyPush(route.home());
   const goProfile = () => historyPush(route.profile());
   const goSportPlaces = () => historyPush(route.sportPlaces());
-  const goEditSportPlace= () => historyPush(route.editSportPlace());
+  const goEditSportPlace = () => historyPush(route.editSportPlace());
 
-  const isUserPlaceOwner = () => user.type === 'place'
+  const isUserPlaceOwner = () => user.type === 'place';
   const ulClassName = active ? NAV.active.style : NAV.inactive.style;
   const goHomeDeactivate = compose(goHome, deactivate);
   const goProfileDeactivate = compose(goProfile, deactivate);
-  const onUserNameClick = () => isUserPlaceOwner() ? goEditSportPlace() : goProfileDeactivate();
+  const onUserNameClick = () => (isUserPlaceOwner() ? goEditSportPlace() : goProfileDeactivate());
   const onLogoutClick = compose(goHomeDeactivate, setLogoutVisible);
   const onSignInClick = compose(
     setSignInVisible,
@@ -106,7 +106,9 @@ function Navbar() {
           <>
             <Button onClick={onUserNameClick}>
               <i className="fas fa-user" />
-              {user.firstName} {user.lastName}
+              {user.firstName}
+              {' '}
+              {user.lastName}
             </Button>
             <Button style={STYLES[1]} onClick={onLogoutClick}>
               Odhlásit se

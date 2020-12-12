@@ -17,7 +17,7 @@ function SignUpForm({onSave, loading}) {
     ico: '',
     email: '',
     password: '',
-    passwordCheck: ''
+    passwordCheck: '',
   };
 
   const isUserPlaceOwner = (user) => user === USER_TYPE_PLACE_OWNER

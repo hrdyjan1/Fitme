@@ -57,19 +57,46 @@ const typeDefs = gql`
 #    country: String
 #  }
 
+  type PlaceImage {
+    id: String!
+    uid: String
+    url: String!
+  }
+
+  type Tag {
+    id: String!
+    uid: String
+    name: String!
+  }
+
   type PlaceDetail {
     id: String!
-    email: String!
-    verified: Int!
-    firstName: String!
-    lastName: String!
-    locked: Int!
-    lockedToken: String!
     name: String!
+    ico: String!
+    email: String!
+    phoneNumber: String!
     description: String!
-    latitude: Float!
-    longitude: Float!
-    pictureList: [Picture]!
+    latitude: String!
+    longitude: String!
+    pictureList: [PlaceImage]!
+    tagList: [Tag]!
+    street: String!
+    city: String!
+  }
+
+  # No arrays
+  input PlaceBasics {
+    id: String!
+    uid: String!
+    name: String!
+    ico: String!
+    email: String!
+    phoneNumber: String!
+    description: String!
+    latitude: String!
+    longitude: String!
+    street: String!
+    city: String!
   }
 
   type AuthInfo {
@@ -82,11 +109,12 @@ const typeDefs = gql`
     users: [User]!
     user: UserDetail!
     places: [Place!]!
-    place: PlaceDetail!
+    place(uid: String!): PlaceDetail!
   }
 
   type Mutation {
     # User
+    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
     uploadProfileImage(file: String!): Boolean
     sendEmailForgotPass(email: String!): Boolean
     changeForgotPass(password: String!, lockedToken: String!): Boolean

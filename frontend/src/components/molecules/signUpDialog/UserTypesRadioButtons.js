@@ -1,13 +1,13 @@
 import React from 'react';
-import {Box, FormControlLabel, Radio} from '@material-ui/core'
-import { Field } from 'formik'
+import { Box, FormControlLabel, Radio } from '@material-ui/core';
+import { Field } from 'formik';
 import { RadioGroup } from 'formik-material-ui';
 
 function UserTypesRadioButtons({ name }) {
   return (
     <Field component={RadioGroup} name={name}>
-        <div className="input__label">Vyberte kategorii účtu</div>
-        <Box display="flex" justifyContent="space-evenly">
+      <div className="input__label">Vyberte kategorii účtu</div>
+      <Box display="flex" justifyContent="space-evenly">
         <FormControlLabel
           value="athlete"
           control={<Radio color="primary" />}
@@ -23,7 +23,7 @@ function UserTypesRadioButtons({ name }) {
           control={<Radio color="primary" />}
           label="Trenér"
         />
-        </Box>
+      </Box>
     </Field>
   );
 }

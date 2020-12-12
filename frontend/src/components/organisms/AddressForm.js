@@ -24,9 +24,9 @@ function AddressForm({ user, loading, onSave }) {
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
-      setInitialValues(values)
-    })
-  }
+      setInitialValues(values);
+    });
+  };
 
   return (
     <CardForm header="ADRESA">

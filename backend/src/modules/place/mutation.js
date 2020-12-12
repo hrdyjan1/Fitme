@@ -1,8 +1,43 @@
 import { uuidv4 } from '../../constants/uuid';
-import {checkIfValidEmail} from "../../constants/checkIfValidEmail";
-import argon2 from "argon2";
-import {EMAIL, sendEmail} from "../../utils/email";
-import {createToken} from "../../libs/token";
+import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
+import argon2 from 'argon2';
+import { EMAIL, sendEmail } from '../../utils/email';
+import { createToken } from '../../libs/token';
+
+export const updatePlaceBasics = async (
+  _,
+  { placeBasics },
+  { dbConnection },
+) => {
+  const {
+    id,
+    uid,
+    name,
+    ico,
+    email,
+    phoneNumber,
+    description,
+    latitude,
+    longitude,
+    street,
+    city,
+  } = placeBasics;
+  const updatedPlaceRows = (
+    await dbConnection.query(
+      `UPDATE place SET name = ?, description = ?, latitude = ?, longitude = ?, ico = ? WHERE id = ?`,
+      [name, description, latitude, longitude, ico, id],
+    )
+  ).affectedRows;
+
+  const updatedUserRows = (
+    await dbConnection.query(
+      `UPDATE user SET email = ?, phoneNumber = ?, street = ?, city = ? WHERE id = ?`,
+      [email, phoneNumber, street, city, uid],
+    )
+  ).affectedRows;
+
+  return updatedPlaceRows === 1 && updatedUserRows === 1;
+};
 
 export const signupPlace = async (
   _,
@@ -18,7 +53,17 @@ export const signupPlace = async (
   await dbConnection.query(
     `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', 'place'],
+    [
+      id,
+      email,
+      firstName,
+      lastName,
+      hashedPassword,
+      verificationToken,
+      0,
+      '',
+      'place',
+    ],
   );
 
   await dbConnection.query(
@@ -28,9 +73,9 @@ export const signupPlace = async (
   );
 
   await dbConnection.query(
-    `INSERT INTO place (uid, name, ico)
-      VALUES (?, ?, ?);`,
-    [id, name, ico],
+    `INSERT INTO place (id, uid, name, ico)
+      VALUES (?, ?, ?, ?);`,
+    [uuidv4(), id, name, ico],
   );
 
   const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
@@ -69,19 +114,18 @@ export const removePlace = async (_, { id }, { dbConnection }) => {
 };
 
 //DEPRECATED
-export const updatePlace = async (_, { id, name, description, latitude, longitude }, { dbConnection }) => {
-    const updatedRows = (await dbConnection.query(
+export const updatePlace = async (
+  _,
+  { id, name, description, latitude, longitude },
+  { dbConnection },
+) => {
+  const updatedRows = (
+    await dbConnection.query(
       `UPDATE place SET name = ?, description = ?, latitude = ?, longitude = ?
        WHERE id = ?`,
-      [
-        name,
-        description,
-        latitude,
-        longitude,
-        id
-      ],
-    )).affectedRows
-  
-    return updatedRows === 1;
-  };
-  
+      [name, description, latitude, longitude, id],
+    )
+  ).affectedRows;
+
+  return updatedRows === 1;
+};

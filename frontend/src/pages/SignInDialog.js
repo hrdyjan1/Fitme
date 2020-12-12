@@ -8,7 +8,7 @@ import {
   Dialog,
   DialogContent,
   Toolbar,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
@@ -48,7 +48,7 @@ export function SignInDialog({
   const handleShowingForgotPassword = compose(onForgotPassClick, close);
   const showUserProfile = (user) => {
     user.type === 'place' ? history.push(route.editSportPlace()) : history.push(route.profile());
-  }
+  };
 
   const onSave = (values) => {
     signin({
@@ -58,13 +58,12 @@ export function SignInDialog({
       },
     })
       .then((response) => {
-        console.log(JSON.stringify(response.data))
         const user = response.data?.signin?.user;
         const token = response.data?.signin?.token;
         if (user && token) {
           login(token, user);
           close();
-          showUserProfile(user)
+          showUserProfile(user);
         } else {
           showMessage(String(response.errors) || 'Chybi uzivatel nebo token.', SEVERITY.ERROR);
         }

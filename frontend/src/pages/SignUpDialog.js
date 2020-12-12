@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import useTheme from '@material-ui/core/styles/useTheme';
-import { SignUpForm } from 'src/components/organisms'
+import { SignUpForm } from 'src/components/organisms';
 
 import { SEVERITY, useNotification } from 'src/contexts/notification';
 
@@ -88,7 +88,7 @@ export function SignUpDialog({ show, close }) {
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
-        password: values.password
+        password: values.password,
       },
     })
     .then((response) => {
@@ -112,7 +112,7 @@ export function SignUpDialog({ show, close }) {
         name: values.organization,
         ico: values.ico,
         email: values.email,
-        password: values.password
+        password: values.password,
       },
     })
     .then((response) => {
