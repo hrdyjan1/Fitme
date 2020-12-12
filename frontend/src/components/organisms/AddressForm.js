@@ -2,10 +2,10 @@ import React from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 
-import { regex } from 'src/constants/regex';
-import { validText } from 'src/constants/validTexts';
 import { CardForm } from 'src/components/organisms/CardForm';
 import { FormikTextField } from 'src/components/atoms';
+import * as yup from 'yup'
+import {yupValidation} from '../../constants/yupValidation'
 
 function AddressForm({ user, loading, onSave }) {
   const [initialValues, setInitialValues] = React.useState({
@@ -15,14 +15,12 @@ function AddressForm({ user, loading, onSave }) {
     country: user.country || '',
   });
 
-  const validate = (values) => {
-    const errors = {};
-    if (!regex.street.test(values.street)) errors.street = validText.street;
-    if (!regex.name.test(values.city)) errors.city = validText.city;
-    if (!regex.zipCode.test(values.zipCode)) errors.zipCode = validText.zipCode;
-    if (!regex.name.test(values.country)) errors.country = validText.country;
-    return errors;
-  };
+  const validationSchema = yup.object().shape({
+    street: yupValidation.street,
+    city: yupValidation.city,
+    zipCode: yupValidation.zipCode,
+    country: yupValidation.country,
+  });
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
@@ -35,8 +33,8 @@ function AddressForm({ user, loading, onSave }) {
       <Formik
         enableReinitialize
         initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={(values) => onSubmit(values)}
-        validate={(values) => validate(values)}
       >
         {(formikBag) => (
           <Form>

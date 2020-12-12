@@ -75,7 +75,7 @@ const SIGN_UP_TRAINER = gql`
 `;
 
 
-export default function SignUpDialog({ show, close }) {
+export function SignUpDialog({ show, close }) {
   const theme = useTheme();
   const [signupAthlete, { loadingAthlete }] = useMutation(SIGN_UP);
   const [signupPlace, { loadingPlace }] = useMutation(SIGN_UP_PLACE);

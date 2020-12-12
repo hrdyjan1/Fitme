@@ -1,4 +1,5 @@
 const validText = {
+  name: 'Název smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   nickname: 'Přezdívka smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   firstName: 'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   lastName: 'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
@@ -13,6 +14,7 @@ const validText = {
   password: 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.',
   noPassword: 'Zadejte heslo.',
   passwordCheck: 'Hesla se neshodují.',
+  required: 'Toto pole je povinné.'
 };
 
 export { validText };
