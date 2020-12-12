@@ -3,6 +3,8 @@ import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
 import argon2 from 'argon2';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { createToken } from '../../libs/token';
+import getUser from "../user/helper";
+import {Cloudinary} from "../../utils/cloudinary";
 
 export const updatePlaceBasics = async (
   _,
@@ -66,6 +68,7 @@ export const signupPlace = async (
     ],
   );
 
+  //create row in dependent tables for new place
   await dbConnection.query(
     `INSERT INTO Address (uid)
       VALUES (?);`,
@@ -73,9 +76,9 @@ export const signupPlace = async (
   );
 
   await dbConnection.query(
-    `INSERT INTO place (id, uid, name, ico)
-      VALUES (?, ?, ?, ?);`,
-    [uuidv4(), id, name, ico],
+    `INSERT INTO place (uid, name, ico)
+      VALUES (?, ?, ?);`,
+    [id, name, ico],
   );
 
   const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;
@@ -129,3 +132,59 @@ export const updatePlace = async (
 
   return updatedRows === 1;
 };
+
+export const deleteFacilityImage = async (_, { iid }, { dbConnection }) => {
+  const errorsStatus = (
+    await dbConnection.query(`DELETE FROM placeGallery WHERE iid = ?;`, [iid])
+  ).warningStatus;
+
+  return errorsStatus === 0;
+};
+
+export const uploadFacilityImage = async (_, { file }, ctx) => {
+  const { auth, dbConnection } = ctx;
+  try {
+    const id = await getUser(auth);
+    const insertImageURLQuery = 'INSERT INTO placeGallery (uid, imageURL) VALUES (?, ?);';
+
+    if (id) {
+      const { url } = await Cloudinary.v2.uploader.upload(file);
+      await dbConnection.query(insertImageURLQuery, [id, url]);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const addSportType = async (_, stid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const id = await getUser(auth);
+    //TODO: add sql query
+    const insertSportType = '';
+
+    if (id) {
+      await dbConnection.query(insertSportType, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+// export const updateUser = async (_, args, { dbConnection, auth }) => {
+//   const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
+
+// export const deleteSportType = async ()

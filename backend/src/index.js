@@ -19,7 +19,20 @@ const typeDefs = gql`
 
   type Picture {
     imageId: Int!
-    imageUrl: String!
+    imageURL: String!
+  }
+
+  type Trainer {
+    tid: Int!
+    firstName: String!
+    lastName: String!
+    affilitaion: String!
+    bio: String!
+    imageURL: String!
+  }
+
+  type TrainerDetail {
+    email: String!
   }
   
   type User {
@@ -110,6 +123,7 @@ const typeDefs = gql`
     user: UserDetail!
     places: [Place!]!
     place(uid: String!): PlaceDetail!
+    images: [Picture]!
   }
 
   type Mutation {
@@ -168,6 +182,9 @@ const typeDefs = gql`
       longitude: Float!
     ): Boolean!
     removePlace(id: String!): Boolean!
+    deleteFacilityImage(iid: String!): Boolean!
+    uploadFacilityImage(file: String!): Boolean!
+    addSportType(id: String!): Boolean!
   }
 `;
 

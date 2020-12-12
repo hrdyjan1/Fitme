@@ -2,6 +2,7 @@ import argon2 from 'argon2';
 
 import { uuidv4 } from '../../constants/uuid';
 import { Cloudinary } from '../../utils/cloudinary';
+import { getVerifiedUser } from '../../utils/userVerification';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
@@ -73,8 +74,8 @@ export const signup = async (
     [id],
   );
 
-  const emailText = `Dobrý den, gratulujeme. \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
+  const emailText = `Dobrý den, gratulujeme, registrace do systému Fit.me proběhla úspěšně. Zbývá ověřit tuto emailovou adresu \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
+  await sendEmail(EMAIL.header, email, 'Fit.me - Potvrzení registrace do systému', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
   const token = createToken({ id });
@@ -132,7 +133,7 @@ export const sendEmailForgotPass = async (_, { email }, { dbConnection }) => {
   const lockedToken = uuidv4();
   await dbConnection.query(lockedUserQuery, [lockedToken, email]);
   const emailText = `Dobrý den. Link pro změnu hesla: \n\n http://frontend.team01.vse.handson.pro/lockedToken=${lockedToken} \n\n\n Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Zmena emailu', emailText);
+  await sendEmail(EMAIL.header, email, 'Fit.me - Změna hesla', emailText);
 
   return true;
 };
