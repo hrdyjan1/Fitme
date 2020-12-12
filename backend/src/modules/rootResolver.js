@@ -13,6 +13,9 @@ export default {
     users: async (_p, _c, { dbConnection }) => {
       return dbConnection.query('SELECT * FROM user');
     },
+    allSportTypes: async (_p, _c, {dbConnection}) => {
+      return dbConnection.query('SELECT sportTypeName FROM sportType;');
+    },
     ...UserQueries,
     ...PlaceQueries,
   },

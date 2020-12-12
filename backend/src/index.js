@@ -124,6 +124,7 @@ const typeDefs = gql`
     places: [Place!]!
     place(uid: String!): PlaceDetail!
     images: [Picture]!
+    allSportTypes: [String]!
   }
 
   type Mutation {
