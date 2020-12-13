@@ -35,6 +35,10 @@ const typeDefs = gql`
     email: String!
   }
   
+  type SportType {
+    sportTypeName: String!
+  }
+  
   type User {
     id: String!
     email: String!
@@ -124,7 +128,8 @@ const typeDefs = gql`
     places: [Place!]!
     place(uid: String!): PlaceDetail!
     images: [Picture]!
-    allSportTypes: [String]!
+    allSportTypes: [SportType]!
+    sportTypes: [SportType]!
   }
 
   type Mutation {
@@ -185,7 +190,8 @@ const typeDefs = gql`
     removePlace(id: String!): Boolean!
     deleteFacilityImage(iid: String!): Boolean!
     uploadFacilityImage(file: String!): Boolean!
-    addSportType(id: String!): Boolean!
+    addSportType(stid: String!): Boolean!
+    removeSportType(stid: String!): Boolean!
   }
 `;
 

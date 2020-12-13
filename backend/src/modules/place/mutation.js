@@ -169,12 +169,11 @@ export const addSportType = async (_, stid, {dbConnection, auth}) => {
   }
 
   try {
-    const id = await getUser(auth);
     //TODO: add sql query
-    const insertSportType = '';
+    const insertSportTypeQuery = 'INSERT INTO placeSportType (uid, stid) VALUES (?, ?);';
 
     if (id) {
-      await dbConnection.query(insertSportType, [id, stid])
+      await dbConnection.query(insertSportTypeQuery, [id, stid])
       return true;
     } else {
       return false;
@@ -184,7 +183,25 @@ export const addSportType = async (_, stid, {dbConnection, auth}) => {
   }
 };
 
-// export const updateUser = async (_, args, { dbConnection, auth }) => {
-//   const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
+export const removeSportType = async (_, stid, {dbConnection, auth}) => {
 
-// export const deleteSportType = async ()
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const removeSportTypeQuery = 'DELETE FROM placeSportType WHERE uid = ? AND stid = ?;';
+    if (id) {
+      await dbConnection.query(removeSportTypeQuery, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+  

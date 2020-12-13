@@ -60,7 +60,7 @@ export const images = async (_p, _c, { dbConnection, auth }) => {
   return null;
 };
 
-export const sportTags = async (_p, _c, { dbConnection, auth }) => {
+export const sportTypes = async (_p, _c, { dbConnection, auth }) => {
 
   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM placeSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
 
