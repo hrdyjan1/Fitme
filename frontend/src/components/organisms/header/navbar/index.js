@@ -25,7 +25,7 @@ import { useUser } from 'src/contexts/user';
 function Navbar() {
   const { token } = useAuth();
   const history = useHistory();
-  const { fullName, user } = useUser();
+  const { user } = useUser();
   const [active, setActive] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
@@ -54,7 +54,6 @@ function Navbar() {
 
   const isUserPlaceOwner = () => user.type === 'place'
   const ulClassName = active ? NAV.active.style : NAV.inactive.style;
-  const goLink = compose(deactivate, historyPush);
   const goHomeDeactivate = compose(goHome, deactivate);
   const goProfileDeactivate = compose(goProfile, deactivate);
   const onUserNameClick = () => isUserPlaceOwner() ? goEditSportPlace() : goProfileDeactivate();
@@ -114,7 +113,10 @@ function Navbar() {
             </Button>
           </>
         ) : (
-          <Button onClick={onSignInClick}>Přihlásit se</Button>
+          <>
+            <Button onClick={onSignInClick}>Přihlásit se</Button>
+            <Button onClick={onSignUpClick} style={STYLES[2]}>Zaregistrovat se</Button>
+          </>
         )}
       </ul>
       <SignInDialog
