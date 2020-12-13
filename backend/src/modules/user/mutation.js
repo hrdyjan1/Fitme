@@ -73,47 +73,10 @@ export const signup = async (
     [id],
   );
 
-  const emailText = `Dobrý den, gratulujeme. \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
+  const emailText = `Dobrý den, gratulujeme, registrace do systému Fit.me proběhla úspěšně. Zbývá ověřit tuto emailovou adresu \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
+  await sendEmail(EMAIL.header, email, 'Fit.me - Potvrzení registrace do systému', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
-  const token = createToken({ id });
-
-  return { user, token };
-};
-
-export const signupTrainer = async (
-  _,
-  { firstName, lastName, ico, email, password },
-  { dbConnection, req },
-) => {
-  await checkIfValidEmail(email, dbConnection);
-  const id = uuidv4();
-  const verificationToken = uuidv4();
-  const hashedPassword = await argon2.hash(password);
-
-  await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', 'trainer'],
-  );
-
-  await dbConnection.query(
-    `INSERT INTO Address (uid)
-      VALUES (?);`,
-    [id],
-  );
-
-  await dbConnection.query(
-    `INSERT INTO trainer (uid, ico)
-      VALUES (?, ?);`,
-    [id, ico],
-  );
-
-  const emailText = `Dobrý den, gratulujeme. \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
-
-  const user = { id, email, firstName, lastName, ico, verified: 0 };
   const token = createToken({ id });
 
   return { user, token };
@@ -132,7 +95,7 @@ export const sendEmailForgotPass = async (_, { email }, { dbConnection }) => {
   const lockedToken = uuidv4();
   await dbConnection.query(lockedUserQuery, [lockedToken, email]);
   const emailText = `Dobrý den. Link pro změnu hesla: \n\n http://frontend.team01.vse.handson.pro/lockedToken=${lockedToken} \n\n\n Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Zmena emailu', emailText);
+  await sendEmail(EMAIL.header, email, 'Fit.me - Změna hesla', emailText);
 
   return true;
 };

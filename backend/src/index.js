@@ -17,10 +17,25 @@ const typeDefs = gql`
     uid: String
   }
 
+  #DEPRECATED
   type Picture {
     imageId: Int!
-    imageUrl: String!
+    imageURL: String!
   }
+
+  type Trainer {
+    tid: Int!
+    firstName: String!
+    lastName: String!
+    affilitaion: String!
+    bio: String!
+    imageURL: String!
+  }
+
+  #-------SOLUTION FOR LAST SPRINT------ 
+#  type SportType {
+#    sportTypeName: String!
+#  }
   
   type User {
     id: String!
@@ -58,15 +73,45 @@ const typeDefs = gql`
 #  }
 
   type PlaceImage {
-    id: String!
+    iid: Int!
     uid: String
-    url: String!
+    imageURL: String!
   }
 
   type Tag {
     id: String!
     uid: String
     name: String!
+  }
+
+  type TrainerDetail {
+    ico: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    description: String!
+    tagList: [Tag]!
+    street: String!
+    city: String!
+    zipCode: String!
+    country: String!
+    imageURL: String!
+  }
+
+  # No arrays
+  input TrainerBasics {
+    uid: String!
+    ico: String!
+    email: String!
+    phoneNumber: String!
+    description: String!
+    firstName: String!
+    lastName: String!
+    street: String!
+    city: String!
+    zipCode: String!
+    country: String!
   }
 
   type PlaceDetail {
@@ -110,11 +155,15 @@ const typeDefs = gql`
     user: UserDetail!
     places: [Place!]!
     place(uid: String!): PlaceDetail!
+    trainer(uid: String!): TrainerDetail!
+    images: [Picture]!
+#-------SOLUTION FOR LAST SPRINT------ 
+#    allSportTypes: [SportType]!
+#    sportTypes: [SportType]!
   }
 
   type Mutation {
     # User
-    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
     uploadProfileImage(file: String!): Boolean
     sendEmailForgotPass(email: String!): Boolean
     changeForgotPass(password: String!, lockedToken: String!): Boolean
@@ -138,6 +187,15 @@ const typeDefs = gql`
       country: String
     ): Boolean!
     updatePassword(oldPassword: String!, newPassword: String!): Boolean!
+    # Trainer
+    signupTrainer(
+      firstName: String!
+      lastName: String!
+      email: String!
+      ico: String!
+      password: String!
+    ): AuthInfo!
+    updateTrainerBasics(placeBasics: TrainerBasics!): Boolean
     # Place
     signupPlace(
       firstName: String!
@@ -147,19 +205,19 @@ const typeDefs = gql`
       ico: String!
       name: String!
     ): AuthInfo!
-    signupTrainer(
-      firstName: String!
-      lastName: String!
-      email: String!
-      ico: String!
-      password: String!
-    ): AuthInfo!
+    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
+    deletePlaceImage(iid: String!): Boolean!
+    uploadPlaceImage(file: String!): Boolean!
+    addTag(name: String!): Boolean!
+    deleteTag(name: String!): Boolean!
+    # DEPRECATED
     insertPlace(
       name: String!
       description: String!
       latitude: Float!
       longitude: Float!
     ): Boolean!
+    # DEPRECATED
     updatePlace(
       id: String!
       name: String!
@@ -167,7 +225,11 @@ const typeDefs = gql`
       latitude: Float!
       longitude: Float!
     ): Boolean!
+    # DEPRECATED
     removePlace(id: String!): Boolean!
+#-------SOLUTION FOR LAST SPRINT------ 
+#    addSportType(stid: String!): Boolean!
+#    removeSportType(stid: String!): Boolean!
   }
 `;
 

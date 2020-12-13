@@ -3,6 +3,8 @@ import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
 import argon2 from 'argon2';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { createToken } from '../../libs/token';
+import getUser from "../user/helper";
+import {Cloudinary} from "../../utils/cloudinary";
 
 export const updatePlaceBasics = async (
   _,
@@ -30,6 +32,7 @@ export const updatePlaceBasics = async (
   ).affectedRows;
 
   const updatedUserRows = (
+    // will be changed to proper address for LAST SPRINT
     await dbConnection.query(
       `UPDATE user SET email = ?, phoneNumber = ?, street = ?, city = ? WHERE id = ?`,
       [email, phoneNumber, street, city, uid],
@@ -66,6 +69,7 @@ export const signupPlace = async (
     ],
   );
 
+  //create row in dependent tables for new place
   await dbConnection.query(
     `INSERT INTO Address (uid)
       VALUES (?);`,
@@ -129,3 +133,121 @@ export const updatePlace = async (
 
   return updatedRows === 1;
 };
+
+export const deletePlaceImage = async (_, { iid }, { dbConnection }) => {
+  const errorsStatus = (
+    await dbConnection.query(`DELETE FROM placeGallery WHERE iid = ?;`, [iid])
+  ).warningStatus;
+
+  return errorsStatus === 0;
+};
+
+export const uploadPlaceImage = async (_, { file }, ctx) => {
+  const { auth, dbConnection } = ctx;
+  try {
+    const id = await getUser(auth);
+    const insertImageURLQuery = 'INSERT INTO placeGallery (uid, imageURL) VALUES (?, ?);';
+
+    if (id) {
+      const { url } = await Cloudinary.v2.uploader.upload(file);
+      await dbConnection.query(insertImageURLQuery, [id, url]);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const addTag = async (_, { name }, { dbConnection, auth }) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
+
+    if (id) {
+      await dbConnection.query(insertTagQuery, [id, name])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
+
+    if (id) {
+      await dbConnection.query(deleteTagQuery, [id, name])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+//-------SOLUTION FOR LAST SPRINT------
+// export const addSportType = async (_, stid, {dbConnection, auth}) => {
+//
+//   let id = null;
+//   try {
+//     id = await getUser(auth);
+//   } catch  (error){
+//     throw new Error('Session neexistujícího uživatele');
+//   }
+//
+//   try {
+//     const insertSportTypeQuery = 'INSERT INTO placeSportType (uid, stid) VALUES (?, ?);';
+//
+//     if (id) {
+//       await dbConnection.query(insertSportTypeQuery, [id, stid])
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     return false;
+//   }
+// };
+//-------SOLUTION FOR LAST SPRINT------
+// export const removeSportType = async (_, stid, {dbConnection, auth}) => {
+//
+//   let id = null;
+//   try {
+//     id = await getUser(auth);
+//   } catch  (error){
+//     throw new Error('Session neexistujícího uživatele');
+//   }
+//
+//   try {
+//     const removeSportTypeQuery = 'DELETE FROM placeSportType WHERE uid = ? AND stid = ?;';
+//     if (id) {
+//       await dbConnection.query(removeSportTypeQuery, [id, stid])
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     return false;
+//   }
+// };
+  
