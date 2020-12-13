@@ -77,9 +77,9 @@ export const signupPlace = async (
   );
 
   await dbConnection.query(
-    `INSERT INTO place (uid, name, ico)
-      VALUES (?, ?, ?);`,
-    [id, name, ico],
+    `INSERT INTO place (id, uid, name, ico)
+      VALUES (?, ?, ?, ?);`,
+    [uuidv4(), id, name, ico],
   );
 
   const emailText = `(Micha)Link pro overeni: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n Pokud nechcete dostavat dalsi emaily z teto adresy kliknete zde:`;

@@ -32,10 +32,6 @@ const typeDefs = gql`
     imageURL: String!
   }
 
-  type TrainerDetail {
-    email: String!
-  }
-
   #-------SOLUTION FOR LAST SPRINT------ 
 #  type SportType {
 #    sportTypeName: String!
@@ -88,6 +84,37 @@ const typeDefs = gql`
     name: String!
   }
 
+  type TrainerDetail {
+    uid: String
+    ico: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    description: String!
+    tagList: [Tag]!
+    street: String!
+    city: String!
+    zipCode: String!
+    country: String!
+    imageURL: String!
+  }
+
+  # No arrays
+  input TrainerBasics {
+    uid: String!
+    ico: String!
+    email: String!
+    phoneNumber: String!
+    description: String!
+    firstName: String!
+    lastName: String!
+    street: String!
+    city: String!
+    zipCode: String!
+    country: String!
+  }
+
   type PlaceDetail {
     id: String!
     uid: String
@@ -129,7 +156,8 @@ const typeDefs = gql`
     users: [User]!
     user: UserDetail!
     places: [Place!]!
-    place: PlaceDetail!
+    place(uid: String!): PlaceDetail!
+    trainer: TrainerDetail!
     images: [Picture]!
 #-------SOLUTION FOR LAST SPRINT------ 
 #    allSportTypes: [SportType]!
@@ -138,7 +166,6 @@ const typeDefs = gql`
 
   type Mutation {
     # User
-    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
     uploadProfileImage(file: String!): Boolean
     sendEmailForgotPass(email: String!): Boolean
     changeForgotPass(password: String!, lockedToken: String!): Boolean
@@ -170,6 +197,7 @@ const typeDefs = gql`
       ico: String!
       password: String!
     ): AuthInfo!
+    updateTrainerBasics(placeBasics: TrainerBasics!): Boolean
     # Place
     signupPlace(
       firstName: String!
@@ -179,6 +207,11 @@ const typeDefs = gql`
       ico: String!
       name: String!
     ): AuthInfo!
+    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
+    deletePlaceImage(iid: String!): Boolean!
+    uploadPlaceImage(file: String!): Boolean!
+    addTag(name: String!): Boolean!
+    deleteTag(name: String!): Boolean!
     # DEPRECATED
     insertPlace(
       name: String!
@@ -196,10 +229,6 @@ const typeDefs = gql`
     ): Boolean!
     # DEPRECATED
     removePlace(id: String!): Boolean!
-    deletePlaceImage(iid: String!): Boolean!
-    uploadPlaceImage(file: String!): Boolean!
-    addTag(name: String!): Boolean!
-    deleteTag(name: String!): Boolean!
 #-------SOLUTION FOR LAST SPRINT------ 
 #    addSportType(stid: String!): Boolean!
 #    removeSportType(stid: String!): Boolean!

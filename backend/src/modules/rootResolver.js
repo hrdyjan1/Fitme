@@ -1,6 +1,6 @@
-import { queries as PlaceQueries } from './place';
 import { queries as UserQueries, mutations as UserMutations } from './user';
-import { mutations as PlaceMutations } from './place';
+import { queries as PlaceQueries, mutations as PlaceMutations } from './place';
+import { queries as TrainerQueries, mutations as TrainerMutations } from './trainer';
 
 export default {
   Query: {
@@ -19,9 +19,11 @@ export default {
     // },
     ...UserQueries,
     ...PlaceQueries,
+    ...TrainerQueries,
   },
   Mutation: {
     ...UserMutations,
     ...PlaceMutations,
+    ...TrainerMutations,
   },
 };
