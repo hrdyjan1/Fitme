@@ -14,6 +14,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import { FormikTextField } from 'src/components/atoms';
 import { useUser } from 'src/contexts/user';
+import { useNotification } from 'src/contexts/notification';
 
 const UPDATE_PLACE_BASICS = gql`
     mutation UpdatePlace($placeBasics: PlaceBasics!) {
@@ -33,6 +34,7 @@ const General = (props) => {
   const { className, place, ...rest } = props;
   const { user } = useUser();
   const classes = useStyles();
+  const { showMessage, showErrorMessage } = useNotification();
   const [updatePlaceBasics] = useMutation(UPDATE_PLACE_BASICS);
 
   const theme = useTheme();
@@ -56,7 +58,8 @@ const General = (props) => {
     updatePlaceBasics({ variables: { placeBasics: { ...values, id: place.id, uid: user.id } } })
       .then(() => {
         setInitialValues(values);
-      });
+        showMessage('Změna proběhla úspěšně.');
+      }).catch(() => showErrorMessage('Během změny nastala chyba.'));
   };
 
   const prepareLabel = (label) => (

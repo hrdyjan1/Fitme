@@ -1,15 +1,15 @@
 import React from 'react';
 import * as yup from 'yup';
-import { yupValidation } from 'src/constants/yupValidation'
-import { Form, Formik } from 'formik'
-import { FormikPasswordField, FormikTextField } from '../atoms'
-import { Box, Button } from '@material-ui/core'
+import { yupValidation } from 'src/constants/yupValidation';
+import { Form, Formik } from 'formik';
+import { Box, Button } from '@material-ui/core';
+import { FormikPasswordField, FormikTextField } from '../atoms';
 
-function SignInForm({onSave, loading}) {
+function SignInForm({ onSave, loading }) {
   const initialValues = {
     email: '',
-    password: ''
-  }
+    password: '',
+  };
 
   const validationSchema = yup.object().shape({
     email: yupValidation.email,

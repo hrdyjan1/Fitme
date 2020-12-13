@@ -3,8 +3,8 @@ import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { FormikPasswordField } from 'src/components/atoms';
 import { CardForm } from 'src/components/organisms';
-import * as yup from 'yup'
-import {yupValidation} from '../../constants/yupValidation'
+import * as yup from 'yup';
+import { yupValidation } from '../../constants/yupValidation';
 
 function ChangePasswordForm({ loading, onSave }) {
   const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' };
@@ -12,7 +12,7 @@ function ChangePasswordForm({ loading, onSave }) {
   const validationSchema = yup.object().shape({
     oldPassword: yupValidation.required,
     newPassword: yupValidation.password,
-    newPasswordCheck: yupValidation.passwordCheck('newPassword')
+    newPasswordCheck: yupValidation.passwordCheck('newPassword'),
   });
 
   return (

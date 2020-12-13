@@ -18,8 +18,8 @@ import {
 import { route } from 'src/constants/routes';
 import { useNotification } from 'src/contexts/notification';
 import Section from 'src/components/organisms/Section';
-import * as yup from 'yup'
-import {yupValidation} from '../constants/yupValidation'
+import * as yup from 'yup';
+import { yupValidation } from '../constants/yupValidation';
 
 const CHANGE_PASSWORD = gql`
   mutation changeForgotPass($lockedToken: String!, $password: String!) {
@@ -41,7 +41,7 @@ const initialFormValues = { newPassword: '', newPasswordCheck: '' };
 
 const validationSchema = yup.object().shape({
   newPassword: yupValidation.password,
-  newPasswordCheck: yupValidation.passwordCheck('newPassword')
+  newPasswordCheck: yupValidation.passwordCheck('newPassword'),
 });
 
 const pickUpLockToken = compose(stringAfterEqual, match(/\/lockedToken=(.+)/));

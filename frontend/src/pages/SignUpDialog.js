@@ -74,7 +74,6 @@ const SIGN_UP_TRAINER = gql`
   }
 `;
 
-
 export function SignUpDialog({ show, close }) {
   const theme = useTheme();
   const [signupAthlete, { loadingAthlete }] = useMutation(SIGN_UP);
@@ -91,17 +90,17 @@ export function SignUpDialog({ show, close }) {
         password: values.password,
       },
     })
-    .then((response) => {
-      if (response.data?.signup?.token) {
-        showMessage('Nyní si zkontrolujte email.');
-        close();
-      } else {
-        showMessage(String(response.errors), SEVERITY.ERROR);
-      }
-    })
-    .catch((error) => {
-      showMessage(String(error.message), SEVERITY.ERROR);
-    });
+      .then((response) => {
+        if (response.data?.signup?.token) {
+          showMessage('Nyní si zkontrolujte email.');
+          close();
+        } else {
+          showMessage(String(response.errors), SEVERITY.ERROR);
+        }
+      })
+      .catch((error) => {
+        showMessage(String(error.message), SEVERITY.ERROR);
+      });
   };
 
   const onSavePlace = (values) => {
@@ -115,17 +114,17 @@ export function SignUpDialog({ show, close }) {
         password: values.password,
       },
     })
-    .then((response) => {
-      if (response.data?.signupPlace?.token) {
-        showMessage('Nyní si zkontrolujte email.');
-        close();
-      } else {
-        showMessage(String(response.errors), SEVERITY.ERROR);
-      }
-    })
-    .catch((error) => {
-      showMessage(String(error.message), SEVERITY.ERROR);
-    });
+      .then((response) => {
+        if (response.data?.signupPlace?.token) {
+          showMessage('Nyní si zkontrolujte email.');
+          close();
+        } else {
+          showMessage(String(response.errors), SEVERITY.ERROR);
+        }
+      })
+      .catch((error) => {
+        showMessage(String(error.message), SEVERITY.ERROR);
+      });
   };
 
   const onSaveTrainer = (values) => {
@@ -135,29 +134,29 @@ export function SignUpDialog({ show, close }) {
         lastName: values.lastName,
         ico: values.ico,
         email: values.email,
-        password: values.password
+        password: values.password,
       },
     })
-    .then((response) => {
-      if (response.data?.signupTrainer?.token) {
-        showMessage('Nyní si zkontrolujte email.');
-        close();
-      } else {
-        showMessage(String(response.errors), SEVERITY.ERROR);
-      }
-    })
-    .catch((error) => {
-      showMessage(String(error.message), SEVERITY.ERROR);
-    });
+      .then((response) => {
+        if (response.data?.signupTrainer?.token) {
+          showMessage('Nyní si zkontrolujte email.');
+          close();
+        } else {
+          showMessage(String(response.errors), SEVERITY.ERROR);
+        }
+      })
+      .catch((error) => {
+        showMessage(String(error.message), SEVERITY.ERROR);
+      });
   };
 
   const onSave = (values) => {
     if (values.userType === 'athlete') {
-      onSaveAthlete(values)
+      onSaveAthlete(values);
     } else if (values.userType === 'place') {
-      onSavePlace(values)
+      onSavePlace(values);
     } else if (values.userType === 'trainer') {
-      onSaveTrainer(values)
+      onSaveTrainer(values);
     }
   };
   const onClose = () => {
@@ -180,8 +179,8 @@ export function SignUpDialog({ show, close }) {
         </IconButton>
       </Toolbar>
       <DialogContent>
-        <Box textAlign="center" justifyContent="center" >
-          <SignUpForm onSave={onSave} loading={loadingAthlete || loadingPlace || loadingTrainer}/>
+        <Box textAlign="center" justifyContent="center">
+          <SignUpForm onSave={onSave} loading={loadingAthlete || loadingPlace || loadingTrainer} />
         </Box>
       </DialogContent>
     </Dialog>

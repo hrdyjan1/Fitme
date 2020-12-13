@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-import { regex } from 'src/constants/regex'
-import { validText } from 'src/constants/validTexts'
+import { regex } from 'src/constants/regex';
+import { validText } from 'src/constants/validTexts';
 
 export const yupValidation = {
   required: yup.string()
@@ -60,7 +60,7 @@ export const yupValidation = {
 
   passwordCheck: (fieldToCompare) => (
     yup.string()
-    .oneOf([yup.ref(fieldToCompare), null], validText.passwordCheck)
-    .required(validText.required)
-  )
-}
+      .oneOf([yup.ref(fieldToCompare), null], validText.passwordCheck)
+      .required(validText.required)
+  ),
+};

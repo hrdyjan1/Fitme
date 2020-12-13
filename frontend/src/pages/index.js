@@ -1,6 +1,6 @@
 import { HomePage } from './HomePage';
-import { SignInDialog } from './SignInDialog'
-import { SignUpDialog } from './SignUpDialog'
+import { SignInDialog } from './SignInDialog';
+import { SignUpDialog } from './SignUpDialog';
 import { Verification } from './Verification';
 import { PageNotFound } from './PageNotFound';
 import { ResetPassword } from './ResetPassword';

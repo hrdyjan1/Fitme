@@ -16,7 +16,7 @@ import { useUser } from 'src/contexts/user';
 import { SEVERITY, useNotification } from 'src/contexts/notification';
 import { compose } from 'src/constants/functions/basic';
 import { route } from 'src/constants/routes';
-import { SignInForm } from 'src/components/organisms'
+import { SignInForm } from 'src/components/organisms';
 
 const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -102,7 +102,7 @@ export function SignInDialog({
           alignItems="center"
         >
           <Box width="65%">
-            <SignInForm onSave={onSave} loading={loading}/>
+            <SignInForm onSave={onSave} loading={loading} />
           </Box>
           <Box width="97%" m="auto">
             <Button

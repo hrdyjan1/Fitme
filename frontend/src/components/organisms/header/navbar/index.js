@@ -14,7 +14,7 @@ import {
 import {
   SignInDialog,
   SignUpDialog,
-} from 'src/pages'
+} from 'src/pages';
 import {
   LogoutDialog,
   ForgotPassDialog,
