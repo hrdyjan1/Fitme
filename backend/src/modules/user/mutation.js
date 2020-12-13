@@ -2,7 +2,6 @@ import argon2 from 'argon2';
 
 import { uuidv4 } from '../../constants/uuid';
 import { Cloudinary } from '../../utils/cloudinary';
-import { getVerifiedUser } from '../../utils/userVerification';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
 import { checkIfValidEmail } from '../../constants/checkIfValidEmail';

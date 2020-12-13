@@ -32,6 +32,7 @@ export const updatePlaceBasics = async (
   ).affectedRows;
 
   const updatedUserRows = (
+    // will be changed to proper address for LAST SPRINT
     await dbConnection.query(
       `UPDATE user SET email = ?, phoneNumber = ?, street = ?, city = ? WHERE id = ?`,
       [email, phoneNumber, street, city, uid],
@@ -133,7 +134,7 @@ export const updatePlace = async (
   return updatedRows === 1;
 };
 
-export const deleteFacilityImage = async (_, { iid }, { dbConnection }) => {
+export const deletePlaceImage = async (_, { iid }, { dbConnection }) => {
   const errorsStatus = (
     await dbConnection.query(`DELETE FROM placeGallery WHERE iid = ?;`, [iid])
   ).warningStatus;
@@ -141,7 +142,7 @@ export const deleteFacilityImage = async (_, { iid }, { dbConnection }) => {
   return errorsStatus === 0;
 };
 
-export const uploadFacilityImage = async (_, { file }, ctx) => {
+export const uploadPlaceImage = async (_, { file }, ctx) => {
   const { auth, dbConnection } = ctx;
   try {
     const id = await getUser(auth);
@@ -159,7 +160,7 @@ export const uploadFacilityImage = async (_, { file }, ctx) => {
   }
 };
 
-export const addSportType = async (_, stid, {dbConnection, auth}) => {
+export const addTag = async (_, { name }, { dbConnection, auth }) => {
 
   let id = null;
   try {
@@ -169,11 +170,10 @@ export const addSportType = async (_, stid, {dbConnection, auth}) => {
   }
 
   try {
-    //TODO: add sql query
-    const insertSportTypeQuery = 'INSERT INTO placeSportType (uid, stid) VALUES (?, ?);';
+    const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
 
     if (id) {
-      await dbConnection.query(insertSportTypeQuery, [id, stid])
+      await dbConnection.query(insertTagQuery, [id, name])
       return true;
     } else {
       return false;
@@ -183,8 +183,7 @@ export const addSportType = async (_, stid, {dbConnection, auth}) => {
   }
 };
 
-export const removeSportType = async (_, stid, {dbConnection, auth}) => {
-
+export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
   let id = null;
   try {
     id = await getUser(auth);
@@ -193,9 +192,10 @@ export const removeSportType = async (_, stid, {dbConnection, auth}) => {
   }
 
   try {
-    const removeSportTypeQuery = 'DELETE FROM placeSportType WHERE uid = ? AND stid = ?;';
+    const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
+
     if (id) {
-      await dbConnection.query(removeSportTypeQuery, [id, stid])
+      await dbConnection.query(deleteTagQuery, [id, name])
       return true;
     } else {
       return false;
@@ -204,4 +204,50 @@ export const removeSportType = async (_, stid, {dbConnection, auth}) => {
     return false;
   }
 };
+
+//-------SOLUTION FOR LAST SPRINT------
+// export const addSportType = async (_, stid, {dbConnection, auth}) => {
+//
+//   let id = null;
+//   try {
+//     id = await getUser(auth);
+//   } catch  (error){
+//     throw new Error('Session neexistujícího uživatele');
+//   }
+//
+//   try {
+//     const insertSportTypeQuery = 'INSERT INTO placeSportType (uid, stid) VALUES (?, ?);';
+//
+//     if (id) {
+//       await dbConnection.query(insertSportTypeQuery, [id, stid])
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     return false;
+//   }
+// };
+//-------SOLUTION FOR LAST SPRINT------
+// export const removeSportType = async (_, stid, {dbConnection, auth}) => {
+//
+//   let id = null;
+//   try {
+//     id = await getUser(auth);
+//   } catch  (error){
+//     throw new Error('Session neexistujícího uživatele');
+//   }
+//
+//   try {
+//     const removeSportTypeQuery = 'DELETE FROM placeSportType WHERE uid = ? AND stid = ?;';
+//     if (id) {
+//       await dbConnection.query(removeSportTypeQuery, [id, stid])
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     return false;
+//   }
+// };
   

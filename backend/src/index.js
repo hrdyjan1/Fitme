@@ -17,6 +17,7 @@ const typeDefs = gql`
     uid: String
   }
 
+  #DEPRECATED
   type Picture {
     imageId: Int!
     imageURL: String!
@@ -34,10 +35,11 @@ const typeDefs = gql`
   type TrainerDetail {
     email: String!
   }
-  
-  type SportType {
-    sportTypeName: String!
-  }
+
+  #-------SOLUTION FOR LAST SPRINT------ 
+#  type SportType {
+#    sportTypeName: String!
+#  }
   
   type User {
     id: String!
@@ -75,9 +77,9 @@ const typeDefs = gql`
 #  }
 
   type PlaceImage {
-    id: String!
+    iid: String!
     uid: String
-    url: String!
+    imageURL: String!
   }
 
   type Tag {
@@ -88,6 +90,7 @@ const typeDefs = gql`
 
   type PlaceDetail {
     id: String!
+    uid: String
     name: String!
     ico: String!
     email: String!
@@ -126,10 +129,11 @@ const typeDefs = gql`
     users: [User]!
     user: UserDetail!
     places: [Place!]!
-    place(uid: String!): PlaceDetail!
+    place: PlaceDetail!
     images: [Picture]!
-    allSportTypes: [SportType]!
-    sportTypes: [SportType]!
+#-------SOLUTION FOR LAST SPRINT------ 
+#    allSportTypes: [SportType]!
+#    sportTypes: [SportType]!
   }
 
   type Mutation {
@@ -158,6 +162,14 @@ const typeDefs = gql`
       country: String
     ): Boolean!
     updatePassword(oldPassword: String!, newPassword: String!): Boolean!
+    # Trainer
+    signupTrainer(
+      firstName: String!
+      lastName: String!
+      email: String!
+      ico: String!
+      password: String!
+    ): AuthInfo!
     # Place
     signupPlace(
       firstName: String!
@@ -167,19 +179,14 @@ const typeDefs = gql`
       ico: String!
       name: String!
     ): AuthInfo!
-    signupTrainer(
-      firstName: String!
-      lastName: String!
-      email: String!
-      ico: String!
-      password: String!
-    ): AuthInfo!
+    # DEPRECATED
     insertPlace(
       name: String!
       description: String!
       latitude: Float!
       longitude: Float!
     ): Boolean!
+    # DEPRECATED
     updatePlace(
       id: String!
       name: String!
@@ -187,11 +194,15 @@ const typeDefs = gql`
       latitude: Float!
       longitude: Float!
     ): Boolean!
+    # DEPRECATED
     removePlace(id: String!): Boolean!
-    deleteFacilityImage(iid: String!): Boolean!
-    uploadFacilityImage(file: String!): Boolean!
-    addSportType(stid: String!): Boolean!
-    removeSportType(stid: String!): Boolean!
+    deletePlaceImage(iid: String!): Boolean!
+    uploadPlaceImage(file: String!): Boolean!
+    addTag(name: String!): Boolean!
+    deleteTag(name: String!): Boolean!
+#-------SOLUTION FOR LAST SPRINT------ 
+#    addSportType(stid: String!): Boolean!
+#    removeSportType(stid: String!): Boolean!
   }
 `;
 
