@@ -73,7 +73,7 @@ const typeDefs = gql`
 #  }
 
   type PlaceImage {
-    iid: String!
+    iid: Int!
     uid: String
     imageURL: String!
   }
@@ -85,7 +85,6 @@ const typeDefs = gql`
   }
 
   type TrainerDetail {
-    uid: String
     ico: String!
     firstName: String!
     lastName: String!
@@ -117,7 +116,6 @@ const typeDefs = gql`
 
   type PlaceDetail {
     id: String!
-    uid: String
     name: String!
     ico: String!
     email: String!
@@ -157,7 +155,7 @@ const typeDefs = gql`
     user: UserDetail!
     places: [Place!]!
     place(uid: String!): PlaceDetail!
-    trainer: TrainerDetail!
+    trainer(uid: String!): TrainerDetail!
     images: [Picture]!
 #-------SOLUTION FOR LAST SPRINT------ 
 #    allSportTypes: [SportType]!

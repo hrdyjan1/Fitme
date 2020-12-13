@@ -14,8 +14,8 @@ const PLACE_DETAIL = gql`
       phoneNumber
       ico
       pictureList {
-        id        
-        url
+        iid        
+        imageURL
       }
       tagList {
           id
