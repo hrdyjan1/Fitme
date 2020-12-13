@@ -4,13 +4,13 @@ import {
   FormControl,
   FormHelperText,
   IconButton,
-  InputAdornment
+  InputAdornment,
 } from '@material-ui/core';
 import { Field } from 'formik';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 function FormikPasswordField({
-  name, label, placeholder
+  name, label, placeholder,
 }) {
   const [showPassword, setShowPassword] = React.useState(false);
 

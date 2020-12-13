@@ -1,3 +1,4 @@
+import { queries as PlaceQueries } from './place';
 import { queries as UserQueries, mutations as UserMutations } from './user';
 import { mutations as PlaceMutations } from './place';
 
@@ -9,13 +10,14 @@ export default {
     todo: async () => {
       return new Date().toISOString();
     },
-    users: async (_p, _c, {dbConnection}) => {
-        return dbConnection.query('SELECT * FROM user');
+    users: async (_p, _c, { dbConnection }) => {
+      return dbConnection.query('SELECT * FROM user');
     },
-    ...UserQueries
+    ...UserQueries,
+    ...PlaceQueries,
   },
   Mutation: {
     ...UserMutations,
-    ...PlaceMutations
+    ...PlaceMutations,
   },
 };

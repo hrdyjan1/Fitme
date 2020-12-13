@@ -4,8 +4,8 @@ import { Form, Formik } from 'formik';
 
 import { CardForm } from 'src/components/organisms/CardForm';
 import { FormikTextField } from 'src/components/atoms';
-import * as yup from 'yup'
-import {yupValidation} from '../../constants/yupValidation'
+import * as yup from 'yup';
+import { yupValidation } from '../../constants/yupValidation';
 
 function AddressForm({ user, loading, onSave }) {
   const [initialValues, setInitialValues] = React.useState({
@@ -24,9 +24,9 @@ function AddressForm({ user, loading, onSave }) {
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
-      setInitialValues(values)
-    })
-  }
+      setInitialValues(values);
+    });
+  };
 
   return (
     <CardForm header="ADRESA">

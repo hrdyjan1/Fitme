@@ -14,7 +14,7 @@ const validText = {
   password: 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.',
   noPassword: 'Zadejte heslo.',
   passwordCheck: 'Hesla se neshodují.',
-  required: 'Toto pole je povinné.'
+  required: 'Toto pole je povinné.',
 };
 
 export { validText };

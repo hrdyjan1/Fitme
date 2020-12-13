@@ -3,8 +3,8 @@ import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { FormikTextField } from 'src/components/atoms/FormikTextField';
 import { CardForm } from 'src/components/organisms/CardForm';
-import * as yup from 'yup'
-import {yupValidation} from '../../constants/yupValidation'
+import * as yup from 'yup';
+import { yupValidation } from '../../constants/yupValidation';
 
 function ContactInfoForm({ user, loading, onSave }) {
   const [initialValues, setInitialValues] = React.useState({
@@ -25,9 +25,9 @@ function ContactInfoForm({ user, loading, onSave }) {
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
-      setInitialValues(values)
-    })
-  }
+      setInitialValues(values);
+    });
+  };
 
   return (
     <CardForm header="KONTAKTNÍ ÚDAJE">

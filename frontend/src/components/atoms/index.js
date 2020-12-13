@@ -1,7 +1,2 @@
-import { FormikTextField } from './FormikTextField';
-import { FormikPasswordField } from './FormikPasswordField';
-
-export {
-  FormikTextField,
-  FormikPasswordField,
-};
+export { FormikTextField } from './FormikTextField';
+export { FormikPasswordField } from './FormikPasswordField';

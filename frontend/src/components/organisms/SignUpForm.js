@@ -1,14 +1,14 @@
 import React from 'react';
 import * as yup from 'yup';
-import { yupValidation } from 'src/constants/yupValidation'
-import { Form, Formik } from 'formik'
-import { FormikPasswordField, FormikTextField } from '../atoms'
-import { UserTypesRadioButtons } from 'src/components/molecules'
-import { Box, Button } from '@material-ui/core'
+import { yupValidation } from 'src/constants/yupValidation';
+import { Form, Formik } from 'formik';
+import { UserTypesRadioButtons } from 'src/components/molecules';
+import { Box, Button } from '@material-ui/core';
+import { FormikPasswordField, FormikTextField } from '../atoms';
 
-function SignUpForm({onSave, loading}) {
-  const USER_TYPE_PLACE_OWNER = 'place'
-  const USER_TYPE_TRAINER = 'trainer'
+function SignUpForm({ onSave, loading }) {
+  const USER_TYPE_PLACE_OWNER = 'place';
+  const USER_TYPE_TRAINER = 'trainer';
   const initialValues = {
     userType: 'athlete',
     firstName: '',
@@ -17,11 +17,11 @@ function SignUpForm({onSave, loading}) {
     ico: '',
     email: '',
     password: '',
-    passwordCheck: ''
+    passwordCheck: '',
   };
 
-  const isUserPlaceOwner = (user) => user === USER_TYPE_PLACE_OWNER
-  const isUserTrainer = (user) => user === USER_TYPE_TRAINER
+  const isUserPlaceOwner = (user) => user === USER_TYPE_PLACE_OWNER;
+  const isUserTrainer = (user) => user === USER_TYPE_TRAINER;
 
   const validationSchema = yup.object().shape({
     userType: yup.string(),
@@ -33,7 +33,7 @@ function SignUpForm({onSave, loading}) {
       .when('userType', { is: USER_TYPE_TRAINER, then: yupValidation.ico }),
     email: yupValidation.email,
     password: yupValidation.password,
-    passwordCheck: yupValidation.passwordCheck('password')
+    passwordCheck: yupValidation.passwordCheck('password'),
   });
 
   return (
