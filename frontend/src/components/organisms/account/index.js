@@ -7,8 +7,8 @@ import { useUser } from 'src/contexts/user';
 import { Template } from 'src/components/organisms/account/Template';
 
 const PLACE_DETAIL = gql`
-  query Place($uid: String!) {
-    place(uid: $uid) {
+  query Place($userid: String!) {
+    place(uid: $userid) {
       id  
       name
       phoneNumber
@@ -33,9 +33,9 @@ const PLACE_DETAIL = gql`
 
 const Account = () => {
   const { user } = useUser();
+  console.log(user);
   const { showErrorMessage } = useNotification();
-  const placeOptions = { variables: { uid: user.id } };
-  const { loading, error, data } = useQuery(PLACE_DETAIL, placeOptions);
+  const { loading, error, data } = useQuery(PLACE_DETAIL, { variables: { userid: user.id } });
 
   if (loading) {
     return null;
