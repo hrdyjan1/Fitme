@@ -15,6 +15,25 @@
   transition: 250ms;
 }
 
+.link-btn--dark {
+  padding: 8px 20px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  background: #1b7cde;
+  font-family: 'Zilla Slab';
+}
+
+.link-btn--dark:hover {
+  padding: 8px 20px;
+  transition: all 0.3s ease-out;
+  color: #1976d2;
+  background: white;
+  transition: 250ms;
+}
+
 .link-btn--primary {
   background-color: #4791db;
 }

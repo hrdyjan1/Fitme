@@ -4,6 +4,7 @@ import 'src/components/organisms/header/navbar/components/style.css';
 const STYLES = [
   'link-btn--primary',
   'link-btn--outline',
+  'link-btn--dark'
 ];
 
 const SIZES = [

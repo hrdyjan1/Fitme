@@ -15,10 +15,11 @@ import {
   match,
   stringAfterEqual,
 } from 'src/constants/functions/basic';
-import { regex } from 'src/constants/regex';
 import { route } from 'src/constants/routes';
 import { useNotification } from 'src/contexts/notification';
 import Section from 'src/components/organisms/Section';
+import * as yup from 'yup'
+import {yupValidation} from '../constants/yupValidation'
 
 const CHANGE_PASSWORD = gql`
   mutation changeForgotPass($lockedToken: String!, $password: String!) {
@@ -36,21 +37,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const initialFormValues = { password: '', re_password: '' };
+const initialFormValues = { newPassword: '', newPasswordCheck: '' };
 
-const validate = (values) => {
-  const errors = {};
-  if (values.password.length < 8) {
-    errors.password = 'Heslo musi mit minimalne 8 znaku';
-  } else if (!regex.password.test(values.password)) {
-    errors.password = 'Heslo musi obsahovat minimalne 1 velke pismeno, 1 male pismeno, 1 cislici,';
-  }
-
-  if (values.password !== values.re_password) {
-    errors.re_password = 'Hesla se neshoduji';
-  }
-  return errors;
-};
+const validationSchema = yup.object().shape({
+  newPassword: yupValidation.password,
+  newPasswordCheck: yupValidation.passwordCheck('newPassword')
+});
 
 const pickUpLockToken = compose(stringAfterEqual, match(/\/lockedToken=(.+)/));
 
@@ -98,30 +90,30 @@ function ResetPassword({ token }) {
           <Box marginTop="10px" width="70%" maxWidth="500px">
             <Formik
               onSubmit={onSubmit}
-              validate={validate}
+              validationSchema={validationSchema}
               initialValues={initialFormValues}
               render={(formikBag) => (
                 <Form>
                   <Field
                     validateOnBlur
                     validateOnChange
-                    name="password"
+                    name="newPassword"
                     render={({ form }) => (
                       <TextField
-                        id="password"
-                        name="password"
-                        type="password"
+                        id="newPassword"
+                        name="newPassword"
+                        type="newPassword"
                         placeholder="Zadejte nove heslo"
                         label="Heslo"
                         onChange={formikBag.handleChange}
                         error={Boolean(
-                          form.errors.password && form.touched.password,
+                          form.errors.newPassword && form.touched.newPassword,
                         )}
                         onBlur={formikBag.handleBlur}
                         helperText={
-                          form.errors.password
-                          && form.touched.password
-                          && String(form.errors.password)
+                          form.errors.newPassword
+                          && form.touched.newPassword
+                          && String(form.errors.newPassword)
                         }
                         variant="filled"
                         fullWidth
@@ -135,23 +127,23 @@ function ResetPassword({ token }) {
                   <Field
                     validateOnBlur
                     validateOnChange
-                    name="re_password"
+                    name="newPasswordCheck"
                     render={({ form }) => (
                       <TextField
-                        id="re_password"
-                        type="password"
-                        name="re_password"
+                        id="newPasswordCheck"
+                        type="newPasswordCheck"
+                        name="newPasswordCheck"
                         placeholder="Zadejte znova heslo"
                         label="Heslo znova"
                         onChange={formikBag.handleChange}
                         error={Boolean(
-                          form.errors.re_password && form.touched.re_password,
+                          form.errors.newPasswordCheck && form.touched.newPasswordCheck,
                         )}
                         onBlur={formikBag.handleBlur}
                         helperText={
-                          form.errors.re_password
-                          && form.touched.re_password
-                          && String(form.errors.re_password)
+                          form.errors.newPasswordCheck
+                          && form.touched.newPasswordCheck
+                          && String(form.errors.newPasswordCheck)
                         }
                         variant="filled"
                         fullWidth
