@@ -3,6 +3,7 @@ import {uuidv4} from "../../constants/uuid";
 import argon2 from "argon2";
 import {EMAIL, sendEmail} from "../../utils/email";
 import {createToken} from "../../libs/token";
+import getUser from '../user/helper'
 
 export const signupTrainer = async (
   _,
@@ -22,13 +23,13 @@ export const signupTrainer = async (
 
   await dbConnection.query(
     `INSERT INTO Address (uid)
-      VALUES (?);`,
+     VALUES (?);`,
     [id],
   );
 
   await dbConnection.query(
     `INSERT INTO trainer (uid, ico)
-      VALUES (?, ?);`,
+     VALUES (?, ?);`,
     [id, ico],
   );
 
@@ -41,10 +42,10 @@ export const signupTrainer = async (
   return { user, token };
 };
 
-export const updateTrainerBasics = async (
+export const updateTrainer = async (
   _,
-  { trainerBasics },
-  { dbConnection },
+  trainerBasics,
+  { dbConnection, auth },
 ) => {
   const {
     uid,
@@ -59,24 +60,32 @@ export const updateTrainerBasics = async (
     country,
     city,
   } = trainerBasics;
+  let id = uid;
+  if (!id) {
+    try {
+      id = await getUser(auth);
+    } catch (error) {
+      throw new Error('Session neexistujícího uživatele');
+    }
+  }
   const updatedTrainerRows = (
     await dbConnection.query(
       `UPDATE trainer SET description = ?, ico = ? WHERE uid = ?`,
-      [description, ico, uid],
+      [description, ico, id],
     )
   ).affectedRows;
 
   const updatedUserRows = (
     await dbConnection.query(
       `UPDATE user SET email = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE id = ?`,
-      [email, firstName, lastName, phoneNumber, uid],
+      [email, firstName, lastName, phoneNumber, id],
     )
   ).affectedRows;
 
   const updatedAddressRows = (
     await dbConnection.query(
       `UPDATE Address SET country = ?, zipCode = ?, street = ?, city = ? WHERE uid = ?`,
-      [country, zipCode, street, city, uid],
+      [country, zipCode, street, city, id],
     )
   ).affectedRows;
 

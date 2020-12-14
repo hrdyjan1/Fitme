@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 import { Image } from 'src/components/atoms/image';
-import { SectionHeader } from 'src/components/molecules/sectionHeader';
+import { SectionHeader } from 'src/components/molecules/SectionHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {

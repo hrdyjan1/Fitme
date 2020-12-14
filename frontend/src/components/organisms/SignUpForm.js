@@ -4,7 +4,7 @@ import { yupValidation } from 'src/constants/yupValidation';
 import { Form, Formik } from 'formik';
 import { UserTypesRadioButtons } from 'src/components/molecules';
 import { Box, Button } from '@material-ui/core';
-import { FormikPasswordField, FormikTextField } from '../atoms';
+import { FormikPasswordField, FormikTextField } from 'src/components/atoms';
 
 function SignUpForm({ onSave, loading }) {
   const USER_TYPE_PLACE_OWNER = 'place';

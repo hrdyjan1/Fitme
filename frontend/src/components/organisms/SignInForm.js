@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { yupValidation } from 'src/constants/yupValidation';
 import { Form, Formik } from 'formik';
 import { Box, Button } from '@material-ui/core';
-import { FormikPasswordField, FormikTextField } from '../atoms';
+import { FormikPasswordField, FormikTextField } from 'src/components/atoms';
 
 function SignInForm({ onSave, loading }) {
   const initialValues = {

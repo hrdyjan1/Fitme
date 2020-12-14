@@ -9,7 +9,8 @@ import {
   PageNotFound,
   UserProfilePage,
   SportPlacesPage,
-} from './pages';
+  TrainerProfilePage
+} from 'src/pages';
 import Account from './components/organisms/account';
 
 export function Routes() {
@@ -22,6 +23,7 @@ export function Routes() {
           <Route path={route.profile()} exact component={UserProfilePage} />
           <Route path={route.sportPlaces()} exact component={SportPlacesPage} />
           <Route path={route.editSportPlace()} exact component={Account} />
+          <Route path={route.trainerProfile()} exact component={TrainerProfilePage} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>

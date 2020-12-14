@@ -6,6 +6,10 @@ export const yupValidation = {
   required: yup.string()
     .required(validText.required),
 
+  description: yup.string()
+    .matches(regex.description, validText.description)
+    .required(validText.required),
+
   name: yup.string()
     .matches(regex.name, validText.name)
     .required(validText.required),

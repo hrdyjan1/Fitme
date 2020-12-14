@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Image } from 'src/components/atoms/image';
-import { SectionHeader } from 'src/components/molecules/sectionHeader';
+import { SectionHeader } from 'src/components/molecules/SectionHeader';
 import { useHistory } from 'react-router-dom';
 import { route } from 'src/constants/routes';
 
