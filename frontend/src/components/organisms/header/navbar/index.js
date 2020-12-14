@@ -48,15 +48,11 @@ function Navbar() {
   const toggleActive = () => setActive((a) => !a);
   const historyPush = (path) => history.push(path);
   const goHome = () => historyPush(route.home());
-  const goProfile = () => historyPush(route.profile());
   const goSportPlaces = () => historyPush(route.sportPlaces());
-  const goEditSportPlace = () => historyPush(route.editSportPlace());
 
-  const isUserPlaceOwner = () => user.type === 'place';
   const ulClassName = active ? NAV.active.style : NAV.inactive.style;
   const goHomeDeactivate = compose(goHome, deactivate);
-  const goProfileDeactivate = compose(goProfile, deactivate);
-  const onUserNameClick = () => (isUserPlaceOwner() ? goEditSportPlace() : goProfileDeactivate());
+  const onUserNameClick = () => history.push(route.userProfileRoute(user.type));
   const onLogoutClick = compose(goHomeDeactivate, setLogoutVisible);
   const onSignInClick = compose(
     setSignInVisible,

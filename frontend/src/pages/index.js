@@ -5,6 +5,7 @@ import { Verification } from './Verification';
 import { PageNotFound } from './PageNotFound';
 import { ResetPassword } from './ResetPassword';
 import { UserProfilePage } from './UserProfilePage';
+import { TrainerProfilePage } from './TrainerProfilePage'
 import { SportPlacesPage } from './SportPlacesPage';
 
 export {
@@ -15,5 +16,6 @@ export {
   PageNotFound,
   ResetPassword,
   UserProfilePage,
+  TrainerProfilePage,
   SportPlacesPage,
 };

@@ -1,4 +1,5 @@
 const validText = {
+  description: 'Napište nějaký popis.',
   name: 'Název smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   nickname: 'Přezdívka smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   firstName: 'Jméno smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',

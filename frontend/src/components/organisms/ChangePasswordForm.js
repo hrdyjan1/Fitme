@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik';
 import { FormikPasswordField } from 'src/components/atoms';
 import { CardForm } from 'src/components/organisms';
 import * as yup from 'yup';
-import { yupValidation } from '../../constants/yupValidation';
+import { yupValidation } from 'src/constants/yupValidation';
 
 function ChangePasswordForm({ loading, onSave }) {
   const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' };

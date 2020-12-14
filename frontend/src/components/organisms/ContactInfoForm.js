@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik';
 import { FormikTextField } from 'src/components/atoms/FormikTextField';
 import { CardForm } from 'src/components/organisms/CardForm';
 import * as yup from 'yup';
-import { yupValidation } from '../../constants/yupValidation';
+import { yupValidation } from 'src/constants/yupValidation';
 
 function ContactInfoForm({ user, loading, onSave }) {
   const [initialValues, setInitialValues] = React.useState({

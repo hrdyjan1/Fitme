@@ -21,15 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hero = (props) => {
-  const { className, ...rest } = props;
+const ProfileHeader = ({ title, subtitle, className, ...rest }) => {
   const classes = useStyles();
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <Section className={classes.section}>
         <SectionHeader
-          title="Editace sportoviště"
-          subtitle="Zde si můžete změnit veškeré údaje o vašem sportovišti."
+          title={title}
+          subtitle={subtitle}
           align="left"
           disableGutter
           titleProps={{
@@ -45,4 +44,4 @@ const Hero = (props) => {
   );
 };
 
-export default Hero;
+export { ProfileHeader };

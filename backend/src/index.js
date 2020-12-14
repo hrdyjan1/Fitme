@@ -99,21 +99,6 @@ const typeDefs = gql`
     imageURL: String!
   }
 
-  # No arrays
-  input TrainerBasics {
-    uid: String!
-    ico: String!
-    email: String!
-    phoneNumber: String!
-    description: String!
-    firstName: String!
-    lastName: String!
-    street: String!
-    city: String!
-    zipCode: String!
-    country: String!
-  }
-
   type PlaceDetail {
     id: String!
     name: String!
@@ -195,7 +180,19 @@ const typeDefs = gql`
       ico: String!
       password: String!
     ): AuthInfo!
-    updateTrainerBasics(placeBasics: TrainerBasics!): Boolean
+    updateTrainer(
+      uid: String
+      ico: String
+      email: String
+      phoneNumber: String
+      description: String
+      firstName: String
+      lastName: String
+      street: String
+      city: String
+      zipCode: String
+      country: String
+    ): Boolean
     # Place
     signupPlace(
       firstName: String!

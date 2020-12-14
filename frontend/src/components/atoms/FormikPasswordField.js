@@ -9,9 +9,7 @@ import {
 import { Field } from 'formik';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
-function FormikPasswordField({
-  name, label, placeholder,
-}) {
+function FormikPasswordField({name, label, placeholder}) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleMouseDownPassword = (event) => {
@@ -20,12 +18,7 @@ function FormikPasswordField({
 
   return (
     <>
-      <div
-        color="textPrimary"
-        className="input__label"
-      >
-        {label}
-      </div>
+      { label && <div color="textPrimary" className="input__label">{label}</div> }
       <Field
         validateOnBlur
         validateOnChange
@@ -65,6 +58,6 @@ function FormikPasswordField({
       />
     </>
   );
-}
+};
 
 export { FormikPasswordField };

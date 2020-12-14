@@ -2,25 +2,23 @@
 import React from 'react';
 import clsx from 'clsx';
 import {
-  Box, List, ListItem, Grid, Typography,
-} from '@material-ui/core';
+  Box, List, ListItem, Grid, Typography, LinearProgress
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 import CardBase from 'src/components/organisms/cardBase';
 import SectionAlternate from 'src/components/organisms/SectionAlternate';
 import {
-  Hero,
-  General,
-  Security,
-  Notifications,
-  Billing,
-  Gallery,
-} from './components';
+  GeneralForm, PasswordForm,
+  ProfileHeader,
+  ProfilePictureForm
+} from 'src/components/organisms'
+import { Notifications } from 'src/components/organisms/account/components';
 
 const TabPanel = ({
-  children, value, index, ...other
-}) => (
-  <Box component="div" hidden={value !== index} {...other}>
+                    children, value, index, ...other
+                  }) => (
+  <Box display="flex" justifyContent="center" hidden={value !== index} {...other}>
     {value === index && children}
   </Box>
 );
@@ -31,21 +29,17 @@ const subPages = [
     title: 'Obecné',
   },
   {
-    id: 'photos',
-    title: 'Fotografie',
+    id: 'profilePhoto',
+    title: 'Profilová fotka',
   },
   {
-    id: 'security',
+    id: 'password',
     title: 'Heslo',
   },
   {
     id: 'tags',
     title: 'Nabízené disciplíny',
-  },
-  {
-    id: 'trainers',
-    title: 'Trenéři',
-  },
+  }
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -102,13 +96,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Template({ place }) {
+function TrainerProfileTemplate({
+  trainer,
+  trainerLoading,
+  passwordLoading,
+  profileImageLoading,
+  onSaveTrainer,
+  onSavePassword,
+  onSaveProfileImage
+}) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Hero />
+      {(passwordLoading || trainerLoading || profileImageLoading) && (
+        <LinearProgress />
+      )}
+      <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje."/>
       <SectionAlternate className={classes.section}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={3}>
@@ -141,19 +146,20 @@ function Template({ place }) {
           <Grid item xs={12} md={9}>
             <CardBase withShadow align="left">
               <TabPanel value={pageId} index="general">
-                <General place={place} />
+                <GeneralForm user={trainer} onSave={onSaveTrainer} loading={trainerLoading}/>
               </TabPanel>
-              <TabPanel value={pageId} index="photos">
-                <Gallery place={place} />
+              <TabPanel value={pageId} index="profilePhoto">
+                <ProfilePictureForm
+                  imageURL={trainer?.imageURL}
+                  onSave={onSaveProfileImage}
+                  loading={profileImageLoading}
+                />
               </TabPanel>
-              <TabPanel value={pageId} index="security">
-                <Security place={place} />
+              <TabPanel value={pageId} index="password">
+                <PasswordForm onSave={onSavePassword} loading={passwordLoading} />
               </TabPanel>
               <TabPanel value={pageId} index="tags">
-                <Notifications place={place} />
-              </TabPanel>
-              <TabPanel value={pageId} index="trainers">
-                <Billing place={place} />
+                <Notifications place={trainer} />
               </TabPanel>
             </CardBase>
           </Grid>
@@ -163,4 +169,4 @@ function Template({ place }) {
   );
 }
 
-export { Template };
+export { TrainerProfileTemplate };

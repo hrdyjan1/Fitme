@@ -60,11 +60,21 @@ const pages = {
   },
 };
 
+const userProfileRoute = (userType) => {
+  switch (userType) {
+    case 'athlete': return route.profile();
+    case 'place': return route.editSportPlace();
+    case 'trainer': return route.trainerProfile();
+  }
+};
+
 const route = {
   home: () => '/',
   profile: () => '/profile',
   sportPlaces: () => '/sportPlaces',
   editSportPlace: () => '/editSportPlace',
+  trainerProfile: () => '/trainerProfile',
+  userProfileRoute
 };
 
 export { route, pages };
