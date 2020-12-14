@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import {
   useMediaQuery,
   Grid,
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GeneralForm ({user, onSave, loading }) {
+function GeneralForm ({user, reFetchUser, onSave, loading }) {
   const classes = useStyles();
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
@@ -39,6 +39,10 @@ function GeneralForm ({user, onSave, loading }) {
     city: user?.city || '',
     zipCode: user?.zipCode || '',
     country: user?.country || ''
+  });
+
+  useEffect(() => {
+    reFetchUser();
   });
 
   const validationSchema = yup.object().shape({

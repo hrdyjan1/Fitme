@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react'
 import {
   useMediaQuery,
   Grid,
@@ -17,11 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProfilePictureForm ({imageURL, onSave, loading }) {
+function ProfilePictureForm ({imageURL, reFetchUser, onSave, loading }) {
   const classes = useStyles();
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
+  });
+
+  useEffect(() => {
+    reFetchUser();
   });
 
   return (

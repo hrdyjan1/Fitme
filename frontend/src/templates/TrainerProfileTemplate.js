@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TrainerProfileTemplate({
   trainer,
+  reFetchTrainer,
   trainerLoading,
   passwordLoading,
   profileImageLoading,
@@ -114,6 +115,7 @@ function TrainerProfileTemplate({
         <LinearProgress />
       )}
       <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje."/>
+      {trainer && (
       <SectionAlternate className={classes.section}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={3}>
@@ -146,11 +148,17 @@ function TrainerProfileTemplate({
           <Grid item xs={12} md={9}>
             <CardBase withShadow align="left">
               <TabPanel value={pageId} index="general">
-                <GeneralForm user={trainer} onSave={onSaveTrainer} loading={trainerLoading}/>
+                <GeneralForm
+                  user={trainer}
+                  reFetchUser={reFetchTrainer}
+                  onSave={onSaveTrainer}
+                  loading={trainerLoading}
+                />
               </TabPanel>
               <TabPanel value={pageId} index="profilePhoto">
                 <ProfilePictureForm
                   imageURL={trainer?.imageURL}
+                  reFetchUser={reFetchTrainer}
                   onSave={onSaveProfileImage}
                   loading={profileImageLoading}
                 />
@@ -165,8 +173,9 @@ function TrainerProfileTemplate({
           </Grid>
         </Grid>
       </SectionAlternate>
+      )}
     </div>
   );
-}
+};
 
 export { TrainerProfileTemplate };

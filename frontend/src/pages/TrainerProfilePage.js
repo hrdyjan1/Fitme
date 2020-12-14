@@ -81,6 +81,10 @@ function TrainerProfilePage() {
     PASSWORD_MUTATION,
   );
 
+  const reFetchTrainer = async () => {
+    await trainerFetcher.refetch()
+  }
+
   const updateProfileImage = async (image) => {
     profileImageMutationRequest({ variables: { file: image } })
     .then((response) => {
@@ -129,6 +133,7 @@ function TrainerProfilePage() {
   return (
     <TrainerProfileTemplate
       trainer={trainerFetcher.data?.trainer}
+      reFetchTrainer={reFetchTrainer}
       trainerLoading={trainerMutationRequestState.loading}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
