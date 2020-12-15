@@ -13,7 +13,7 @@ export default {
     users: async (_p, _c, { dbConnection }) => {
       return dbConnection.query('SELECT * FROM user');
     },
-    //-------SOLUTION FOR LAST SPRINT------
+    //TODO:-------SOLUTION FOR LAST SPRINT------
     // allSportTypes: async (_p, _c, {dbConnection}) => {
     //   return dbConnection.query('SELECT sportTypeName FROM sportType;');
     // },

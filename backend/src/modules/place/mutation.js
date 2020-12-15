@@ -24,6 +24,7 @@ export const updatePlaceBasics = async (
     street,
     city,
   } = placeBasics;
+
   const updatedPlaceRows = (
     await dbConnection.query(
       `UPDATE place SET name = ?, description = ?, latitude = ?, longitude = ?, ico = ? WHERE id = ?`,
@@ -32,7 +33,7 @@ export const updatePlaceBasics = async (
   ).affectedRows;
 
   const updatedUserRows = (
-    // will be changed to proper address for LAST SPRINT
+    //TODO: will be changed to proper address for LAST SPRINT
     await dbConnection.query(
       `UPDATE user SET email = ?, phoneNumber = ?, street = ?, city = ? WHERE id = ?`,
       [email, phoneNumber, street, city, uid],
@@ -91,52 +92,12 @@ export const signupPlace = async (
   return { user, token };
 };
 
-// DEPRECATED
-export const insertPlace = async (
-  _,
-  { name, description, latitude, longitude },
-  { dbConnection },
-) => {
-  const addedRows = (
-    await dbConnection.query(
-      `INSERT INTO place (id, name, description, latitude, longitude)
-    VALUES (?, ?, ?, ?, ?);`,
-      [uuidv4(), name, description, latitude, longitude],
-    )
-  ).affectedRows;
-
-  return addedRows === 1;
-};
-
-//DEPRECATED
-export const removePlace = async (_, { id }, { dbConnection }) => {
-  const errorsStatus = (
-    await dbConnection.query(`DELETE FROM place WHERE id = ?`, [id])
-  ).warningStatus;
-
-  return errorsStatus === 0;
-};
-
-//DEPRECATED
-export const updatePlace = async (
-  _,
-  { id, name, description, latitude, longitude },
-  { dbConnection },
-) => {
-  const updatedRows = (
-    await dbConnection.query(
-      `UPDATE place SET name = ?, description = ?, latitude = ?, longitude = ?
-       WHERE id = ?`,
-      [name, description, latitude, longitude, id],
-    )
-  ).affectedRows;
-
-  return updatedRows === 1;
-};
-
 export const deletePlaceImage = async (_, { iid }, { dbConnection }) => {
+
+  const deletePlaceImageQuery = 'DELETE FROM placeGallery WHERE iid = ?;';
+
   const errorsStatus = (
-    await dbConnection.query(`DELETE FROM placeGallery WHERE iid = ?;`, [iid])
+    await dbConnection.query(deletePlaceImageQuery, [iid])
   ).warningStatus;
 
   return errorsStatus === 0;
@@ -205,7 +166,7 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
   }
 };
 
-//-------SOLUTION FOR LAST SPRINT------
+//TODO:-------SOLUTION FOR LAST SPRINT------
 // export const addSportType = async (_, stid, {dbConnection, auth}) => {
 //
 //   let id = null;
@@ -228,7 +189,7 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //     return false;
 //   }
 // };
-//-------SOLUTION FOR LAST SPRINT------
+//TODO:-------SOLUTION FOR LAST SPRINT------
 // export const removeSportType = async (_, stid, {dbConnection, auth}) => {
 //
 //   let id = null;
