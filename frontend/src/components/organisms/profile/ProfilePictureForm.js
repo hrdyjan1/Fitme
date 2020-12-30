@@ -26,7 +26,7 @@ function ProfilePictureForm ({imageURL, reFetchUser, onSave, loading }) {
 
   useEffect(() => {
     reFetchUser();
-  });
+  }, []);
 
   return (
     <div className={classes.root}>

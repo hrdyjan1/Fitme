@@ -67,79 +67,59 @@ const PASSWORD_MUTATION = gql`
 `;
 
 function TrainerProfilePage() {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
-  const trainerFetcher = useQuery(TRAINER_QUERY, { variables: { userid: user.id } });
-  const [
-    profileImageMutationRequest,
-    profileImageMutationRequestState,
-  ] = useMutation(PROFILE_IMAGE_MUTATION);
-  const [trainerMutationRequest, trainerMutationRequestState] = useMutation(
-    TRAINER_MUTATION,
-  );
-  const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION,
-  );
 
-  const reFetchTrainer = async () => {
-    await trainerFetcher.refetch()
+  const trainer = {
+    mutationRequest: (values) => trainerMutationRequest({ variables: values }),
+    onCompleted: () => showMessage('Základní informace byly aktualizovány.'),
+    onError: (error) => showErrorMessage(error.message)
   }
 
-  const updateProfileImage = async (image) => {
-    profileImageMutationRequest({ variables: { file: image } })
-    .then((response) => {
-      if (response.data) {
-        showMessage('Profilová fotka byla úspěšně aktualizována..');
-      } else {
-        showErrorMessage(String(response.errors) || 'Profilová nebyla aktualizována.');
-      }
-    })
-    .catch((error) => {
-      showErrorMessage(String(error.message));
-    });
-  };
+  const password = {
+    mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
+    onCompleted: () => showMessage('Heslo bylo změněno.'),
+    onError: (error) => showErrorMessage(error.message)
+  }
 
-  const updateTrainer = async (values) => {
-    trainerMutationRequest({ variables: values })
-    .then((response) => {
-      if (!values.street) {
-        setUser(values);
-      }
-      if (response.data) {
-        showMessage('Údaje byly úspěšně aktualizovány.');
-      } else {
-        showErrorMessage(String(response.errors) || 'Kontaktní údaje nebyly aktualizovány.');
-      }
-    })
-    .catch((error) => {
-      showErrorMessage(String(error.message));
-    });
-  };
+  const profileImage = {
+    mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
+    onCompleted: () => showMessage('Profilová fotka byla úspěšně aktualizována.'),
+    onError: (error) => showErrorMessage(error.message)
+  }
 
-  const updatePassword = async (values) => {
-    passwordMutationRequest({ variables: { ...values } })
-    .then((response) => {
-      if (response.data) {
-        showMessage('Heslo bylo změněno.');
-      } else {
-        showErrorMessage(String(response.errors) || 'Heslo nebylo změněno.');
-      }
-    })
-    .catch((error) => {
-      showErrorMessage(error.message);
-    });
-  };
+  const trainerFetcher = useQuery(TRAINER_QUERY, { variables: { userid: user.id } });
+
+  const [trainerMutationRequest, trainerMutationRequestState] = useMutation(
+    TRAINER_MUTATION,{
+      onCompleted: trainer.onCompleted,
+      onError: trainer.onError
+    }
+  );
+
+  const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
+    PASSWORD_MUTATION,{
+      onCompleted: password.onCompleted,
+      onError: password.onError
+    }
+  );
+
+  const [profileImageMutationRequest, profileImageMutationRequestState] = useMutation(
+    PROFILE_IMAGE_MUTATION,{
+      onCompleted: profileImage.onCompleted,
+      onError: profileImage.onError
+  });
 
   return (
     <TrainerProfileTemplate
       trainer={trainerFetcher.data?.trainer}
-      reFetchTrainer={reFetchTrainer}
+      reFetchTrainer={trainerFetcher.refetch}
       trainerLoading={trainerMutationRequestState.loading}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
-      onSaveTrainer={updateTrainer}
-      onSavePassword={updatePassword}
-      onSaveProfileImage={updateProfileImage}
+      onSaveTrainer={trainer.mutationRequest}
+      onSavePassword={password.mutationRequest}
+      onSaveProfileImage={profileImage.mutationRequest}
     />
   );
 }

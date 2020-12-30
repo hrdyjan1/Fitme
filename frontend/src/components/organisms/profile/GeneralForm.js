@@ -43,7 +43,7 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
 
   useEffect(() => {
     reFetchUser();
-  });
+  }, []);
 
   const validationSchema = yup.object().shape({
     ico: yupValidation.ico,
