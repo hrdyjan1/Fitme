@@ -1,4 +1,4 @@
-async function checkIfValidEmail(email, dbConnection) {
+async function checkIfValidEmail(dbConnection, email) {
   const exists = (await dbConnection.query(
     'SELECT * FROM user WHERE email = ?',
     [email],
