@@ -1,31 +1,13 @@
-import {checkIfValidEmail} from "../../constants/checkIfValidEmail";
-import {uuidv4} from "../../constants/uuid";
-import argon2 from "argon2";
 import {EMAIL, sendEmail} from "../../utils/email";
-import {createToken} from "../../libs/token";
 import getUser from '../user/helper'
+import {generalSignup} from "../../constants/generalSignup";
 
 export const signupTrainer = async (
   _,
   { firstName, lastName, ico, email, password },
-  { dbConnection, req },
+  { dbConnection },
 ) => {
-  await checkIfValidEmail(email, dbConnection);
-  const id = uuidv4();
-  const verificationToken = uuidv4();
-  const hashedPassword = await argon2.hash(password);
-
-  await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', 'trainer'],
-  );
-
-  await dbConnection.query(
-    `INSERT INTO Address (uid)
-     VALUES (?);`,
-    [id],
-  );
+  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'trainer')
 
   await dbConnection.query(
     `INSERT INTO trainer (uid, ico)
@@ -37,7 +19,6 @@ export const signupTrainer = async (
   await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
 
   const user = { id, email, firstName, lastName, ico, verified: 0 };
-  const token = createToken({ id });
 
   return { user, token };
 };

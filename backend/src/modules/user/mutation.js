@@ -4,8 +4,8 @@ import { uuidv4 } from '../../constants/uuid';
 import { Cloudinary } from '../../utils/cloudinary';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
-import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
 import getUser from './helper';
+import {generalSignup} from "../../constants/generalSignup";
 
 export const verify = async (_, { token }, { dbConnection }) => {
   const user = (
@@ -50,22 +50,7 @@ export const signup = async (
   { firstName, lastName, email, password },
   { dbConnection },
 ) => {
-  await checkIfValidEmail(email, dbConnection);
-  const id = uuidv4();
-  const verificationToken = uuidv4();
-  const hashedPassword = await argon2.hash(password);
-
-  await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', "athlete"],
-  );
-
-  await dbConnection.query(
-    `INSERT INTO Address (uid)
-      VALUES (?);`,
-    [id],
-  );
+  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'athlete');
 
   await dbConnection.query(
     `INSERT INTO athlete (uid)
@@ -77,7 +62,6 @@ export const signup = async (
   await sendEmail(EMAIL.header, email, 'Fit.me - Potvrzení registrace do systému', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
-  const token = createToken({ id });
 
   return { user, token };
 };

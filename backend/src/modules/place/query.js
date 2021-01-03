@@ -6,10 +6,9 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
   const place = placeArray[0];
 
   const pictureListArray = await dbConnection.query('SELECT * FROM placeGallery WHERE uid = ?;', [uid])
-  const pictureList = pictureListArray[0] || []
-
+  const pictureList = [pictureListArray[0]] || [];
   const tagListArray = await dbConnection.query('SELECT * FROM tag WHERE uid = ?;', [uid])
-  const tagList = tagListArray[0] || []
+  const tagList = [tagListArray[0]] || [];
 
   const user = (
     await dbConnection.query('SELECT * FROM user WHERE id = ?;', [uid])

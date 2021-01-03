@@ -1,10 +1,8 @@
 import { uuidv4 } from '../../constants/uuid';
-import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
-import argon2 from 'argon2';
 import { EMAIL, sendEmail } from '../../utils/email';
-import { createToken } from '../../libs/token';
 import getUser from "../user/helper";
 import {Cloudinary} from "../../utils/cloudinary";
+import { generalSignup } from "../../constants/generalSignup";
 
 export const updatePlaceBasics = async (
   _,
@@ -46,36 +44,9 @@ export const updatePlaceBasics = async (
 export const signupPlace = async (
   _,
   { firstName, lastName, ico, name, email, password },
-  { dbConnection, req },
+  { dbConnection },
 ) => {
-  await checkIfValidEmail(email, dbConnection);
-  const id = uuidv4();
-  const verificationToken = uuidv4();
-  const hashedPassword = await argon2.hash(password);
-
-  //added type column to see which type of user it is
-  await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-    [
-      id,
-      email,
-      firstName,
-      lastName,
-      hashedPassword,
-      verificationToken,
-      0,
-      '',
-      'place',
-    ],
-  );
-
-  //create row in dependent tables for new place
-  await dbConnection.query(
-    `INSERT INTO Address (uid)
-      VALUES (?);`,
-    [id],
-  );
+  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'place');
 
   await dbConnection.query(
     `INSERT INTO place (id, uid, name, ico)
@@ -87,7 +58,6 @@ export const signupPlace = async (
   await sendEmail(EMAIL.header, email, 'Gratuluji', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
-  const token = createToken({ id });
 
   return { user, token };
 };
