@@ -4,8 +4,8 @@ import { uuidv4 } from '../../constants/uuid';
 import { Cloudinary } from '../../utils/cloudinary';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
-import { checkIfValidEmail } from '../../constants/checkIfValidEmail';
 import getUser from './helper';
+import {generalSignup} from "../../constants/generalSignup";
 
 export const verify = async (_, { token }, { dbConnection }) => {
   const user = (
@@ -48,24 +48,9 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
 export const signup = async (
   _,
   { firstName, lastName, email, password },
-  { dbConnection, req },
+  { dbConnection },
 ) => {
-  await checkIfValidEmail(email, dbConnection);
-  const id = uuidv4();
-  const verificationToken = uuidv4();
-  const hashedPassword = await argon2.hash(password);
-
-  await dbConnection.query(
-    `INSERT INTO user (id, email, firstName, lastName, password, verificationToken, verified, lockedToken, type)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-    [id, email, firstName, lastName, hashedPassword, verificationToken, 0, '', "athlete"],
-  );
-
-  await dbConnection.query(
-    `INSERT INTO Address (uid)
-      VALUES (?);`,
-    [id],
-  );
+  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'athlete');
 
   await dbConnection.query(
     `INSERT INTO athlete (uid)
@@ -77,7 +62,6 @@ export const signup = async (
   await sendEmail(EMAIL.header, email, 'Fit.me - Potvrzení registrace do systému', emailText);
 
   const user = { id, email, firstName, lastName, verified: 0 };
-  const token = createToken({ id });
 
   return { user, token };
 };
@@ -155,7 +139,6 @@ export const updatePassword = async (_, args, { dbConnection, auth }) => {
 export const updateUser = async (_, args, { dbConnection, auth }) => {
   const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
 
-  // const selectUserQuery = 'SELECT email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country FROM user WHERE id = ?;';
   const selectUserQuery = 'SELECT email, firstName, lastName, ath.nickname, phoneNumber, a.street, a.city, a.zipCode, a.country FROM `user` u JOIN Address a ON u.id = a.uid JOIN athlete ath ON u.id = ath.uid WHERE id = ?;';
   const updateUserQuery = 'UPDATE user SET email = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE id = ?;';
   const updateAddressQuery = 'UPDATE Address SET street = ?, city = ?, zipCode = ?, country = ? WHERE uid = ?;';
