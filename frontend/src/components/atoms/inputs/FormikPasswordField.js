@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { Field } from 'formik';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { InputLabel } from 'src/components/atoms';
 
 function FormikPasswordField({name, label, placeholder}) {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -18,7 +19,7 @@ function FormikPasswordField({name, label, placeholder}) {
 
   return (
     <>
-      { label && <div color="textPrimary" className="input__label">{label}</div> }
+      { label && <InputLabel label={label}/> }
       <Field
         validateOnBlur
         validateOnChange

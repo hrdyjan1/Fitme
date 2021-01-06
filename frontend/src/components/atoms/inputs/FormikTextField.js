@@ -1,16 +1,12 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import { Field } from 'formik';
+import { InputLabel } from 'src/components/atoms';
 
 function FormikTextField({ name, label, placeholder }) {
   return (
     <>
-      <div
-        color="textPrimary"
-        className="input__label"
-      >
-        {label}
-      </div>
+      { label && <InputLabel label={label}/> }
       <Field
         validateOnBlur
         validateOnChange

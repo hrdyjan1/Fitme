@@ -2,7 +2,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { SectionHeader } from 'src/components/molecules/SectionHeader';
+import { SectionHeader } from 'src/components/molecules';
 import Section from 'src/components/organisms/Section';
 
 const useStyles = makeStyles((theme) => ({

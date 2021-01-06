@@ -1,27 +1,30 @@
 import React from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { TrainerProfileTemplate } from 'src/templates';
+import { PlaceProfileTemplate } from 'src/templates';
 import { useUser } from 'src/contexts/user';
 import { useNotification } from 'src/contexts/notification';
 
-const TRAINER_QUERY = gql`
-  query Trainer($userid: String!) {
-    trainer(uid: $userid) {
-      ico
-      firstName
-      lastName
-      email
+const PLACE_QUERY = gql`
+  query Place($userid: String!) {
+    place(uid: $userid) {
+      id  
+      name
       phoneNumber
-      description
-      tagList {
-        id
-        name
+      ico
+      pictureList {
+        iid        
+        imageURL
       }
-      street
+      tagList {
+          id
+          name
+      }
+      description
+      latitude
+      longitude
       city
-      zipCode
-      country
-      imageURL
+      street
+      email
     }
   }
 `;
@@ -32,8 +35,8 @@ const PROFILE_IMAGE_MUTATION = gql`
   }
 `;
 
-const TRAINER_MUTATION = gql`
-  mutation UpdateTrainer(
+const PLACE_MUTATION = gql`
+  mutation UpdatePlace(
     $ico: String
     $email: String
     $phoneNumber: String
@@ -45,7 +48,7 @@ const TRAINER_MUTATION = gql`
     $zipCode: String
     $country: String
   ) {
-    updateTrainer(
+    updatePlace(
       ico: $ico
       email: $email
       phoneNumber: $phoneNumber
@@ -66,12 +69,12 @@ const PASSWORD_MUTATION = gql`
   }
 `;
 
-function TrainerProfilePage() {
+function PlaceProfilePage() {
   const { user } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
 
-  const trainer = {
-    mutationRequest: (values) => trainerMutationRequest({ variables: values }),
+  const place = {
+    mutationRequest: (values) => placeMutationRequest({ variables: values }),
     onCompleted: () => showMessage('Základní informace byly aktualizovány.'),
     onError: (error) => showErrorMessage(error.message)
   }
@@ -88,12 +91,12 @@ function TrainerProfilePage() {
     onError: (error) => showErrorMessage(error.message)
   }
 
-  const trainerFetcher = useQuery(TRAINER_QUERY, { variables: { userid: user.id } });
+  const placeFetcher = useQuery(PLACE_QUERY, { variables: { userid: user.id } });
 
-  const [trainerMutationRequest, trainerMutationRequestState] = useMutation(
-    TRAINER_MUTATION,{
-      onCompleted: trainer.onCompleted,
-      onError: trainer.onError
+  const [placeMutationRequest, placeMutationRequestState] = useMutation(
+    PLACE_MUTATION,{
+      onCompleted: place.onCompleted,
+      onError: place.onError
     }
   );
 
@@ -108,20 +111,20 @@ function TrainerProfilePage() {
     PROFILE_IMAGE_MUTATION,{
       onCompleted: profileImage.onCompleted,
       onError: profileImage.onError
-  });
+    });
 
   return (
-    <TrainerProfileTemplate
-      trainer={trainerFetcher.data?.trainer}
-      reFetchTrainer={trainerFetcher.refetch}
-      trainerLoading={trainerMutationRequestState.loading}
+    <PlaceProfileTemplate
+      place={placeFetcher.data?.place}
+      reFetchPlace={placeFetcher.refetch}
+      placeLoading={placeMutationRequestState.loading}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
-      onSaveTrainer={trainer.mutationRequest}
+      onSavePlace={place.mutationRequest}
       onSavePassword={password.mutationRequest}
       onSaveProfileImage={profileImage.mutationRequest}
     />
   );
 }
 
-export { TrainerProfilePage };
+export { PlaceProfilePage };
