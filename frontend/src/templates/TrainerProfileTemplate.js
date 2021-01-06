@@ -1,27 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import clsx from 'clsx';
-import {
-  Box, List, ListItem, Grid, Typography, LinearProgress
-} from '@material-ui/core'
+import { Grid, LinearProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
-import CardBase from 'src/components/organisms/cardBase';
 import SectionAlternate from 'src/components/organisms/SectionAlternate';
 import {
-  GeneralForm, PasswordForm,
+  GeneralForm,
+  PasswordForm,
   ProfileHeader,
-  ProfilePictureForm
+  ProfilePictureForm,
+  TabPanel,
+  CardBase,
+  ProfileMenu
 } from 'src/components/organisms'
 import { Notifications } from 'src/components/organisms/account/components';
-
-const TabPanel = ({
-                    children, value, index, ...other
-                  }) => (
-  <Box display="flex" justifyContent="center" hidden={value !== index} {...other}>
-    {value === index && children}
-  </Box>
-);
 
 const subPages = [
   {
@@ -61,39 +53,6 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  menu: {
-    height: 'auto',
-  },
-  list: {
-    display: 'inline-flex',
-    overflow: 'auto',
-    flexWrap: 'nowrap',
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      marginRight: theme.spacing(-3),
-      marginLeft: theme.spacing(-3),
-    },
-  },
-  listItem: {
-    cursor: 'pointer',
-    marginRight: theme.spacing(2),
-    flex: 0,
-    [theme.breakpoints.up('md')]: {
-      paddingRight: theme.spacing(3),
-      paddingLeft: theme.spacing(3),
-      borderLeft: '2px solid transparent',
-    },
-  },
-  listItemActive: {
-    [theme.breakpoints.up('md')]: {
-      borderLeft: `2px solid ${theme.palette.primary.dark}`,
-    },
-    '& .menu__item': {
-      color: theme.palette.text.primary,
-    },
-  },
 }));
 
 function TrainerProfileTemplate({
@@ -119,34 +78,10 @@ function TrainerProfileTemplate({
       <SectionAlternate className={classes.section}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={3}>
-            <CardBase withShadow align="left" className={classes.menu}>
-              <List disablePadding className={classes.list}>
-                {subPages.map((item) => (
-                  <ListItem
-                    key={item.id}
-                    component="a"
-                    className={clsx(
-                      classes.listItem,
-                      pageId === item.id ? classes.listItemActive : {},
-                    )}
-                    onClick={() => setPageId(item.id)}
-                    disableGutters
-                  >
-                    <Typography
-                      variant="subtitle1"
-                      noWrap
-                      color="textSecondary"
-                      className="menu__item"
-                    >
-                      {item.title}
-                    </Typography>
-                  </ListItem>
-                ))}
-              </List>
-            </CardBase>
+            <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId}/>
           </Grid>
           <Grid item xs={12} md={9}>
-            <CardBase withShadow align="left">
+            <CardBase>
               <TabPanel value={pageId} index="general">
                 <GeneralForm
                   user={trainer}

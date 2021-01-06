@@ -7,6 +7,7 @@ import { ResetPassword } from './ResetPassword';
 import { UserProfilePage } from './UserProfilePage';
 import { TrainerProfilePage } from './TrainerProfilePage'
 import { SportPlacesPage } from './SportPlacesPage';
+import { PlaceProfilePage } from './PlaceProfilePage';
 
 export {
   HomePage,
@@ -16,6 +17,7 @@ export {
   PageNotFound,
   ResetPassword,
   UserProfilePage,
+  PlaceProfilePage,
   TrainerProfilePage,
   SportPlacesPage,
 };

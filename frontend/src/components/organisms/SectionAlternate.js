@@ -21,30 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/**
- * Component to display the alternative sections
- *
- * @param {Object} props
- */
-const SectionAlternate = (props) => {
-  const {
-    children, innerNarrowed, className, ...rest
-  } = props;
-
+const SectionAlternate = ({ children, className }) => {
   const classes = useStyles();
 
   return (
-    <section
-      className={clsx('section-alternate', classes.root, className)}
-      {...rest}
-    >
-      <div
-        className={clsx(
-          'section-alternate__content',
-          classes.inner,
-          innerNarrowed ? classes.innerNarrowed : {},
-        )}
-      >
+    <section className={clsx('section-alternate', classes.root, className)}>
+      <div className={clsx('section-alternate__content', classes.inner)}>
         {children}
       </div>
     </section>

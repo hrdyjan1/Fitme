@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { FormikTextField } from 'src/components/atoms/FormikTextField';
+import { FormikTextField } from 'src/components/atoms/inputs/FormikTextField';
 import { CardForm } from 'src/components/organisms/CardForm';
 import * as yup from 'yup';
 import { yupValidation } from 'src/constants/yupValidation';

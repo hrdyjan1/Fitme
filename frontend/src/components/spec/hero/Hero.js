@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Grid, Typography } from '@material-ui/core';
 
 import { Image } from 'src/components/atoms/image';
-import { SectionHeader } from 'src/components/molecules/SectionHeader';
+import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { PARTNERS } from './helpers';
 
 const useStyles = makeStyles((theme) => ({
