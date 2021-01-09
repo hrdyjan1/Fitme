@@ -41,23 +41,22 @@ const categoriesOptions = [
 
 const SportPlace = ({ className, showAll, ...rest }) => {
   const classes = useStyles();
+  // TODO: Correct places @Michalinka
+  // Needs to useMutation with 'category' and 'searchValue'
+  const { data } = useQuery(GET_PLACES);
+  const places = isFilledArray(data?.places) ? data?.places : null;
 
   const timer = React.useRef();
   const [loading, setLoading] = React.useState(false);
   const [category, setCategory] = React.useState('');
   const [searchValue, setSearchValue] = React.useState('');
 
-  // TODO: Correct places @Michalinka
-  // Needs to useMutation with 'category' and 'searchValue'
-  const { data } = useQuery(GET_PLACES);
-  const places = isFilledArray(data?.places) ? data?.places : null;
-
   const onCategoryChange = (_, value) => setCategory(value);
   const onSearchValueChange = (_, value) => setSearchValue(value);
 
   const history = useHistory();
   const goToSportPlaces = () => history.push(route.sportPlaces());
-  const maxPlaceToSee = showAll ? data.length : 6;
+  const maxPlaceToSee = showAll && places ? places.length : 6;
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
