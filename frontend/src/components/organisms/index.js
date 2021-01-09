@@ -16,6 +16,7 @@ import { TabPanel } from './profile/TabPanel';
 import { ProfileMenu } from './profile/ProfileMenu';
 import { CardBase } from './profile/CardBase';
 import Search from './search';
+import SportPlace from './sportPlace';
 
 export {
   CardForm,
@@ -36,4 +37,5 @@ export {
   ProfileMenu,
   CardBase,
   Search,
+  SportPlace,
 };

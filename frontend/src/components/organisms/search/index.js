@@ -48,17 +48,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  searchButton: {
-    maxHeight: 45,
-    minWidth: 135,
-    [theme.breakpoints.down('sm')]: {
-      minWidth: 'auto',
-    },
-  },
 }));
 
 function Search({
-  heading, options, placeholder, label, freeSolo = false, onInputChange = noop,
+  options, placeholder, label, freeSolo = false, onInputChange = noop,
 }) {
   const classes = useStyles();
 
@@ -95,14 +88,7 @@ function Search({
             )}
           />
         </FormControl>
-        <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          className={classes.searchButton}
-        >
-          Zvolit
-        </Button>
+
       </div>
     </Section>
   );
