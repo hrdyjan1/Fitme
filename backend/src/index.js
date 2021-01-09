@@ -27,7 +27,11 @@ const typeDefs = gql`
   }
 
   #TODO:-------SOLUTION FOR LAST SPRINT------ 
-#  type SportType {
+  type SportType {
+    sportTypeName: String!
+  }
+#  
+#  input SportTypeInput {
 #    sportTypeName: String!
 #  }
   
@@ -60,7 +64,7 @@ const typeDefs = gql`
     uid: String
     imageURL: String!
   }
-
+  
   type Tag {
     id: String!
     uid: String
@@ -124,8 +128,9 @@ const typeDefs = gql`
     places: [Place!]!
     place(uid: String!): PlaceDetail!
     trainer(uid: String!): TrainerDetail!
+    searchPlaces(containedName: String, sportType: String): [Place!]!
 #TODO:-------SOLUTION FOR LAST SPRINT------ 
-#    allSportTypes: [SportType]!
+    allSportTypes: [SportType]!
 #    sportTypes: [SportType]!
   }
 
