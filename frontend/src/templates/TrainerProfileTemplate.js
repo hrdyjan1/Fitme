@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Grid, LinearProgress } from '@material-ui/core'
+import { Grid, LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SectionAlternate from 'src/components/organisms/SectionAlternate';
@@ -11,8 +11,8 @@ import {
   ProfilePictureForm,
   TabPanel,
   CardBase,
-  ProfileMenu
-} from 'src/components/organisms'
+  ProfileMenu,
+} from 'src/components/organisms';
 import { Notifications } from 'src/components/organisms/account/components';
 
 const subPages = [
@@ -31,7 +31,7 @@ const subPages = [
   {
     id: 'tags',
     title: 'Nabízené disciplíny',
-  }
+  },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +63,7 @@ function TrainerProfileTemplate({
   profileImageLoading,
   onSaveTrainer,
   onSavePassword,
-  onSaveProfileImage
+  onSaveProfileImage,
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
@@ -73,12 +73,12 @@ function TrainerProfileTemplate({
       {(passwordLoading || trainerLoading || profileImageLoading) && (
         <LinearProgress />
       )}
-      <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje."/>
+      <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje." />
       {trainer && (
       <SectionAlternate className={classes.section}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={3}>
-            <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId}/>
+            <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId} />
           </Grid>
           <Grid item xs={12} md={9}>
             <CardBase>
@@ -111,6 +111,6 @@ function TrainerProfileTemplate({
       )}
     </div>
   );
-};
+}
 
 export { TrainerProfileTemplate };

@@ -2,7 +2,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { ProfileTitle, ProfileSubtitle } from 'src/components/atoms'
+import { ProfileTitle, ProfileSubtitle } from 'src/components/atoms';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,11 +30,11 @@ const ProfileHeader = ({ title, subtitle }) => {
       <section className={classes.section}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <ProfileTitle title={title}/>
+            <ProfileTitle title={title} />
           </Grid>
           {subtitle && (
             <Grid item xs={12}>
-              <ProfileSubtitle subtitle={subtitle}/>
+              <ProfileSubtitle subtitle={subtitle} />
             </Grid>
           )}
         </Grid>

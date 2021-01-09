@@ -76,42 +76,43 @@ function PlaceProfilePage() {
   const place = {
     mutationRequest: (values) => placeMutationRequest({ variables: values }),
     onCompleted: () => showMessage('Základní informace byly aktualizovány.'),
-    onError: (error) => showErrorMessage(error.message)
-  }
+    onError: (error) => showErrorMessage(error.message),
+  };
 
   const password = {
     mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
     onCompleted: () => showMessage('Heslo bylo změněno.'),
-    onError: (error) => showErrorMessage(error.message)
-  }
+    onError: (error) => showErrorMessage(error.message),
+  };
 
   const profileImage = {
     mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
     onCompleted: () => showMessage('Profilová fotka byla úspěšně aktualizována.'),
-    onError: (error) => showErrorMessage(error.message)
-  }
+    onError: (error) => showErrorMessage(error.message),
+  };
 
   const placeFetcher = useQuery(PLACE_QUERY, { variables: { userid: user.id } });
 
   const [placeMutationRequest, placeMutationRequestState] = useMutation(
-    PLACE_MUTATION,{
+    PLACE_MUTATION, {
       onCompleted: place.onCompleted,
-      onError: place.onError
-    }
+      onError: place.onError,
+    },
   );
 
   const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION,{
+    PASSWORD_MUTATION, {
       onCompleted: password.onCompleted,
-      onError: password.onError
-    }
+      onError: password.onError,
+    },
   );
 
   const [profileImageMutationRequest, profileImageMutationRequestState] = useMutation(
-    PROFILE_IMAGE_MUTATION,{
+    PROFILE_IMAGE_MUTATION, {
       onCompleted: profileImage.onCompleted,
-      onError: profileImage.onError
-    });
+      onError: profileImage.onError,
+    },
+  );
 
   return (
     <PlaceProfileTemplate

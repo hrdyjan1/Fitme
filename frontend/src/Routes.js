@@ -9,7 +9,7 @@ import {
   PageNotFound,
   UserProfilePage,
   SportPlacesPage,
-  TrainerProfilePage
+  TrainerProfilePage,
 } from 'src/pages';
 import Account from './components/organisms/account';
 

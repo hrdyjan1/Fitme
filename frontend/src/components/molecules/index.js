@@ -5,5 +5,5 @@ import { SectionHeader } from './profile/SectionHeader';
 export {
   ProfilePicture,
   UserTypesRadioButtons,
-  SectionHeader
+  SectionHeader,
 };

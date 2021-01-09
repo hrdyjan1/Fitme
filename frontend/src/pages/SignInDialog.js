@@ -46,7 +46,7 @@ export function SignInDialog({
   const [signin, { loading }] = useMutation(SIGN_IN);
 
   const handleShowingForgotPassword = compose(onForgotPassClick, close);
-  const showUserProfile = (user) => history.push(route.userProfileRoute(user.type))
+  const showUserProfile = (user) => history.push(route.userProfileRoute(user.type));
 
   const onSave = (values) => {
     signin({

@@ -6,7 +6,7 @@ import { InputLabel } from 'src/components/atoms';
 function FormikTextField({ name, label, placeholder }) {
   return (
     <>
-      { label && <InputLabel label={label}/> }
+      { label && <InputLabel label={label} /> }
       <Field
         validateOnBlur
         validateOnChange

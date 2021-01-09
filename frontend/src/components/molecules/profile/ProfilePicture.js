@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Box, Card, CardMedia,
 } from '@material-ui/core';
-import { InputFileButton, ImageButton } from 'src/components/atoms'
+import { InputFileButton, ImageButton } from 'src/components/atoms';
 
 function ProfilePicture({ imageURL, loading, onSave }) {
   const [imageSource, setImageSource] = React.useState();

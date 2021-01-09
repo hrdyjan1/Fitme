@@ -74,7 +74,7 @@ const route = {
   sportPlaces: () => '/sportPlaces',
   editSportPlace: () => '/editSportPlace',
   trainerProfile: () => '/trainerProfile',
-  userProfileRoute
+  userProfileRoute,
 };
 
 export { route, pages };
