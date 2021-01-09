@@ -6,22 +6,9 @@ import { generalSignup } from "../../constants/generalSignup";
 
 export const updatePlaceBasics = async (
   _,
-  { placeBasics },
+  { id, uid, firstName, lastName, name, ico, email, phoneNumber, description, latitude, longitude, street, city, zipCode, country },
   { dbConnection },
 ) => {
-  const {
-    id,
-    uid,
-    name,
-    ico,
-    email,
-    phoneNumber,
-    description,
-    latitude,
-    longitude,
-    street,
-    city,
-  } = placeBasics;
 
   const updatedPlaceRows = (
     await dbConnection.query(
@@ -31,14 +18,20 @@ export const updatePlaceBasics = async (
   ).affectedRows;
 
   const updatedUserRows = (
-    //TODO: will be changed to proper address for LAST SPRINT
     await dbConnection.query(
-      `UPDATE user SET email = ?, phoneNumber = ?, street = ?, city = ? WHERE id = ?`,
-      [email, phoneNumber, street, city, uid],
+      `UPDATE user SET firstName = ?, lastName = ?, email = ?, phoneNumber = ? WHERE id = ?`,
+      [firstName, lastName, email, phoneNumber, uid],
     )
   ).affectedRows;
 
-  return updatedPlaceRows === 1 && updatedUserRows === 1;
+  const updatedAddressRows = (
+    await dbConnection.query(
+      `UPDATE Address SET country = ?, zipCode = ?, street = ?, city = ? WHERE uid = ?`,
+      [country, zipCode, street, city, uid],
+    )
+  ).affectedRows;
+
+  return updatedPlaceRows === 1 && updatedUserRows === 1 && updatedAddressRows === 1;
 };
 
 export const signupPlace = async (
@@ -181,4 +174,4 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //     return false;
 //   }
 // };
-  
+

@@ -1,12 +1,20 @@
 import React from 'react';
 import { Button } from '@material-ui/core'
 
-const InputFileButton = ({ text, onChange, loading }) => {
+const InputImageButton = ({ text, onLoad, loading }) => {
+  const onChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => onLoad(reader.result);
+  };
+
   return (
     <Button
       component="label"
+      variant="contained"
       color="primary"
-      size="small"
+      size="large"
       disabled={loading}
     >
       <input
@@ -21,4 +29,4 @@ const InputFileButton = ({ text, onChange, loading }) => {
   )
 };
 
-export { InputFileButton };
+export { InputImageButton };

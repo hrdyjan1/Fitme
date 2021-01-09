@@ -5,8 +5,10 @@ import { ProfileTitle } from './titles/ProfileTitle';
 import { ProfileSubtitle } from './titles/ProfileSubtitle';
 import { FormTitle } from './titles/FormTitle';
 import { FormButton } from './buttons/FormButton';
-import { ImageButton } from './buttons/ImageButton';
-import { InputFileButton } from './buttons/InputFileButton';
+import { ProfileImageButton } from './buttons/ProfileImageButton';
+import { InputImageButton } from './buttons/InputImageButton';
+import { Tag } from './chips/Tag'
+import { TextInput } from './inputs/TextInput'
 
 export {
   FormikTextField,
@@ -16,6 +18,8 @@ export {
   FormTitle,
   InputLabel,
   FormButton,
-  ImageButton,
-  InputFileButton,
+  ProfileImageButton,
+  InputImageButton,
+  Tag,
+  TextInput,
 }

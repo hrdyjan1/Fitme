@@ -12,7 +12,7 @@ import {
   CardContent,
   Typography,
 } from '@material-ui/core';
-import { Image } from 'src/components/atoms/image';
+import { GalleryImage } from 'src/components/molecules/image/GalleryImage';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { useHistory } from 'react-router-dom';
 import { route } from 'src/constants/routes';
@@ -98,7 +98,7 @@ const SportPlaces = ({
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
             <Card className={classes.card}>
               <CardMedia className={classes.cardMedia}>
-                <Image
+                <GalleryImage
                   src="https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg"
                   alt={item.name}
                   className={classes.image}

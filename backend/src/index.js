@@ -84,6 +84,8 @@ const typeDefs = gql`
 
   type PlaceDetail {
     id: String!
+    firstName: String!
+    lastName: String!
     name: String!
     ico: String!
     email: String!
@@ -95,21 +97,8 @@ const typeDefs = gql`
     tagList: [Tag]!
     street: String!
     city: String!
-  }
-
-  # No arrays
-  input PlaceBasics {
-    id: String!
-    uid: String!
-    name: String!
-    ico: String!
-    email: String!
-    phoneNumber: String!
-    description: String!
-    latitude: String!
-    longitude: String!
-    street: String!
-    city: String!
+    zipCode: String!
+    country: String!
   }
 
   type AuthInfo {
@@ -184,7 +173,23 @@ const typeDefs = gql`
       ico: String!
       name: String!
     ): AuthInfo!
-    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
+    updatePlaceBasics(
+      id: String!
+      uid: String!
+      firstName: String
+      lastName: String
+      name: String
+      ico: String
+      email: String
+      phoneNumber: String
+      description: String
+      latitude: String
+      longitude: String
+      street: String
+      city: String
+      zipCode: String
+      country: String
+    ): Boolean
     deletePlaceImage(iid: String!): Boolean!
     uploadPlaceImage(file: String!): Boolean!
     addTag(name: String!): Boolean!

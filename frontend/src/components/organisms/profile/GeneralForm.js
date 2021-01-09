@@ -10,42 +10,72 @@ import { useTheme } from '@material-ui/core/styles';
 import { FormikTextField, FormTitle, FormButton } from 'src/components/atoms';
 import * as yup from 'yup'
 import { yupValidation } from 'src/constants/yupValidation'
+import { useUser } from '../../../contexts/user'
 
-function GeneralForm ({user, reFetchUser, onSave, loading }) {
+const USER_TYPE_ATHLETE = 'athlete';
+const USER_TYPE_PLACE_OWNER = 'place';
+const USER_TYPE_TRAINER = 'trainer';
+
+function GeneralForm ({data, reFetchData, onSave, loading }) {
+  const { user } = useUser();
   const theme = useTheme();
+  const isUserPlaceOwner = user.type === USER_TYPE_PLACE_OWNER;
+  const isUserTrainer = user.type === USER_TYPE_TRAINER;
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
 
   const [initialValues, setInitialValues] = React.useState({
-    ico: user?.ico || '',
-    email: user?.email || '',
-    phoneNumber: user?.phoneNumber || '',
-    description: user?.description || '',
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    street: user?.street || '',
-    city: user?.city || '',
-    zipCode: user?.zipCode || '',
-    country: user?.country || ''
+    ico: data?.ico || '',
+    email: data?.email || '',
+    phoneNumber: data?.phoneNumber || '',
+    description: data?.description || '',
+    name: data?.name || '',
+    firstName: data?.firstName || '',
+    lastName: data?.lastName || '',
+    street: data?.street || '',
+    city: data?.city || '',
+    zipCode: data?.zipCode || '',
+    country: data?.country || '',
+    latitude: data?.latitude || '',
+    longitude: data?.longitude || '',
   });
 
   useEffect(() => {
-    reFetchUser();
+    reFetchData();
   }, []);
 
-  const validationSchema = yup.object().shape({
-    ico: yupValidation.ico,
-    email: yupValidation.email,
-    phoneNumber: yupValidation.phoneNumber,
-    description: yupValidation.description,
+  const athleteValidationSchema = {
     firstName: yupValidation.firstName,
     lastName: yupValidation.lastName,
+    email: yupValidation.email,
+    phoneNumber: yupValidation.phoneNumber,
     street: yupValidation.street,
     city: yupValidation.city,
     zipCode: yupValidation.zipCode,
     country: yupValidation.country
-  });
+  };
+
+  const trainerValidationSchema = {
+    ...athleteValidationSchema,
+    ico: yupValidation.ico,
+    description: yupValidation.description,
+  };
+
+  const placeOwnerValidationSchema = {
+    ...trainerValidationSchema,
+    name: yupValidation.name,
+    latitude: yupValidation.latitude,
+    longitude: yupValidation.longitude,
+  };
+
+  const validationSchema = () => {
+    switch (user.type) {
+      case USER_TYPE_ATHLETE: return yup.object().shape(athleteValidationSchema)
+      case USER_TYPE_PLACE_OWNER: return yup.object().shape(placeOwnerValidationSchema)
+      case USER_TYPE_TRAINER: return yup.object().shape(trainerValidationSchema)
+    }
+  }
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
@@ -67,9 +97,8 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
                 <FormTitle title="Základní informace"/>
               </Grid>
               <Grid item xs={12}>
-                <Divider />
+                <Divider/>
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <FormikTextField
                   label="Jméno"
@@ -79,18 +108,29 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormikTextField
-                  label="Příjmení"
-                  name="lastName"
-                  placeholder="Zadejte příjmení"
+                label="Příjmení"
+                name="lastName"
+                placeholder="Zadejte příjmení"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormikTextField
-                  label="IČO"
-                  name="ico"
-                  placeholder="Zadejte ičo"
-                />
-              </Grid>
+              {isUserPlaceOwner && (
+                <Grid item xs={12} sm={6}>
+                  <FormikTextField
+                    label="Název organizace"
+                    name="name"
+                    placeholder="Zadejte název"
+                  />
+                </Grid>
+              )}
+              {(isUserPlaceOwner || isUserTrainer) && (
+                <Grid item xs={12} sm={6}>
+                  <FormikTextField
+                    label="IČO"
+                    name="ico"
+                    placeholder="Zadejte ičo"
+                  />
+                </Grid>
+              )}
               <Grid item xs={12} sm={6}>
                 <FormikTextField
                   label="Ulice a č.p."
@@ -119,13 +159,33 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
                   placeholder="Zadejte stát"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormikTextField
-                  label="Popis"
-                  name="description"
-                  placeholder="Zadejte popis"
-                />
-              </Grid>
+              {isUserPlaceOwner && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <FormikTextField
+                      label="Zeměpisná šířka"
+                      name="latitude"
+                      placeholder="Zadejte zeměpisnou šířku"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormikTextField
+                    label="Zeměpisná délka"
+                    name="longitude"
+                    placeholder="Zadejte zeměpisnou délku"
+                    />
+                  </Grid>
+                </>
+              )}
+              {(isUserPlaceOwner || isUserTrainer) && (
+                <Grid item xs={12}>
+                  <FormikTextField
+                    label="Popis"
+                    name="description"
+                    placeholder="Zadejte popis"
+                  />
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <Divider />
               </Grid>

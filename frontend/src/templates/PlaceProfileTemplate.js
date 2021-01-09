@@ -8,12 +8,12 @@ import {
   GeneralForm,
   PasswordForm,
   ProfileHeader,
-  ProfilePictureForm,
   TabPanel,
   CardBase,
-  ProfileMenu
+  ProfileMenu,
+  Gallery,
 } from 'src/components/organisms'
-import { Notifications } from 'src/components/organisms/account/components';
+import {Billing, Notifications} from 'src/components/organisms/account/components'
 
 const subPages = [
   {
@@ -25,7 +25,7 @@ const subPages = [
     title: 'Fotografie',
   },
   {
-    id: 'security',
+    id: 'password',
     title: 'Heslo',
   },
   {
@@ -64,20 +64,37 @@ function PlaceProfileTemplate({
   reFetchPlace,
   placeLoading,
   passwordLoading,
-  profileImageLoading,
+  uploadPlaceImageLoading,
+  deletePlaceImageLoading,
+  addTagLoading,
+  deleteTagLoading,
   onSavePlace,
   onSavePassword,
-  onSaveProfileImage
+  onSavePlaceImage,
+  onDeletePlaceImage,
+  onSaveTag,
+  onDeleteTag,
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
+  const isLoading = (
+    passwordLoading
+    || placeLoading
+    || uploadPlaceImageLoading
+    || deletePlaceImageLoading
+    || addTagLoading
+    || deleteTagLoading
+  );
 
   return (
     <div className={classes.root}>
-      {(passwordLoading || placeLoading || profileImageLoading) && (
+      {isLoading && (
         <LinearProgress />
       )}
-      <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje."/>
+      <ProfileHeader
+        title="Váš profil sportoviště"
+        subtitle="Zde si můžete změnit veškeré údaje o vašem sportovišti."
+      />
       {place && (
         <SectionAlternate className={classes.section}>
           <Grid container spacing={4}>
@@ -88,18 +105,19 @@ function PlaceProfileTemplate({
               <CardBase>
                 <TabPanel value={pageId} index="general">
                   <GeneralForm
-                    user={place}
-                    reFetchUser={reFetchPlace}
+                    data={place}
+                    reFetchData={reFetchPlace}
                     onSave={onSavePlace}
                     loading={placeLoading}
                   />
                 </TabPanel>
-                <TabPanel value={pageId} index="profilePhoto">
-                  <ProfilePictureForm
-                    imageURL={place?.imageURL}
-                    reFetchUser={reFetchPlace}
-                    onSave={onSaveProfileImage}
-                    loading={profileImageLoading}
+                <TabPanel value={pageId} index="photos">
+                  <Gallery
+                    name={place?.name}
+                    images={place?.pictureList}
+                    reFetchData={reFetchPlace}
+                    onSave={onSavePlaceImage}
+                    onDelete={onDeletePlaceImage}
                   />
                 </TabPanel>
                 <TabPanel value={pageId} index="password">
@@ -107,6 +125,9 @@ function PlaceProfileTemplate({
                 </TabPanel>
                 <TabPanel value={pageId} index="tags">
                   <Notifications place={place} />
+                </TabPanel>
+                <TabPanel value={pageId} index="trainers">
+                  <Billing place={place} />
                 </TabPanel>
               </CardBase>
             </Grid>

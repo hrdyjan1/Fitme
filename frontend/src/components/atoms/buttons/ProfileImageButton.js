@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core'
 
-const ImageButton = ({ text, onClick, loading }) => {
+const ProfileImageButton = ({ text, onClick, loading }) => {
   return (
     <Button
       color="primary"
@@ -16,4 +16,4 @@ const ImageButton = ({ text, onClick, loading }) => {
   )
 };
 
-export { ImageButton };
+export { ProfileImageButton };

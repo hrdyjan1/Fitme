@@ -12,7 +12,7 @@ import {
   Divider,
   Box,
 } from '@material-ui/core';
-import { Image } from 'src/components/atoms/image';
+import { GalleryImage } from 'src/components/molecules/image/GalleryImage';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -116,7 +116,7 @@ const Gallery = (props) => {
           {data.map((item, index) => (
             <GridListTile key={index} cols={isMd ? item.cols : 3 || 1}>
               <div className={classes.folioItem}>
-                <Image
+                <GalleryImage
                   src={item.cover}
                   alt={item.title}
                   className={clsx('folio__image', classes.image)}

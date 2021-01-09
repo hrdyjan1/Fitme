@@ -7,25 +7,6 @@ import { EMAIL, sendEmail } from '../../utils/email';
 import getUser from './helper';
 import {generalSignup} from "../../constants/generalSignup";
 
-export const verify = async (_, { token }, { dbConnection }) => {
-  const user = (
-    await dbConnection.query(`SELECT * FROM user WHERE verificationToken = ?`, [
-      token,
-    ])
-  )[0];
-
-  if (user) {
-    if (!user.verified) {
-      await dbConnection.query(
-        `UPDATE user SET verified = true WHERE verificationToken = ?;`,
-        [token],
-      );
-      return true;
-    }
-  }
-  return false;
-};
-
 export const signin = async (_, { email, password }, { dbConnection }) => {
   const user = (
     await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [email])
