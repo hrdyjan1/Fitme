@@ -57,9 +57,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const categoriesOptions = [
+  { title: 'Jóga' },
+  { title: 'Běhání' },
+  { title: 'Posilování' },
+  { title: 'Aerobik' },
+  { title: 'Zumba' },
+];
+
 const SportPlaces = ({
   data, className, showAll, ...rest
 }) => {
+  const [category, setCategory] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState('');
+
+  const onCategoryChange = (_, value) => setCategory(value);
+  const onSearchValueChange = (_, value) => setSearchValue(value);
+
   const classes = useStyles();
   const history = useHistory();
   const goToSportPlaces = () => history.push(route.sportPlaces());
@@ -94,9 +108,21 @@ const SportPlaces = ({
         subtitle="Zde je seznam sportovišť, které doporučujeme."
         titleVariant="h4"
       />
-      <Search />
+      <Search
+        options={categoriesOptions}
+        placeholder="Vybrat kategorii"
+        label="Kategorie"
+        onInputChange={onCategoryChange}
+      />
+      <Search
+        options={[]}
+        placeholder="Vyhledat podle názvu"
+        label="Hledání"
+        freeSolo
+        onInputChange={onSearchValueChange}
+      />
 
-      <Grid container spacing={isMd ? 4 : 2}>
+      <Grid container spacing={isMd ? 4 : 2} style={{ marginTop: 20 }}>
         {data.slice(0, maxPlaceToSee).map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
             <Card className={classes.card}>
@@ -127,7 +153,11 @@ const SportPlaces = ({
         ))}
         {!showAll && (
           <Grid item xs={12} container justify="center" data-aos="fade-up">
-            <Button variant="outlined" color="primary" onClick={goToSportPlaces}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={goToSportPlaces}
+            >
               Všechny sportoviště
             </Button>
           </Grid>

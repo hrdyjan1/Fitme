@@ -10,14 +10,15 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { Icon } from 'src/components/atoms';
 import Section from 'src/components/organisms/Section';
+import { noop } from 'src/constants/functions/basic';
 
 const useStyles = makeStyles((theme) => ({
   pagePaddingTop: {
     padding: theme.spacing(0),
     paddingBottom: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(1),
     },
   },
 
@@ -56,15 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const top5Categories = [
-  { title: 'Jóga' },
-  { title: 'Běhání' },
-  { title: 'Posilování' },
-  { title: 'Aerobik' },
-  { title: 'Zumba' },
-];
-
-function Search() {
+function Search({
+  heading, options, placeholder, label, freeSolo = false, onInputChange = noop,
+}) {
   const classes = useStyles();
 
   return (
@@ -72,15 +67,18 @@ function Search() {
       <div className={classes.searchInputContainer} data-aos="fade-up">
         <FormControl fullWidth variant="outlined">
           <Autocomplete
+            noOptionsText="Žádné výsledky"
+            onInputChange={onInputChange}
+            freeSolo={freeSolo}
             id="combo-box-demo"
-            options={top5Categories}
+            options={options}
             getOptionLabel={(option) => option.title}
             renderInput={(params) => (
               <TextField
               // size="medium"
                 variant="outlined"
-                placeholder="Vyhledávat podle kategorie"
-                label="Vyhledávání"
+                placeholder={placeholder}
+                label={label}
                 {...params}
                 InputProps={{
                   ...params.InputProps,
@@ -103,11 +101,11 @@ function Search() {
           size="large"
           className={classes.searchButton}
         >
-          Vyhledávat
+          Zvolit
         </Button>
       </div>
     </Section>
   );
 }
 
-export { Search };
+export default Search;

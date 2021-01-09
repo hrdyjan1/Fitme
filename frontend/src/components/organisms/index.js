@@ -15,7 +15,7 @@ import { PasswordForm } from './profile/PasswordForm';
 import { TabPanel } from './profile/TabPanel';
 import { ProfileMenu } from './profile/ProfileMenu';
 import { CardBase } from './profile/CardBase';
-import { Search } from './search';
+import Search from './search';
 
 export {
   CardForm,
