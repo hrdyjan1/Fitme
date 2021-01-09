@@ -1,12 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles'
-import { List, ListItem, Typography} from '@material-ui/core'
-import clsx from 'clsx'
-import { CardBase } from 'src/components/organisms'
+import { makeStyles } from '@material-ui/core/styles';
+import { List, ListItem, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import { CardBase } from 'src/components/organisms';
 
 const useStyles = makeStyles((theme) => ({
   menu: {
-      height: 'auto',
+    height: 'auto',
   },
   list: {
     display: 'inline-flex',
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProfileMenu ({ pages, pageId, setPageId }) {
+function ProfileMenu({ pages, pageId, setPageId }) {
   const classes = useStyles();
   return (
     <CardBase withShadow align="left" className={classes.menu}>
@@ -68,7 +68,7 @@ function ProfileMenu ({ pages, pageId, setPageId }) {
         ))}
       </List>
     </CardBase>
-  )
+  );
 }
 
-export { ProfileMenu }
+export { ProfileMenu };

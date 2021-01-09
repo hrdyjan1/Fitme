@@ -41,10 +41,36 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
 
 export { singlePlace as place };
 
+export const searchPlaces = async (_, { containedName, sportType }, {dbConnection} ) => {
+
+  const selectFilteredPlacesQuery =
+    `SELECT DISTINCT name, description, latitude, longitude, uid 
+    FROM place p 
+    LEFT JOIN userSportType pst USING (uid)
+    LEFT JOIN sportType st USING (stid)`;
+
+  if (typeof containedName === 'undefined' || containedName === null) {
+    containedName = "";
+  }
+
+  if (typeof sportType === 'undefined' || sportType === null) {
+    let whereCondition = `WHERE name LIKE '%${containedName}%';`;
+    let wholeQuery = `${selectFilteredPlacesQuery} ${whereCondition}`;
+
+    return await dbConnection.query(wholeQuery);
+  } else {
+    let whereCondition = `WHERE sportTypeName = ? AND name LIKE '%${containedName}%';`;
+    let wholeQuery = `${selectFilteredPlacesQuery} ${whereCondition}`;
+
+    return await dbConnection.query(wholeQuery, [sportType]);
+  }
+}
+
+
 //TODO:-------SOLUTION FOR LAST SPRINT------
-// export const sportTypes = async (_p, _c, { dbConnection, auth }) => {
+// export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
 //
-//   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM placeSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
+//   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
 //
 //   let id = null;
 //   try {
@@ -58,3 +84,22 @@ export { singlePlace as place };
 //   }
 //   return null;
 // };
+
+export const placeTrainers = async (_p, _c, { dbConnection, auth }) => {
+
+  const selectPlaceTrainersQuery = 'SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM place p JOIN placeTrainer pt ON p.uid=pt.pid JOIN trainer t ON pt.tid=t.uid JOIN `user` u ON t.uid=u.id WHERE pt.pid = ?';
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch (error){
+    throw new Error('Session neexistujícího uživatele')
+  }
+
+  if (id) {
+    return (await dbConnection.query(selectPlaceTrainersQuery, [id]));
+  }
+  return null;
+};
+
+

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Grid, LinearProgress } from '@material-ui/core'
+import { Grid, LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SectionAlternate from 'src/components/organisms/SectionAlternate';
@@ -99,7 +99,7 @@ function PlaceProfileTemplate({
         <SectionAlternate className={classes.section}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={3}>
-              <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId}/>
+              <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId} />
             </Grid>
             <Grid item xs={12} md={9}>
               <CardBase>
@@ -136,6 +136,6 @@ function PlaceProfileTemplate({
       )}
     </div>
   );
-};
+}
 
 export { PlaceProfileTemplate };

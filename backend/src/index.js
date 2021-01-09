@@ -18,16 +18,19 @@ const typeDefs = gql`
   }
 
   type Trainer {
-    tid: Int!
+    id: String!
     firstName: String!
     lastName: String!
-    affilitaion: String!
-    bio: String!
-    imageURL: String!
+    description: String
+    imageURL: String
   }
 
   #TODO:-------SOLUTION FOR LAST SPRINT------ 
-#  type SportType {
+  type SportType {
+    sportTypeName: String!
+  }
+#  
+#  input SportTypeInput {
 #    sportTypeName: String!
 #  }
   
@@ -60,7 +63,7 @@ const typeDefs = gql`
     uid: String
     imageURL: String!
   }
-
+  
   type Tag {
     id: String!
     uid: String
@@ -113,9 +116,12 @@ const typeDefs = gql`
     places: [Place!]!
     place(uid: String!): PlaceDetail!
     trainer(uid: String!): TrainerDetail!
+    searchPlaces(containedName: String, sportType: String): [Place!]!
 #TODO:-------SOLUTION FOR LAST SPRINT------ 
-#    allSportTypes: [SportType]!
-#    sportTypes: [SportType]!
+    allSportTypes: [SportType]!
+    allTrainers: [Trainer]!
+#    placeSportTypes: [SportType]!
+    placeTrainers: [Trainer]!
   }
 
   type Mutation {
@@ -194,6 +200,8 @@ const typeDefs = gql`
     uploadPlaceImage(file: String!): Boolean!
     addTag(name: String!): Boolean!
     deleteTag(name: String!): Boolean!
+    addTrainer(tid: String!): Boolean!
+    removeTrainer(tid: String!): Boolean!
 #TODO:-------SOLUTION FOR LAST SPRINT------ 
 #    addSportType(stid: String!): Boolean!
 #    removeSportType(stid: String!): Boolean!

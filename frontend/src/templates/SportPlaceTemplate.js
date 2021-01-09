@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
-  useMediaQuery,
   colors,
   Grid,
   Button,
@@ -11,14 +10,26 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import { GalleryImage } from 'src/components/molecules/image/GalleryImage';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
-import { useHistory } from 'react-router-dom';
-import { route } from 'src/constants/routes';
+import { Search } from 'src/components/organisms';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: theme.palette.primary,
+    position: 'absolute',
+    top: '55%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
   card: {
     boxShadow: '0 9px 18px 0 rgba(0, 0, 0, 0.1)',
     borderRadius: theme.spacing(2),
@@ -45,46 +56,37 @@ const useStyles = makeStyles((theme) => ({
   ratingContainer: {
     margin: theme.spacing(2, 0),
   },
-  ratingIcon: {
-    color: colors.yellow[700],
-    marginRight: theme.spacing(1 / 2),
-  },
   priceCta: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  searchButton: {
+    maxHeight: 45,
+    minWidth: 135,
+    [theme.breakpoints.down('sm')]: {
+      minWidth: 'auto',
+    },
+  },
 }));
 
-const SportPlaces = ({
-  data, className, showAll, ...rest
-}) => {
+function SportPlaceTemplate(props) {
+  const {
+    isMd,
+    rating,
+    places,
+    loading,
+    showAll,
+    className,
+    maxPlaceToSee,
+    goToSportPlaces,
+    onCategoryChange,
+    categoriesOptions,
+    handleFilterClick,
+    onSearchValueChange, ...rest
+  } = props;
+
   const classes = useStyles();
-  const history = useHistory();
-  const goToSportPlaces = () => history.push(route.sportPlaces());
-  const maxPlaceToSee = showAll ? data.length : 6;
-
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
-    defaultMatches: true,
-  });
-
-  const rating = (count) => {
-    const ratingArray = [];
-    for (let i = 1; i <= 5; i += 1) {
-      ratingArray.push(
-        <i
-          className={clsx(
-            i <= count ? 'fas fa-star' : 'far fa-star',
-            classes.ratingIcon,
-          )}
-          key={i}
-        />,
-      );
-    }
-
-    return ratingArray;
-  };
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
@@ -93,8 +95,37 @@ const SportPlaces = ({
         subtitle="Zde je seznam sportovišť, které doporučujeme."
         titleVariant="h4"
       />
-      <Grid container spacing={isMd ? 4 : 2}>
-        {data.slice(0, maxPlaceToSee).map((item) => (
+      <Search
+        options={categoriesOptions}
+        placeholder="Vybrat kategorii"
+        label="Kategorie"
+        onInputChange={onCategoryChange}
+      />
+      <Search
+        options={[]}
+        placeholder="Vyhledat podle názvu"
+        label="Hledání"
+        freeSolo
+        onInputChange={onSearchValueChange}
+      />
+
+      <div className={classes.wrapper}>
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          disabled={loading}
+          onClick={handleFilterClick}
+          className={classes.searchButton}
+        >
+          Filtrovat
+        </Button>
+        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+      </div>
+
+      {places && (
+      <Grid container spacing={isMd ? 4 : 2} style={{ marginTop: 20 }}>
+        {places.slice(0, maxPlaceToSee).map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
             <Card className={classes.card}>
               <CardMedia className={classes.cardMedia}>
@@ -123,15 +154,20 @@ const SportPlaces = ({
           </Grid>
         ))}
         {!showAll && (
-          <Grid item xs={12} container justify="center" data-aos="fade-up">
-            <Button variant="outlined" color="primary" onClick={goToSportPlaces}>
-              Všechny sportoviště
-            </Button>
-          </Grid>
+        <Grid item xs={12} container justify="center" data-aos="fade-up">
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={goToSportPlaces}
+          >
+            Všechny sportoviště
+          </Button>
+        </Grid>
         )}
       </Grid>
+      )}
     </div>
   );
-};
+}
 
-export default SportPlaces;
+export { SportPlaceTemplate };

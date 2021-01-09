@@ -7,8 +7,6 @@ import {
   Grid,
   Typography,
   TextField,
-  FormControlLabel,
-  Switch,
   Button,
   Divider,
 } from '@material-ui/core';

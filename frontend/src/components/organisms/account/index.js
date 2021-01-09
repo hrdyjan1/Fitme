@@ -33,7 +33,6 @@ const PLACE_DETAIL = gql`
 
 const Account = () => {
   const { user } = useUser();
-  console.log(user);
   const { showErrorMessage } = useNotification();
   const { loading, error, data } = useQuery(PLACE_DETAIL, { variables: { userid: user.id } });
 

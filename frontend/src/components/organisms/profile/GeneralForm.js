@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import {
   useMediaQuery,
   Grid,
@@ -8,9 +8,9 @@ import { Form, Formik } from 'formik';
 import { useTheme } from '@material-ui/core/styles';
 
 import { FormikTextField, FormTitle, FormButton } from 'src/components/atoms';
-import * as yup from 'yup'
-import { yupValidation } from 'src/constants/yupValidation'
-import { useUser } from '../../../contexts/user'
+import * as yup from 'yup';
+import { yupValidation } from 'src/constants/yupValidation';
+import { useUser } from '../../../contexts/user';
 
 const USER_TYPE_ATHLETE = 'athlete';
 const USER_TYPE_PLACE_OWNER = 'place';
@@ -90,11 +90,12 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
         validationSchema={validationSchema}
         initialValues={initialValues}
         onSubmit={onSubmit}
-      >{(formik) => (
+      >
+        {(formik) => (
           <Form>
             <Grid container spacing={isMd ? 4 : 2}>
               <Grid item xs={12}>
-                <FormTitle title="Základní informace"/>
+                <FormTitle title="Základní informace" />
               </Grid>
               <Grid item xs={12}>
                 <Divider/>
@@ -215,6 +216,6 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
       </Formik>
     </>
   );
-};
+}
 
 export { GeneralForm };

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardBase = ({ className, children}) => {
+const CardBase = ({ className, children }) => {
   const classes = useStyles();
 
   return (

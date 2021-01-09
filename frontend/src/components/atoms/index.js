@@ -1,6 +1,6 @@
 import { FormikTextField } from './inputs/FormikTextField';
 import { FormikPasswordField } from './inputs/FormikPasswordField';
-import { InputLabel } from './titles/InputLabel'
+import { InputLabel } from './titles/InputLabel';
 import { ProfileTitle } from './titles/ProfileTitle';
 import { ProfileSubtitle } from './titles/ProfileSubtitle';
 import { FormTitle } from './titles/FormTitle';
