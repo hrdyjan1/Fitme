@@ -41,7 +41,7 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
   const selectFilteredPlacesQuery =
     `SELECT DISTINCT name, description, latitude, longitude, uid 
     FROM place p 
-    LEFT JOIN placeSportType pst USING (uid)
+    LEFT JOIN userSportType pst USING (uid)
     LEFT JOIN sportType st USING (stid)`;
 
   if (typeof containedName === 'undefined' || containedName === null) {
@@ -63,9 +63,9 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
 
 
 //TODO:-------SOLUTION FOR LAST SPRINT------
-// export const sportTypes = async (_p, _c, { dbConnection, auth }) => {
+// export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
 //
-//   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM placeSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
+//   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
 //
 //   let id = null;
 //   try {
@@ -79,3 +79,22 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
 //   }
 //   return null;
 // };
+
+export const placeTrainers = async (_p, _c, { dbConnection, auth }) => {
+
+  const selectPlaceTrainersQuery = 'SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM place p JOIN placeTrainer pt ON p.uid=pt.pid JOIN trainer t ON pt.tid=t.uid JOIN `user` u ON t.uid=u.id WHERE pt.pid = ?';
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch (error){
+    throw new Error('Session neexistujícího uživatele')
+  }
+
+  if (id) {
+    return (await dbConnection.query(selectPlaceTrainersQuery, [id]));
+  }
+  return null;
+};
+
+

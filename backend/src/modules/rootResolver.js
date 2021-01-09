@@ -17,6 +17,9 @@ export default {
     allSportTypes: async (_p, _c, {dbConnection}) => {
       return dbConnection.query('SELECT sportTypeName FROM sportType;');
     },
+    allTrainers: async  (_p, _c, {dbConnection}) => {
+      return dbConnection.query('SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM trainer t JOIN `user` u ON t.uid=u.id;');
+    },
     ...UserQueries,
     ...PlaceQueries,
     ...TrainerQueries,

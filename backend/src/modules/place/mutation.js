@@ -147,7 +147,7 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //   }
 //
 //   try {
-//     const insertSportTypeQuery = 'INSERT INTO placeSportType (uid, stid) VALUES (?, ?);';
+//     const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
 //
 //     if (id) {
 //       await dbConnection.query(insertSportTypeQuery, [id, stid])
@@ -170,7 +170,7 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //   }
 //
 //   try {
-//     const removeSportTypeQuery = 'DELETE FROM placeSportType WHERE uid = ? AND stid = ?;';
+//     const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
 //     if (id) {
 //       await dbConnection.query(removeSportTypeQuery, [id, stid])
 //       return true;
@@ -181,4 +181,49 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //     return false;
 //   }
 // };
-  
+
+export const removeTrainer = async (_, tid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const removeTrainerQuery = 'DELETE FROM placeTrainer WHERE pid = ? AND tid = ?;';
+    if (id) {
+      await dbConnection.query(removeTrainerQuery, [id, tid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const addTrainer = async (_, tid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const insertTrainerQuery = 'INSERT INTO placeTrainer (pid, tid) VALUES (?, ?);';
+
+    if (id) {
+      await dbConnection.query(insertTrainerQuery, [id, tid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
