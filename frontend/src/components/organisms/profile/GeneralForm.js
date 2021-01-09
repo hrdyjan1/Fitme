@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import {
   useMediaQuery,
   Grid,
@@ -8,10 +8,12 @@ import { Form, Formik } from 'formik';
 import { useTheme } from '@material-ui/core/styles';
 
 import { FormikTextField, FormTitle, FormButton } from 'src/components/atoms';
-import * as yup from 'yup'
-import { yupValidation } from 'src/constants/yupValidation'
+import * as yup from 'yup';
+import { yupValidation } from 'src/constants/yupValidation';
 
-function GeneralForm ({user, reFetchUser, onSave, loading }) {
+function GeneralForm({
+  user, reFetchUser, onSave, loading,
+}) {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -27,7 +29,7 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
     street: user?.street || '',
     city: user?.city || '',
     zipCode: user?.zipCode || '',
-    country: user?.country || ''
+    country: user?.country || '',
   });
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
     street: yupValidation.street,
     city: yupValidation.city,
     zipCode: yupValidation.zipCode,
-    country: yupValidation.country
+    country: yupValidation.country,
   });
 
   const onSubmit = (values) => {
@@ -60,11 +62,12 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
         validationSchema={validationSchema}
         initialValues={initialValues}
         onSubmit={onSubmit}
-      >{(formik) => (
+      >
+        {(formik) => (
           <Form>
             <Grid container spacing={isMd ? 4 : 2}>
               <Grid item xs={12}>
-                <FormTitle title="Základní informace"/>
+                <FormTitle title="Základní informace" />
               </Grid>
               <Grid item xs={12}>
                 <Divider />
@@ -155,6 +158,6 @@ function GeneralForm ({user, reFetchUser, onSave, loading }) {
       </Formik>
     </>
   );
-};
+}
 
 export { GeneralForm };

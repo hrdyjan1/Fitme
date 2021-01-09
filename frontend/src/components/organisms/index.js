@@ -7,14 +7,15 @@ import ForgotPassDialog from './forgotPass';
 import { AddressForm } from './AddressForm';
 import { ContactInfoForm } from './ContactInfoForm';
 import { ChangePasswordForm } from './ChangePasswordForm';
-import SectionAlternate from './SectionAlternate'
-import { GeneralForm } from './profile/GeneralForm'
-import { ProfileHeader } from '../molecules/profile/ProfileHeader'
-import { ProfilePictureForm } from './profile/ProfilePictureForm'
-import { PasswordForm } from './profile/PasswordForm'
-import { TabPanel } from './profile/TabPanel'
-import { ProfileMenu } from './profile/ProfileMenu'
-import { CardBase } from './profile/CardBase'
+import SectionAlternate from './SectionAlternate';
+import { GeneralForm } from './profile/GeneralForm';
+import { ProfileHeader } from '../molecules/profile/ProfileHeader';
+import { ProfilePictureForm } from './profile/ProfilePictureForm';
+import { PasswordForm } from './profile/PasswordForm';
+import { TabPanel } from './profile/TabPanel';
+import { ProfileMenu } from './profile/ProfileMenu';
+import { CardBase } from './profile/CardBase';
+import { Search } from './search';
 
 export {
   CardForm,
@@ -34,4 +35,5 @@ export {
   TabPanel,
   ProfileMenu,
   CardBase,
+  Search,
 };

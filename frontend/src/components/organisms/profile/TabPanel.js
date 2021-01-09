@@ -1,14 +1,14 @@
 import React from 'react';
-import { Box } from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
+import { Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
   },
 }));
 
-function TabPanel ({ children, value, index }) {
+function TabPanel({ children, value, index }) {
   const classes = useStyles();
 
   return (
@@ -20,7 +20,7 @@ function TabPanel ({ children, value, index }) {
     >
       {value === index && children}
     </Box>
-  )
+  );
 }
 
-export { TabPanel }
+export { TabPanel };

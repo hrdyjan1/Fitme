@@ -10,7 +10,7 @@ import { Field } from 'formik';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { InputLabel } from 'src/components/atoms';
 
-function FormikPasswordField({name, label, placeholder}) {
+function FormikPasswordField({ name, label, placeholder }) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleMouseDownPassword = (event) => {
@@ -19,7 +19,7 @@ function FormikPasswordField({name, label, placeholder}) {
 
   return (
     <>
-      { label && <InputLabel label={label}/> }
+      { label && <InputLabel label={label} /> }
       <Field
         validateOnBlur
         validateOnChange
@@ -59,6 +59,6 @@ function FormikPasswordField({name, label, placeholder}) {
       />
     </>
   );
-};
+}
 
 export { FormikPasswordField };

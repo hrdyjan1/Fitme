@@ -16,6 +16,7 @@ import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { useHistory } from 'react-router-dom';
 import { route } from 'src/constants/routes';
+import { Search } from 'src/components/organisms';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -93,6 +94,8 @@ const SportPlaces = ({
         subtitle="Zde je seznam sportovišť, které doporučujeme."
         titleVariant="h4"
       />
+      <Search />
+
       <Grid container spacing={isMd ? 4 : 2}>
         {data.slice(0, maxPlaceToSee).map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
