@@ -9,6 +9,7 @@ import { ProfileImageButton } from './buttons/ProfileImageButton';
 import { InputImageButton } from './buttons/InputImageButton';
 import { Tag } from './chips/Tag'
 import { TextInput } from './inputs/TextInput'
+import { Icon } from './icon';
 
 export {
   FormikTextField,
@@ -22,4 +23,5 @@ export {
   InputImageButton,
   Tag,
   TextInput,
+  Icon
 }
