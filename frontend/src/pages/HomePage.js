@@ -1,23 +1,9 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
-
 import { makeStyles } from '@material-ui/core';
-
-import { isFilledArray } from 'src/constants/array';
 import Hero from 'src/components/spec/hero/Hero';
 import Section from 'src/components/organisms/Section';
 import Overview from 'src/components/spec/Overview';
-import SportPlaces from 'src/components/spec/SportPlaces';
-
-const GET_PLACES = gql`
-  query GetPlaces {
-    places {
-      uid
-      name
-      description
-    }
-  }
-`;
+import SportPlace from 'src/components/organisms/sportPlace';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,8 +44,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function HomePage() {
   const classes = useStyles();
-  const { data } = useQuery(GET_PLACES);
-  const places = isFilledArray(data?.places) ? data?.places : null;
 
   return (
     <div>
@@ -69,11 +53,9 @@ export function HomePage() {
       <Section className={classes.pagePaddingTopBottom}>
         <Overview />
       </Section>
-      {places && (
-        <Section>
-          <SportPlaces data={places} />
-        </Section>
-      )}
+      <Section>
+        <SportPlace />
+      </Section>
     </div>
   );
 }
