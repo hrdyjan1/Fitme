@@ -4,10 +4,7 @@ import clsx from 'clsx';
 import { gql, useQuery } from '@apollo/client';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  colors,
-  useMediaQuery,
-} from '@material-ui/core';
+import { colors, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { route } from 'src/constants/routes';
 import { isFilledArray } from 'src/constants/array';
@@ -28,48 +25,70 @@ const useStyles = makeStyles((theme) => ({
     color: colors.yellow[700],
     marginRight: theme.spacing(1 / 2),
   },
-
 }));
 
-const categoriesOptions = [
-  { title: 'Jóga' },
-  { title: 'Běhání' },
-  { title: 'Posilování' },
-  { title: 'Aerobik' },
-  { title: 'Zumba' },
-];
+const GET_ALL_SPORT_TYPES = gql`
+  query GetAllSportTypes {
+    allSportTypes {
+      sportTypeName
+    }
+  }
+`;
+const GET_FILTERED_PLACES = gql`
+  query SearchPlaces($containedName: String, $sportType: String) {
+    searchPlaces(containedName: $containedName, sportType: $sportType) {
+      uid
+      description
+      name
+    }
+  }
+`;
+
+const initialSearchPlaceData = { category: null, searchValue: null };
+
+function handleCategoriesOptions(data) {
+  return data?.allSportTypes.map((s) => ({ title: s.sportTypeName })) || [];
+}
+
+function handleFilterPlacesQueryOptions(data) {
+  return { variables: { containedName: data.searchValue, sportType: data.category } };
+}
+
+function setNullIfEmpty(value) {
+  return value === '' ? null : value;
+}
 
 const SportPlace = ({ className, showAll, ...rest }) => {
+  const theme = useTheme();
   const classes = useStyles();
-  // TODO: Correct places @Michalinka
-  // Needs to useMutation with 'category' and 'searchValue'
-  const { data } = useQuery(GET_PLACES);
-  const places = isFilledArray(data?.places) ? data?.places : null;
-
-  const timer = React.useRef();
-  const [loading, setLoading] = React.useState(false);
+  const history = useHistory();
   const [category, setCategory] = React.useState('');
   const [searchValue, setSearchValue] = React.useState('');
+  const { data: sportTypesData } = useQuery(GET_ALL_SPORT_TYPES);
+  const [searchPlaceData, setSearchPlaceData] = React.useState(initialSearchPlaceData);
 
+  const categoriesOptions = handleCategoriesOptions(sportTypesData);
+
+  // 👓 Filtered Places
+  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(searchPlaceData);
+  const { data, loading } = useQuery(GET_FILTERED_PLACES, filteredPlacesQueryOptions);
+  const places = isFilledArray(data?.searchPlaces) ? data?.searchPlaces : null;
+  const maxPlaceToSee = showAll && places ? places.length : 6;
+
+  // 🎬 Change category or search-value
   const onCategoryChange = (_, value) => setCategory(value);
   const onSearchValueChange = (_, value) => setSearchValue(value);
 
-  const history = useHistory();
   const goToSportPlaces = () => history.push(route.sportPlaces());
-  const maxPlaceToSee = showAll && places ? places.length : 6;
 
-  const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
 
   const handleFilterClick = () => {
-    if (!loading) {
-      setLoading(true);
-      timer.current = window.setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    }
+    const validCategory = setNullIfEmpty(category);
+    const validSearchValue = setNullIfEmpty(searchValue);
+    setSearchPlaceData({ category: validCategory, searchValue: validSearchValue });
   };
 
   const rating = (count) => {
