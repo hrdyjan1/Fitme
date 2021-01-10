@@ -24,7 +24,6 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
       id: place.id,
       ico: place.ico,
       name: place.name,
-      // tagList: tagList,
       city: address.city || '',
       email: user.email || '',
       street: address.street || '',
@@ -70,8 +69,6 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
   }
 }
 
-
-//TODO:-------SOLUTION FOR LAST SPRINT------
 export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
 
   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';

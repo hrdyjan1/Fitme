@@ -1,12 +1,22 @@
-# 4IT580: Backend
+# Fit.me: Backend
 
+Basic info for Fit.me app backend usage 
+## Requirements
+
+- Node.js v12 (or later)
+- Yarn
 ## Setup ENV Variables
 
-```
-cp ./.env.example ./.env
-```
-
 Edit `.env` file (DB user, password, ...)
+
+Mandatory fields:
+- PORT (default= 4000)
+- JWT_SECRET
+- DB_HOST
+- DB_NAME
+- DB_USER
+- DB_PASSWORD
+- DB_PORT (default=4242)
 
 ## Install Dependencies
 
@@ -19,6 +29,10 @@ yarn install
 Runs the app in the development mode.\
 Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 
+## Seed Database
+
+Using phpMyAdmin or MySQL Workbench run following SQL: [`./db/seed.sql`](./db/seed.sql)
+
 ## Run Production
 
 ```bash
@@ -29,10 +43,4 @@ yarn start
 
 ```bash
 yarn build
-```
-
-### Build Production and Watch for Changes
-
-```bash
-yarn build:watch
 ```

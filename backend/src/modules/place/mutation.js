@@ -96,53 +96,7 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
     return false;
   }
 };
-// //DEPRECATED - DELETE
-// export const addTag = async (_, { name }, { dbConnection, auth }) => {
-//
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch  (error){
-//     throw new Error('Session neexistujícího uživatele');
-//   }
-//
-//   try {
-//     const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
-//
-//     if (id) {
-//       await dbConnection.query(insertTagQuery, [id, name])
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     return false;
-//   }
-// };
-//
-// export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch  (error){
-//     throw new Error('Session neexistujícího uživatele');
-//   }
-//
-//   try {
-//     const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
-//
-//     if (id) {
-//       await dbConnection.query(deleteTagQuery, [id, name])
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     return false;
-//   }
-// };
 
-//TODO:-------SOLUTION FOR LAST SPRINT------
 export const addSportType = async (_, stid, {dbConnection, auth}) => {
 
   let id = null;
@@ -165,7 +119,7 @@ export const addSportType = async (_, stid, {dbConnection, auth}) => {
     return false;
   }
 };
-//TODO:-------SOLUTION FOR LAST SPRINT------
+
 export const removeSportType = async (_, stid, {dbConnection, auth}) => {
 
   let id = null;
