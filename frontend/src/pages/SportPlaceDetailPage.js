@@ -21,6 +21,7 @@ const GET_PLACE = gql`
       city
       email
       street
+      imageURL
       phoneNumber
       description
       sportTypeList {
@@ -83,7 +84,7 @@ const SportPlaceDetailPage = () => {
     <div className={classes.root}>
       <HeroSportPlace name={data?.place.name} />
       <Section>
-        <Story description={data?.place.description} />
+        <Story description={data?.place.description} imageURL={data?.place.imageURL} />
       </Section>
       <SectionAlternate>
         <ChipList data={chipListData} />

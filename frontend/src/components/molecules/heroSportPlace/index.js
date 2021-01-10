@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     minHeight: 400,
+    maxHeight: 600,
     objectFit: 'cover',
     [theme.breakpoints.down('sm')]: {
       width: 'auto',
@@ -42,7 +43,7 @@ const HeroSportPlace = (props) => {
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <Image
-        src="https://lh3.googleusercontent.com/proxy/283rGJBF39JzbzpzomOs9gMzqX6GR3nX5qUVFU9fdfkk4mRxshTod8wUlphDUQ4ypGs6yTOfuyAgsg8HOWoQffoPMo2BRkiqXAMQ5ELT3jZPdNK93Mo"
+        src="https://topfigurefitness.cz/wp-content/uploads/2015/03/bg-sport-new.png"
         alt="Name"
         className={classes.image}
         lazyProps={{

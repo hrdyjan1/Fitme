@@ -9,11 +9,14 @@ const useStyles = makeStyles(() => ({
   root: {},
   image: {
     maxWidth: 420,
+    maxHeight: 420,
   },
 }));
 
 const Story = (props) => {
-  const { className, description, ...rest } = props;
+  const {
+    className, description, imageURL, ...rest
+  } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -61,7 +64,7 @@ const Story = (props) => {
           data-aos="fade-up"
         >
           <Image
-            src="https://png.pngtree.com/png-clipart/20190516/original/pngtree-football-football-team-team-physical-education-png-image_3922709.jpg"
+            src={imageURL}
             alt="Our story"
             className={classes.image}
           />
