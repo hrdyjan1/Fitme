@@ -17,6 +17,7 @@ import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { Search } from 'src/components/organisms';
 import { route } from 'src/constants/routes';
 import { useHistory } from 'react-router-dom';
+import { truncate } from 'src/constants/string';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -160,7 +161,7 @@ function SportPlaceTemplate(props) {
                   <div className={classes.ratingContainer}>{rating(3)}</div>
                   <div className={classes.priceCta}>
                     <Typography variant="subtitle1">
-                      {item.description}
+                      {truncate(item.description, 120)}
                     </Typography>
                   </div>
                 </CardContent>
