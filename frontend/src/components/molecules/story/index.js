@@ -6,8 +6,9 @@ import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 
 const useStyles = makeStyles(() => ({
-  root: {},
   image: {
+    margin: 'auto',
+    width: 'initial',
     maxWidth: 420,
     maxHeight: 420,
   },

@@ -10,13 +10,19 @@ import {
   Avatar,
 } from '@material-ui/core';
 import { CardBase } from 'src/components/organisms';
+import { useHistory } from 'react-router-dom';
+import { route } from 'src/constants/routes';
 import { SectionHeader } from '../profile/SectionHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   cardBase: {
     boxShadow: 'none',
+    cursor: 'pointer',
     background: theme.palette.alternate.main,
+    '&:hover': {
+      boxShadow: '0 9px 18px 0 rgba(0, 0, 0, 0.5)',
+    },
     borderRadius: theme.spacing(1),
     '& .card-base__content': {
       padding: theme.spacing(1),
@@ -60,11 +66,14 @@ const useStyles = makeStyles((theme) => ({
 const Team = (props) => {
   const { data, className } = props;
   const classes = useStyles();
+  const history = useHistory();
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
   });
+
+  const onClick = (id) => history.push(route.trainerDetail(id));
 
   return (
     <div className={clsx(classes.root, className)}>
@@ -73,9 +82,9 @@ const Team = (props) => {
         subtitle="Zde je seznam našich trenérů. Pro bližší informace můžete kliknout na trenéra."
       />
       <Grid container spacing={isMd ? 2 : 1}>
-        {data.map((item) => (
-          <Grid item xs={6} sm={4} key={item.toString()} data-aos="fade-up">
-            <CardBase className={classes.cardBase} liftUp>
+        {data.map((item, index) => (
+          <Grid item xs={6} sm={4} key={index} data-aos="fade-up">
+            <CardBase className={classes.cardBase} liftUp onClick={() => onClick(item.id)}>
               <ListItem disableGutters className={classes.listItem}>
                 <ListItemAvatar className={classes.listItemAvatar}>
                   <Avatar src={item.imageURL} className={classes.avatar} />

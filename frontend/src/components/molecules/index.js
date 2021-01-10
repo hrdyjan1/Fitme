@@ -1,7 +1,7 @@
 import { ProfilePicture } from './profile/ProfilePicture';
 import { UserTypesRadioButtons } from './signUpDialog/UserTypesRadioButtons';
 import { SectionHeader } from './profile/SectionHeader';
-import { HeroSportPlace } from './heroSportPlace';
+import { HeroDetail } from './heroDetail';
 import { WhoWeAre } from './whoWeAre';
 import { Hero } from './hero';
 import { Story } from './story';
@@ -18,8 +18,8 @@ export {
   ProfilePicture,
   UserTypesRadioButtons,
   GallerySportPlace,
-  HeroSportPlace,
   SectionHeader,
+  HeroDetail,
   WhoWeAre,
   Overview,
   ChipList,

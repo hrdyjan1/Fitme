@@ -85,6 +85,7 @@ function SportPlaceTemplate(props) {
     loading,
     showAll,
     className,
+    includeFilter,
     maxPlaceToSee,
     goToSportPlaces,
     onCategoryChange,
@@ -102,38 +103,42 @@ function SportPlaceTemplate(props) {
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title="Sportoviště"
-        subtitle="Zde je seznam sportovišť, které doporučujeme."
+        subtitle="Zde je seznam sportovišť."
         titleVariant="h4"
       />
-      <Search
-        options={categoriesOptions}
-        placeholder="Vybrat kategorii"
-        label="Kategorie"
-        onInputChange={onCategoryChange}
-      />
-      <Search
-        options={[]}
-        placeholder="Vyhledat podle názvu"
-        label="Hledání"
-        freeSolo
-        onInputChange={onSearchValueChange}
-      />
+      {includeFilter && (
+        <>
+          <Search
+            options={categoriesOptions}
+            placeholder="Vybrat kategorii"
+            label="Kategorie"
+            onInputChange={onCategoryChange}
+          />
+          <Search
+            options={[]}
+            placeholder="Vyhledat podle názvu"
+            label="Hledání"
+            freeSolo
+            onInputChange={onSearchValueChange}
+          />
 
-      <div className={classes.wrapper}>
-        <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          disabled={loading}
-          onClick={handleFilterClick}
-          className={classes.searchButton}
-        >
-          Filtrovat
-        </Button>
-        {loading && (
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        )}
-      </div>
+          <div className={classes.wrapper}>
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              disabled={loading}
+              onClick={handleFilterClick}
+              className={classes.searchButton}
+            >
+              Filtrovat
+            </Button>
+            {loading && (
+              <CircularProgress size={24} className={classes.buttonProgress} />
+            )}
+          </div>
+        </>
+      )}
 
       {places && (
         <Grid container spacing={isMd ? 4 : 2} style={{ marginTop: 20 }}>
