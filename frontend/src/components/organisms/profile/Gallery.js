@@ -22,7 +22,7 @@ const Gallery = ({
 
   useEffect(() => {
     reFetchData();
-  }, []);
+  }, [reFetchData]);
 
   const onSaveImage = (image) => {
     onSave(image).then(() => {
@@ -48,8 +48,8 @@ const Gallery = ({
       </Grid>
       <Box marginY={4}>
         <GridList cellHeight={isMd ? 260 : 160} cols={3} spacing={isMd ? 24 : 8}>
-          {images.map((item, index) => (item?.imageURL && (
-            <GridListTile key={index} cols={isMd ? 1 : 3}>
+          {images.map((item) => (item?.imageURL && (
+            <GridListTile key={item.toString()} cols={isMd ? 1 : 3}>
               <GalleryImage
                 title={name}
                 src={item?.imageURL}

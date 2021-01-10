@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Team = (props) => {
-  const { data, className, ...rest } = props;
+  const { data, className } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -67,14 +67,14 @@ const Team = (props) => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <SectionHeader
         title="Poznej naše trenéry"
         subtitle="Zde je seznam našich trenérů. Pro bližší informace můžete kliknout na trenéra."
       />
       <Grid container spacing={isMd ? 2 : 1}>
-        {data.map((item, index) => (
-          <Grid item xs={6} sm={4} key={index} data-aos="fade-up">
+        {data.map((item) => (
+          <Grid item xs={6} sm={4} key={item.toString()} data-aos="fade-up">
             <CardBase className={classes.cardBase} liftUp>
               <ListItem disableGutters className={classes.listItem}>
                 <ListItemAvatar className={classes.listItemAvatar}>

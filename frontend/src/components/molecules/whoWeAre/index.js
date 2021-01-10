@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const WhoWeAre = (props) => {
-  const { className, ...rest } = props;
+  const { className } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -18,7 +18,7 @@ const WhoWeAre = (props) => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12} sm={6} data-aos="fade-up">
           <SectionHeader

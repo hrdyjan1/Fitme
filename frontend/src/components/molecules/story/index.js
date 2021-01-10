@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 
 const Story = (props) => {
   const {
-    className, description, imageURL, ...rest
+    className, description, imageURL,
   } = props;
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ const Story = (props) => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <Grid
         container
         justify="space-between"

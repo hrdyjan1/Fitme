@@ -9,7 +9,7 @@ import {
 import { FormTitle, SportTypeChip } from 'src/components/atoms';
 import { AddSportTypeForm } from 'src/components/organisms';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   titleCta: {
     display: 'flex',
     justifyContent: 'space-between',

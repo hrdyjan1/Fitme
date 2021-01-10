@@ -10,7 +10,7 @@ import { FormTitle } from 'src/components/atoms';
 import { TrainerCard } from 'src/components/molecules';
 import { AddTrainerForm } from 'src/components/organisms';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   list: {
     width: '100%',
     justifyContent: 'center',
@@ -45,8 +45,8 @@ const Trainers = ({
           <Divider />
         </Grid>
         <Grid container spacing={isMd ? 2 : 1} justify="center">
-          {placeTrainers.map((item, index) => (
-            <Grid item sm={6} key={index} data-aos="fade-up">
+          {placeTrainers.map((item) => (
+            <Grid item sm={6} key={item.toString()} data-aos="fade-up">
               <TrainerCard
                 id={item.id}
                 name={`${item.firstName} ${item.lastName}`}

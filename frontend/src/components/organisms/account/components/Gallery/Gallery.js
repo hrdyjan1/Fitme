@@ -113,8 +113,8 @@ const Gallery = (props) => {
 
       <Box marginY={4}>
         <GridList cellHeight={isMd ? 260 : 160} cols={3} spacing={isMd ? 24 : 8}>
-          {data.map((item, index) => (
-            <GridListTile key={index} cols={isMd ? item.cols : 3 || 1}>
+          {data.map((item) => (
+            <GridListTile key={item.toString()} cols={isMd ? item.cols : 3 || 1}>
               <div className={classes.folioItem}>
                 <GalleryImage
                   src={item.cover}

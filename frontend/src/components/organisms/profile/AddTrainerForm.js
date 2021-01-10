@@ -15,7 +15,7 @@ const AddTrainerForm = ({
 
   useEffect(() => {
     reFetchData();
-  }, []);
+  }, [reFetchData]);
 
   const onSavePlaceTrainer = () => {
     onSave(selectedTrainer.id).then(() => {

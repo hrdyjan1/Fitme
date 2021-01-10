@@ -65,6 +65,7 @@ const userProfileRoute = (userType) => {
     case 'athlete': return route.profile();
     case 'place': return route.editSportPlace();
     case 'trainer': return route.trainerProfile();
+    default: return undefined;
   }
 };
 

@@ -19,7 +19,7 @@ function ProfilePictureForm({
 
   useEffect(() => {
     reFetchUser();
-  }, []);
+  }, [reFetchUser]);
 
   return (
     <>

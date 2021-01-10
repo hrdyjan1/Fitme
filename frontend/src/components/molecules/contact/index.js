@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Contact = (props) => {
   const {
-    data, className, phone, email, city, street, ...rest
+    className, phone, email, city, street,
   } = props;
 
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <div>
         <SectionHeader
           title="Kontaktujte nás"

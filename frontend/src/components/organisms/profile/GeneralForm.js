@@ -43,7 +43,7 @@ function GeneralForm({
 
   useEffect(() => {
     reFetchData();
-  }, []);
+  }, [reFetchData]);
 
   const athleteValidationSchema = {
     firstName: yupValidation.firstName,
@@ -72,6 +72,7 @@ function GeneralForm({
       case USER_TYPE_ATHLETE: return yup.object().shape(athleteValidationSchema);
       case USER_TYPE_PLACE_OWNER: return yup.object().shape(placeOwnerValidationSchema);
       case USER_TYPE_TRAINER: return yup.object().shape(trainerValidationSchema);
+      default: return undefined;
     }
   };
 

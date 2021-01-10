@@ -15,7 +15,7 @@ const AddSportTypeForm = ({
 
   useEffect(() => {
     reFetchData();
-  }, []);
+  }, [reFetchData]);
 
   const onSavePlaceSportType = () => {
     onSave(selectedSportType.stid).then(() => {

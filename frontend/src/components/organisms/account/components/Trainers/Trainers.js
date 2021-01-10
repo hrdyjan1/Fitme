@@ -133,8 +133,8 @@ const Billing = (props) => {
         </Grid>
 
         <Grid container spacing={isMd ? 2 : 1}>
-          {data.map((item, index) => (
-            <Grid item sm={6} key={index} data-aos="fade-up">
+          {data.map((item) => (
+            <Grid item sm={6} key={item.toString()} data-aos="fade-up">
               <CardBase className={classes.cardBase}>
                 <ListItem disableGutters className={classes.listItem}>
                   <Grid container>

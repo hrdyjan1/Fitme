@@ -1,11 +1,3 @@
-function print(text, warn) {
-  (warn ? console.warn : console.log)(text);
-}
-
-function alertMessage(text) {
-  alert(text);
-}
-
 function curry(fn) {
   const arity = fn.length;
   return function execution(...args) {
@@ -21,5 +13,5 @@ const compose = (...fns) => (...args) => fns.reduceRight((res, fn) => [fn(...res
 const stringAfterEqual = compose(substring(1), head, match(/=(.+)/), head);
 
 export {
-  noop, print, alertMessage, compose, curry, match, head, substring, stringAfterEqual,
+  noop, compose, curry, match, head, substring, stringAfterEqual,
 };
