@@ -16,6 +16,7 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     minHeight: 400,
     maxHeight: 600,
+    height: 'initial',
     objectFit: 'cover',
   },
   textWhite: {
