@@ -9,6 +9,8 @@ import { Team } from './team';
 import { Contact } from './contact';
 import { GallerySportPlace } from './gallerySportPlace';
 import { ChipList } from './chipList';
+import { Footer } from './footer';
+import { Overview } from './overview';
 
 export {
   ProfilePicture,
@@ -17,8 +19,10 @@ export {
   HeroSportPlace,
   SectionHeader,
   WhoWeAre,
+  Overview,
   ChipList,
   Contact,
+  Footer,
   Story,
   Hero,
   Team,

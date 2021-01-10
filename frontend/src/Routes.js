@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { route, pages } from 'src/constants/routes';
 
-import { Footer } from 'src/components/spec/Footer';
+import { Footer } from 'src/components/molecules';
 import { Navbar } from 'src/components/organisms/header/navbar';
 import {
   HomePage,
