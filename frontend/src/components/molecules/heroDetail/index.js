@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
 
 const HeroDetail = (props) => {
   const {
-    className, title, subtitle, src, ...rest
+    className, title, subtitle, src,
   } = props;
   const classes = useStyles();
 

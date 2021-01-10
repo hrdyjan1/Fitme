@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Contact = (props) => {
   const {
-    data, title, className, phone, email, city, street, ...rest
+    className, phone, email, city, street,
   } = props;
 
   const classes = useStyles();
