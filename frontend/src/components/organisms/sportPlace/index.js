@@ -30,6 +30,7 @@ const GET_FILTERED_PLACES = gql`
       uid
       description
       name
+      imageURL
     }
   }
 `;

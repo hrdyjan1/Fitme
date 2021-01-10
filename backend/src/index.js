@@ -13,6 +13,7 @@ const typeDefs = gql`
     name: String!
     description: String
     uid: String
+    imageURL: String
   }
 
   type Trainer {
