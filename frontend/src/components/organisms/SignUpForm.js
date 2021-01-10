@@ -27,8 +27,14 @@ function SignUpForm({ onSave, loading }) {
     userType: yup.string(),
     firstName: yupValidation.firstName,
     lastName: yupValidation.lastName,
-    organization: yup.string().when('userType', { is: USER_TYPE_PLACE_OWNER, then: yupValidation.organization }),
-    ico: yup.string()
+    organization: yup
+      .string()
+      .when('userType', {
+        is: USER_TYPE_PLACE_OWNER,
+        then: yupValidation.organization,
+      }),
+    ico: yup
+      .string()
       .when('userType', { is: USER_TYPE_PLACE_OWNER, then: yupValidation.ico })
       .when('userType', { is: USER_TYPE_TRAINER, then: yupValidation.ico }),
     email: yupValidation.email,
@@ -56,19 +62,16 @@ function SignUpForm({ onSave, loading }) {
             label="Příjmení"
             placeholder="Zadejte své příjmení"
           />
-          { isUserPlaceOwner(formik.values.userType) && (
+          {isUserPlaceOwner(formik.values.userType) && (
             <FormikTextField
               name="organization"
               label="Název organizace"
               placeholder="Zadejte název organizace"
             />
           )}
-          {(isUserPlaceOwner(formik.values.userType) || isUserTrainer(formik.values.userType)) && (
-            <FormikTextField
-              name="ico"
-              label="IČO"
-              placeholder="Zadejte IČO"
-            />
+          {(isUserPlaceOwner(formik.values.userType) ||
+            isUserTrainer(formik.values.userType)) && (
+            <FormikTextField name="ico" label="IČO" placeholder="Zadejte IČO" />
           )}
           <FormikTextField
             name="email"

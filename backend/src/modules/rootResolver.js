@@ -1,6 +1,9 @@
 import { queries as UserQueries, mutations as UserMutations } from './user';
 import { queries as PlaceQueries, mutations as PlaceMutations } from './place';
-import { queries as TrainerQueries, mutations as TrainerMutations } from './trainer';
+import {
+  queries as TrainerQueries,
+  mutations as TrainerMutations,
+} from './trainer';
 
 export default {
   Query: {
@@ -13,11 +16,13 @@ export default {
     users: async (_p, _c, { dbConnection }) => {
       return dbConnection.query('SELECT * FROM user');
     },
-    allSportTypes: async (_p, _c, {dbConnection}) => {
+    allSportTypes: async (_p, _c, { dbConnection }) => {
       return dbConnection.query('SELECT stid, sportTypeName FROM sportType;');
     },
-    allTrainers: async  (_p, _c, {dbConnection}) => {
-      return dbConnection.query('SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM trainer t JOIN `user` u ON t.uid=u.id;');
+    allTrainers: async (_p, _c, { dbConnection }) => {
+      return dbConnection.query(
+        'SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM trainer t JOIN `user` u ON t.uid=u.id;',
+      );
     },
     ...UserQueries,
     ...PlaceQueries,

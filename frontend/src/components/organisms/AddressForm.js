@@ -74,7 +74,7 @@ function AddressForm({ user, loading, onSave }) {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={loading || (formikBag.values === initialValues)}
+                  disabled={loading || formikBag.values === initialValues}
                 >
                   Uložit
                 </Button>

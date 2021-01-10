@@ -23,8 +23,16 @@ function SignInForm({ onSave, loading }) {
       onSubmit={(values) => onSave(values)}
       render={() => (
         <Form>
-          <FormikTextField name="email" label="E-mail" placeholder="Zadejte svůj e-mail" />
-          <FormikPasswordField name="password" label="Heslo" placeholder="Zadeje své heslo" />
+          <FormikTextField
+            name="email"
+            label="E-mail"
+            placeholder="Zadejte svůj e-mail"
+          />
+          <FormikPasswordField
+            name="password"
+            label="Heslo"
+            placeholder="Zadeje své heslo"
+          />
           <Box
             marginTop="30px"
             marginBottom="30px"

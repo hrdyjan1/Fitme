@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
 function Subtitle() {
   return (
     <Typography color="textSecondary" align="justify">
-      Fit.me je portál, díky kterému máš možnost najít téměř všechny
-      sportoviště na jednom místě online. Kromě toho také uvidíš stav svého
-      profilu ať už jsi sportovec či majitel sportoviště. Pokud patříš ke sportovištím
-      nebo sportovcům, kteří by s námi chtěli více spolupracovat, tak se neboj
-      ozvat. My se s Tebou rádi seznámíme a předáme Ti veškeré detaily o Fitme.
+      Fit.me je portál, díky kterému máš možnost najít téměř všechny sportoviště
+      na jednom místě online. Kromě toho také uvidíš stav svého profilu ať už
+      jsi sportovec či majitel sportoviště. Pokud patříš ke sportovištím nebo
+      sportovcům, kteří by s námi chtěli více spolupracovat, tak se neboj ozvat.
+      My se s Tebou rádi seznámíme a předáme Ti veškeré detaily o Fitme.
     </Typography>
   );
 }
@@ -101,7 +101,11 @@ const Hero = (props) => {
           <div className={classes.disclimer} data-aos="fade-up" />
         </Grid>
         <Grid item container justify="center" xs={12} md={6} data-aos="fade-up">
-          <GalleryImage src="/runner.jpg" alt="Runner" className={classes.image} />
+          <GalleryImage
+            src="/runner.jpg"
+            alt="Runner"
+            className={classes.image}
+          />
         </Grid>
       </Grid>
     </div>

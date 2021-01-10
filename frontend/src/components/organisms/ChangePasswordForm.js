@@ -7,7 +7,11 @@ import * as yup from 'yup';
 import { yupValidation } from 'src/constants/yupValidation';
 
 function ChangePasswordForm({ loading, onSave }) {
-  const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' };
+  const initialValues = {
+    oldPassword: '',
+    newPassword: '',
+    newPasswordCheck: '',
+  };
 
   const validationSchema = yup.object().shape({
     oldPassword: yupValidation.required,
@@ -56,7 +60,10 @@ function ChangePasswordForm({ loading, onSave }) {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  disabled={loading || Object.values(formikBag.values).some((value) => !value)}
+                  disabled={
+                    loading ||
+                    Object.values(formikBag.values).some((value) => !value)
+                  }
                 >
                   Uložit
                 </Button>

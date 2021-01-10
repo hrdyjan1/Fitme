@@ -9,12 +9,12 @@ import { Template } from 'src/components/organisms/account/Template';
 const PLACE_DETAIL = gql`
   query Place($userid: String!) {
     place(uid: $userid) {
-      id  
+      id
       name
       phoneNumber
       ico
       pictureList {
-        iid        
+        iid
         imageURL
       }
       sportTypeList {
@@ -34,15 +34,15 @@ const PLACE_DETAIL = gql`
 const Account = () => {
   const { user } = useUser();
   const { showErrorMessage } = useNotification();
-  const { loading, error, data } = useQuery(PLACE_DETAIL, { variables: { userid: user.id } });
+  const { loading, error, data } = useQuery(PLACE_DETAIL, {
+    variables: { userid: user.id },
+  });
 
   if (loading) {
     return null;
   }
   if (error || !data?.place) {
-    showErrorMessage(
-      error?.message || 'Chyba při načítání stránky',
-    );
+    showErrorMessage(error?.message || 'Chyba při načítání stránky');
     return null;
   }
 

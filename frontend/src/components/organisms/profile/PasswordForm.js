@@ -1,13 +1,13 @@
 import React from 'react';
-import {
-  useMediaQuery,
-  Grid,
-  Divider,
-} from '@material-ui/core';
+import { useMediaQuery, Grid, Divider } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTheme } from '@material-ui/core/styles';
 
-import { FormButton, FormikPasswordField, FormTitle } from 'src/components/atoms';
+import {
+  FormButton,
+  FormikPasswordField,
+  FormTitle,
+} from 'src/components/atoms';
 import * as yup from 'yup';
 import { yupValidation } from '../../../constants/yupValidation';
 
@@ -17,7 +17,11 @@ function PasswordForm({ onSave, loading }) {
     defaultMatches: true,
   });
 
-  const initialValues = { oldPassword: '', newPassword: '', newPasswordCheck: '' };
+  const initialValues = {
+    oldPassword: '',
+    newPassword: '',
+    newPasswordCheck: '',
+  };
 
   const validationSchema = yup.object().shape({
     oldPassword: yupValidation.required,
@@ -72,7 +76,10 @@ function PasswordForm({ onSave, loading }) {
               <Grid item container justify="center" xs={12}>
                 <FormButton
                   text="Uložit"
-                  disabled={loading || Object.values(formik.values).some((value) => !value)}
+                  disabled={
+                    loading ||
+                    Object.values(formik.values).some((value) => !value)
+                  }
                 />
               </Grid>
             </Grid>

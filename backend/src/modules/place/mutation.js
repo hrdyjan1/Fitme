@@ -1,15 +1,28 @@
 import { uuidv4 } from '../../constants/uuid';
 import { EMAIL, sendEmail } from '../../utils/email';
-import getUser from "../user/helper";
-import {Cloudinary} from "../../utils/cloudinary";
-import { generalSignup } from "../../constants/generalSignup";
+import getUser from '../user/helper';
+import { Cloudinary } from '../../utils/cloudinary';
+import { generalSignup } from '../../constants/generalSignup';
 
 export const updatePlaceBasics = async (
   _,
-  { id, uid, firstName, lastName, name, ico, email, phoneNumber, description, street, city, zipCode, country },
+  {
+    id,
+    uid,
+    firstName,
+    lastName,
+    name,
+    ico,
+    email,
+    phoneNumber,
+    description,
+    street,
+    city,
+    zipCode,
+    country,
+  },
   { dbConnection },
 ) => {
-
   const updatedPlaceRows = (
     await dbConnection.query(
       `UPDATE place SET name = ?, description = ?, ico = ? WHERE id = ?`,
@@ -31,7 +44,9 @@ export const updatePlaceBasics = async (
     )
   ).affectedRows;
 
-  return updatedPlaceRows === 1 && updatedUserRows === 1 && updatedAddressRows === 1;
+  return (
+    updatedPlaceRows === 1 && updatedUserRows === 1 && updatedAddressRows === 1
+  );
 };
 
 export const signupPlace = async (
@@ -39,7 +54,14 @@ export const signupPlace = async (
   { firstName, lastName, ico, name, email, password },
   { dbConnection },
 ) => {
-  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'place');
+  const { id, verificationToken, token } = await generalSignup(
+    dbConnection,
+    email,
+    password,
+    firstName,
+    lastName,
+    'place',
+  );
 
   await dbConnection.query(
     `INSERT INTO place (id, uid, name, ico)
@@ -56,12 +78,10 @@ export const signupPlace = async (
 };
 
 export const deletePlaceImage = async (_, { iid }, { dbConnection }) => {
-
   const deletePlaceImageQuery = 'DELETE FROM placeGallery WHERE iid = ?;';
 
-  const errorsStatus = (
-    await dbConnection.query(deletePlaceImageQuery, [iid])
-  ).warningStatus;
+  const errorsStatus = (await dbConnection.query(deletePlaceImageQuery, [iid]))
+    .warningStatus;
 
   return errorsStatus === 0;
 };
@@ -70,7 +90,8 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
   const { auth, dbConnection } = ctx;
   try {
     const id = await getUser(auth);
-    const insertImageURLQuery = 'INSERT INTO placeGallery (uid, imageURL) VALUES (?, ?);';
+    const insertImageURLQuery =
+      'INSERT INTO placeGallery (uid, imageURL) VALUES (?, ?);';
 
     if (id) {
       const { url } = await Cloudinary.v2.uploader.upload(file);
@@ -84,19 +105,19 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
   }
 };
 
-export const removeTrainer = async (_, tid, {dbConnection, auth}) => {
-
+export const removeTrainer = async (_, tid, { dbConnection, auth }) => {
   let id = null;
   try {
     id = await getUser(auth);
-  } catch  (error){
+  } catch (error) {
     throw new Error('Session neexistujícího uživatele');
   }
 
   try {
-    const removeTrainerQuery = 'DELETE FROM placeTrainer WHERE pid = ? AND tid = ?;';
+    const removeTrainerQuery =
+      'DELETE FROM placeTrainer WHERE pid = ? AND tid = ?;';
     if (id) {
-      await dbConnection.query(removeTrainerQuery, [id, tid])
+      await dbConnection.query(removeTrainerQuery, [id, tid]);
       return true;
     } else {
       return false;
@@ -106,20 +127,20 @@ export const removeTrainer = async (_, tid, {dbConnection, auth}) => {
   }
 };
 
-export const addTrainer = async (_, tid, {dbConnection, auth}) => {
-
+export const addTrainer = async (_, tid, { dbConnection, auth }) => {
   let id = null;
   try {
     id = await getUser(auth);
-  } catch  (error){
+  } catch (error) {
     throw new Error('Session neexistujícího uživatele');
   }
 
   try {
-    const insertTrainerQuery = 'INSERT INTO placeTrainer (pid, tid) VALUES (?, ?);';
+    const insertTrainerQuery =
+      'INSERT INTO placeTrainer (pid, tid) VALUES (?, ?);';
 
     if (id) {
-      await dbConnection.query(insertTrainerQuery, [id, tid])
+      await dbConnection.query(insertTrainerQuery, [id, tid]);
       return true;
     } else {
       return false;
@@ -128,4 +149,3 @@ export const addTrainer = async (_, tid, {dbConnection, auth}) => {
     return false;
   }
 };
-

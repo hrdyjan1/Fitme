@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GallerySportPlace = (props) => {
-  const { data, className, ...rest } = props;
+  const { data, className } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -23,15 +23,15 @@ const GallerySportPlace = (props) => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <SectionHeader
         title="Zkontrolujte naší galerii"
         subtitle="Zde jsou vidět fotogravie sportoviště, sportovců, ..."
         data-aos="fade-up"
       />
       <GridList cellHeight={isMd ? 360 : 260} cols={4} spacing={isMd ? 24 : 8}>
-        {data.map((item, index) => (
-          <GridListTile key={index} cols={isMd ? item.cols : 4 || 1}>
+        {data.map((item) => (
+          <GridListTile key={item.toString()} cols={isMd ? item.cols : 4 || 1}>
             <Image
               src={item.imageURL}
               alt={item.location}

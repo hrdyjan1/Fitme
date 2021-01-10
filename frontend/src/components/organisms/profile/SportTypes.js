@@ -1,15 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  useMediaQuery,
-  Grid,
-  Divider,
-} from '@material-ui/core';
+import { useMediaQuery, Grid, Divider } from '@material-ui/core';
 import { FormTitle, SportTypeChip } from 'src/components/atoms';
 import { AddSportTypeForm } from 'src/components/organisms';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   titleCta: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -43,7 +39,7 @@ const SportTypes = ({
           <Divider />
         </Grid>
         <Grid item xs={12} md={6}>
-          { placeSportTypes?.map((sportType) => (
+          {placeSportTypes?.map((sportType) => (
             <SportTypeChip
               id={sportType.stid}
               text={sportType.sportTypeName}
@@ -62,7 +58,6 @@ const SportTypes = ({
             loading={addSportTypeLoading}
           />
         </Grid>
-
       </Grid>
     </div>
   );

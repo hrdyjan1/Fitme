@@ -17,9 +17,13 @@ const FORGOT_PASS = gql`
   }
 `;
 
-const handleValidEmail = () => ('Zkontrolujte si email');
-const handleInvalidEmail = (error) => (error?.message || 'Chyba pri zmene hesla');
+const handleValidEmail = () => 'Zkontrolujte si email';
+const handleInvalidEmail = (error) => error?.message || 'Chyba pri zmene hesla';
 
 export {
-  initialFormValues, validate, FORGOT_PASS, handleInvalidEmail, handleValidEmail,
+  initialFormValues,
+  validate,
+  FORGOT_PASS,
+  handleInvalidEmail,
+  handleValidEmail,
 };

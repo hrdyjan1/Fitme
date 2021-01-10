@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Box, Fab, Card, Button,
-} from '@material-ui/core';
+import { Box, Fab, Card, Button } from '@material-ui/core';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 
 import { CardForm } from 'src/components/organisms/CardForm';

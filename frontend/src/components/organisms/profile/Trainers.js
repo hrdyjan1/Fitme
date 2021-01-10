@@ -1,16 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  useMediaQuery,
-  Grid,
-  Divider,
-} from '@material-ui/core';
+import { useMediaQuery, Grid, Divider } from '@material-ui/core';
 import { FormTitle } from 'src/components/atoms';
 import { TrainerCard } from 'src/components/molecules';
 import { AddTrainerForm } from 'src/components/organisms';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   list: {
     width: '100%',
     justifyContent: 'center',
@@ -45,8 +41,8 @@ const Trainers = ({
           <Divider />
         </Grid>
         <Grid container spacing={isMd ? 2 : 1} justify="center">
-          {placeTrainers.map((item, index) => (
-            <Grid item sm={6} key={index} data-aos="fade-up">
+          {placeTrainers.map((item) => (
+            <Grid item sm={6} key={item.toString()} data-aos="fade-up">
               <TrainerCard
                 id={item.id}
                 name={`${item.firstName} ${item.lastName}`}
@@ -57,7 +53,9 @@ const Trainers = ({
               />
             </Grid>
           ))}
-          {placeTrainers.length || <FormTitle title="Sportoviště nemá žádné trenéry" />}
+          {placeTrainers.length || (
+            <FormTitle title="Sportoviště nemá žádné trenéry" />
+          )}
         </Grid>
         <Grid item xs={12} md={6}>
           <AddTrainerForm
@@ -68,7 +66,6 @@ const Trainers = ({
             loading={addTrainerLoading}
           />
         </Grid>
-
       </Grid>
     </div>
   );

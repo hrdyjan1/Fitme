@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  useMediaQuery,
-  Grid,
-  Divider,
-} from '@material-ui/core';
+import { useMediaQuery, Grid, Divider } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -16,9 +12,7 @@ const USER_TYPE_ATHLETE = 'athlete';
 const USER_TYPE_PLACE_OWNER = 'place';
 const USER_TYPE_TRAINER = 'trainer';
 
-function GeneralForm({
-  data, reFetchData, onSave, loading,
-}) {
+function GeneralForm({ data, reFetchData, onSave, loading }) {
   const { user } = useUser();
   const theme = useTheme();
   const isUserPlaceOwner = user.type === USER_TYPE_PLACE_OWNER;
@@ -43,7 +37,7 @@ function GeneralForm({
 
   useEffect(() => {
     reFetchData();
-  }, []);
+  }, [reFetchData]);
 
   const athleteValidationSchema = {
     firstName: yupValidation.firstName,
@@ -69,9 +63,14 @@ function GeneralForm({
 
   const validationSchema = () => {
     switch (user.type) {
-      case USER_TYPE_ATHLETE: return yup.object().shape(athleteValidationSchema);
-      case USER_TYPE_PLACE_OWNER: return yup.object().shape(placeOwnerValidationSchema);
-      case USER_TYPE_TRAINER: return yup.object().shape(trainerValidationSchema);
+      case USER_TYPE_ATHLETE:
+        return yup.object().shape(athleteValidationSchema);
+      case USER_TYPE_PLACE_OWNER:
+        return yup.object().shape(placeOwnerValidationSchema);
+      case USER_TYPE_TRAINER:
+        return yup.object().shape(trainerValidationSchema);
+      default:
+        return undefined;
     }
   };
 

@@ -6,7 +6,7 @@ import { InputLabel } from 'src/components/atoms';
 function FormikTextField({ name, label, placeholder }) {
   return (
     <>
-      { label && <InputLabel label={label} /> }
+      {label && <InputLabel label={label} />}
       <Field
         validateOnBlur
         validateOnChange
@@ -21,9 +21,9 @@ function FormikTextField({ name, label, placeholder }) {
             error={Boolean(form.errors[name] && form.touched[name])}
             onBlur={form.handleBlur}
             helperText={
-              form.errors[name]
-              && form.touched[name]
-              && String(form.errors[name])
+              form.errors[name] &&
+              form.touched[name] &&
+              String(form.errors[name])
             }
             variant="outlined"
             fullWidth

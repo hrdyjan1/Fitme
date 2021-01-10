@@ -89,7 +89,8 @@ function SportPlaceTemplate(props) {
     onCategoryChange,
     categoriesOptions,
     handleFilterClick,
-    onSearchValueChange, ...rest
+    onSearchValueChange,
+    ...rest
   } = props;
 
   const classes = useStyles();
@@ -128,51 +129,56 @@ function SportPlaceTemplate(props) {
         >
           Filtrovat
         </Button>
-        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+        {loading && (
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        )}
       </div>
 
       {places && (
-      <Grid container spacing={isMd ? 4 : 2} style={{ marginTop: 20 }}>
-        {places.slice(0, maxPlaceToSee).map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
-            <Card className={classes.card} onClick={() => onClick(item.id)}>
-              <CardMedia className={classes.cardMedia}>
-                <Image
-                  src={item.imageURL || 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg'}
-                  alt={item.name}
-                  className={classes.image}
-                />
-              </CardMedia>
-              <CardContent className={classes.cardContent}>
-                <Typography
-                  color="textPrimary"
-                  variant="h6"
-                  className={classes.fontWeightBold}
-                >
-                  {item.name}
-                </Typography>
-                <div className={classes.ratingContainer}>{rating(3)}</div>
-                <div className={classes.priceCta}>
-                  <Typography variant="subtitle1">
-                    {item.description}
+        <Grid container spacing={isMd ? 4 : 2} style={{ marginTop: 20 }}>
+          {places.slice(0, maxPlaceToSee).map((item) => (
+            <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
+              <Card className={classes.card} onClick={() => onClick(item.id)}>
+                <CardMedia className={classes.cardMedia}>
+                  <Image
+                    src={
+                      item.imageURL ||
+                      'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg'
+                    }
+                    alt={item.name}
+                    className={classes.image}
+                  />
+                </CardMedia>
+                <CardContent className={classes.cardContent}>
+                  <Typography
+                    color="textPrimary"
+                    variant="h6"
+                    className={classes.fontWeightBold}
+                  >
+                    {item.name}
                   </Typography>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-        {!showAll && (
-        <Grid item xs={12} container justify="center" data-aos="fade-up">
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={goToSportPlaces}
-          >
-            Všechny sportoviště
-          </Button>
+                  <div className={classes.ratingContainer}>{rating(3)}</div>
+                  <div className={classes.priceCta}>
+                    <Typography variant="subtitle1">
+                      {item.description}
+                    </Typography>
+                  </div>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+          {!showAll && (
+            <Grid item xs={12} container justify="center" data-aos="fade-up">
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={goToSportPlaces}
+              >
+                Všechny sportoviště
+              </Button>
+            </Grid>
+          )}
         </Grid>
-        )}
-      </Grid>
       )}
     </div>
   );

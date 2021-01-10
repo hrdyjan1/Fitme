@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HeroSportPlace = (props) => {
-  const { className, name, ...rest } = props;
+  const { className, name } = props;
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <Image
         src="https://topfigurefitness.cz/wp-content/uploads/2015/03/bg-sport-new.png"
         alt="Name"

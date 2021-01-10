@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Chip, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
-const TextInput = ({ name, placeholder }) => (
+const TextInput = () => (
   <TextField
     placeholder="Jméno disciplíny"
     variant="outlined"

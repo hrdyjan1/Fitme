@@ -14,9 +14,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Story = (props) => {
-  const {
-    className, description, imageURL, ...rest
-  } = props;
+  const { className, description, imageURL } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -25,7 +23,7 @@ const Story = (props) => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)}>
       <Grid
         container
         justify="space-between"
@@ -64,11 +62,7 @@ const Story = (props) => {
           data-aos="fade-up"
         >
           {imageURL && (
-          <Image
-            src={imageURL}
-            alt="Our story"
-            className={classes.image}
-          />
+            <Image src={imageURL} alt="Our story" className={classes.image} />
           )}
         </Grid>
       </Grid>

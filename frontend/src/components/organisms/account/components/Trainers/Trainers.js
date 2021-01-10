@@ -68,42 +68,48 @@ export const data = [
   {
     title: 'Fitness trenérka',
     authorPhoto: {
-      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
+      src:
+        'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Kate Segelson',
   },
   {
     title: 'Zumba lektor',
     authorPhoto: {
-      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
+      src:
+        'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Alex Johnson',
   },
   {
     title: 'Badminton specialistka',
     authorPhoto: {
-      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
+      src:
+        'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Valeria Kogan',
   },
   {
     title: 'Hatha Yoga Coach',
     authorPhoto: {
-      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
+      src:
+        'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Akachi Luccini',
   },
   {
     title: 'Fitness tréner',
     authorPhoto: {
-      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
+      src:
+        'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Jack Smith',
   },
   {
     title: 'Výživová poradkyně',
     authorPhoto: {
-      src: 'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
+      src:
+        'https://us.123rf.com/450wm/donets/donets1506/donets150600766/41721329-female-user-icon-with-long-shadow-on-white-background.jpg?ver=6',
     },
     authorName: 'Veronica Adams',
   },
@@ -133,8 +139,8 @@ const Billing = (props) => {
         </Grid>
 
         <Grid container spacing={isMd ? 2 : 1}>
-          {data.map((item, index) => (
-            <Grid item sm={6} key={index} data-aos="fade-up">
+          {data.map((item) => (
+            <Grid item sm={6} key={item.toString()} data-aos="fade-up">
               <CardBase className={classes.cardBase}>
                 <ListItem disableGutters className={classes.listItem}>
                   <Grid container>
@@ -150,12 +156,19 @@ const Billing = (props) => {
                     </Grid>
                     <Grid item xs={4} justify="center">
                       <Box display="flex" justifyContent="center">
-                        <Avatar {...item.authorPhoto} className={classes.avatar} />
+                        <Avatar
+                          {...item.authorPhoto}
+                          className={classes.avatar}
+                        />
                       </Box>
                     </Grid>
                     <Grid item sm={12}>
                       <Box marginY={2}>
-                        <Typography>Tréner/ka působící na našem sportovišti poskytující prvotřídní rady, jak s treéninkem tak v oblasti výživy.</Typography>
+                        <Typography>
+                          Tréner/ka působící na našem sportovišti poskytující
+                          prvotřídní rady, jak s treéninkem tak v oblasti
+                          výživy.
+                        </Typography>
                       </Box>
                     </Grid>
                   </Grid>
@@ -170,7 +183,6 @@ const Billing = (props) => {
           </Box>
         </Grid>
         <Grid container spacing={isMd ? 4 : 2}>
-
           <Grid item xs={12} sm={6}>
             <Typography
               variant="subtitle1"
