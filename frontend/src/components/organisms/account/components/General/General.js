@@ -48,8 +48,8 @@ const General = (props) => {
     name: place.name || '',
     email: place.email || '',
     street: place.street || '',
-    latitude: place.latitude || '',
-    longitude: place.longitude || '',
+    zipCode: place.zipCode || '',
+    country: place.country || '',
     description: place.description || '',
     phoneNumber: place.phoneNumber || '',
   });
@@ -103,6 +103,9 @@ const General = (props) => {
                   placeholder="Zadejte ičo"
                 />
               </Grid>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <FormikTextField
                   label={prepareLabel('Ulice')}
@@ -117,28 +120,28 @@ const General = (props) => {
                   placeholder="Zadejte město"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <FormikTextField
-                  label={prepareLabel('Popis')}
-                  name="description"
-                  placeholder="Zadejte popis"
+                  label={prepareLabel('PSČ')}
+                  name="zipCode"
+                  placeholder="Zadejte PSČ"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormikTextField
+                  label={prepareLabel('Země')}
+                  name="country"
+                  placeholder="Zadejte zemi"
                 />
               </Grid>
               <Grid item xs={12}>
                 <Divider />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <FormikTextField
-                  label={prepareLabel('Zeměpisná šířka')}
-                  name="latitude"
-                  placeholder="50.1332"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormikTextField
-                  label={prepareLabel('Zeměpisná délka')}
-                  name="longitude"
-                  placeholder="14.538"
+                  label={prepareLabel('Popis')}
+                  name="description"
+                  placeholder="Zadejte popis"
                 />
               </Grid>
               <Grid item xs={12}>

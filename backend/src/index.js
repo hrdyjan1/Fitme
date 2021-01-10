@@ -12,8 +12,6 @@ const typeDefs = gql`
   type Place {
     name: String!
     description: String
-    latitude: Float
-    longitude: Float
     uid: String
   }
 
@@ -95,8 +93,10 @@ const typeDefs = gql`
     email: String!
     phoneNumber: String!
     description: String!
-    latitude: String!
-    longitude: String!
+#    latitude: String!
+#    longitude: String!
+    zipCode: String!
+    country: String!
     pictureList: [PlaceImage]
     sportTypeList: [SportType]
     trainerList: [Trainer]
@@ -115,8 +115,8 @@ const typeDefs = gql`
     email: String!
     phoneNumber: String!
     description: String!
-    latitude: String!
-    longitude: String!
+    zipCode: String!
+    country: String!
     street: String!
     city: String!
   }
