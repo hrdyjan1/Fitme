@@ -5,13 +5,14 @@ import { useMediaQuery, Grid } from '@material-ui/core';
 import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   image: {
     margin: 'auto',
     width: 'initial',
     maxWidth: '100%',
     maxHeight: 420,
     height: 'initial',
+    borderRadius: theme.spacing(2),
   },
 }));
 
