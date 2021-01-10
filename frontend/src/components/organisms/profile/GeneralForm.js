@@ -37,8 +37,6 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
     city: data?.city || '',
     zipCode: data?.zipCode || '',
     country: data?.country || '',
-    latitude: data?.latitude || '',
-    longitude: data?.longitude || '',
   });
 
   useEffect(() => {
@@ -65,8 +63,6 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
   const placeOwnerValidationSchema = {
     ...trainerValidationSchema,
     name: yupValidation.name,
-    latitude: yupValidation.latitude,
-    longitude: yupValidation.longitude,
   };
 
   const validationSchema = () => {
@@ -160,24 +156,6 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
                   placeholder="Zadejte stát"
                 />
               </Grid>
-              {isUserPlaceOwner && (
-                <>
-                  <Grid item xs={12} sm={6}>
-                    <FormikTextField
-                      label="Zeměpisná šířka"
-                      name="latitude"
-                      placeholder="Zadejte zeměpisnou šířku"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormikTextField
-                    label="Zeměpisná délka"
-                    name="longitude"
-                    placeholder="Zadejte zeměpisnou délku"
-                    />
-                  </Grid>
-                </>
-              )}
               {(isUserPlaceOwner || isUserTrainer) && (
                 <Grid item xs={12}>
                   <FormikTextField

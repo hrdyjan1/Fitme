@@ -12,8 +12,6 @@ const validText = {
   city: 'Název města smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   zipCode: 'PSČ nemá správný formát.',
   country: 'Název státu smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
-  latitude: 'Zeměpisná šířka musí obsahovat číslo v rozmezí -90 a 90.',
-  longitude: 'Zeměpisná délka musí obsahovat číslo v rozmezí -180 a 180.',
   password: 'Heslo musí být minimálně 8 znaků dlouhé, musí obsahovat číslici a velké i malé písmeno.',
   noPassword: 'Zadejte heslo.',
   passwordCheck: 'Hesla se neshodují.',

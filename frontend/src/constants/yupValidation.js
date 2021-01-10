@@ -58,14 +58,6 @@ export const yupValidation = {
     .matches(regex.name, validText.country)
     .required(validText.required),
 
-  latitude: yup.string()
-    .matches(regex.latitude, validText.latitude)
-    .required(validText.required),
-
-  longitude: yup.string()
-    .matches(regex.longitude, validText.longitude)
-    .required(validText.required),
-
   password: yup.string()
     .matches(regex.password, validText.password)
     .required(validText.required),

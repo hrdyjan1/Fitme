@@ -184,8 +184,6 @@ const typeDefs = gql`
       email: String
       phoneNumber: String
       description: String
-      latitude: String
-      longitude: String
       street: String
       city: String
       zipCode: String

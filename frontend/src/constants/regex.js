@@ -7,8 +7,6 @@ export const regex = {
   phoneNumber: /^(\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/,
   ico: /^\d{8}$/,
   zipCode: /^\d{3}\d{2}?$/,
-  latitude: /^[-+]?([1-8]?\d(\,\d+)?|90(\,0+)?)$/,
-  longitude: /^[-+]?(180(\,0+)?|((1[0-7]\d)|([1-9]?\d))(\,\d+)?)$/,
   // 8 characters,
   // 1 capital letter,
   // 1 small letter,

@@ -6,14 +6,14 @@ import { generalSignup } from "../../constants/generalSignup";
 
 export const updatePlaceBasics = async (
   _,
-  { id, uid, firstName, lastName, name, ico, email, phoneNumber, description, latitude, longitude, street, city, zipCode, country },
+  { id, uid, firstName, lastName, name, ico, email, phoneNumber, description, street, city, zipCode, country },
   { dbConnection },
 ) => {
 
   const updatedPlaceRows = (
     await dbConnection.query(
-      `UPDATE place SET name = ?, description = ?, latitude = ?, longitude = ?, ico = ? WHERE id = ?`,
-      [name, description, latitude, longitude, ico, id],
+      `UPDATE place SET name = ?, description = ?, ico = ? WHERE id = ?`,
+      [name, description, ico, id],
     )
   ).affectedRows;
 
