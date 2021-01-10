@@ -143,8 +143,8 @@ function SportPlaceTemplate(props) {
                 <CardMedia className={classes.cardMedia}>
                   <Image
                     src={
-                      item.imageURL ||
-                      'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg'
+                      item.imageURL
+                      || 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg'
                     }
                     alt={item.name}
                     className={classes.image}
@@ -161,7 +161,7 @@ function SportPlaceTemplate(props) {
                   <div className={classes.ratingContainer}>{rating(3)}</div>
                   <div className={classes.priceCta}>
                     <Typography variant="subtitle1">
-                      {truncate(item.description, 120)}
+                      {item.description ? truncate(item.description, 120) : ''}
                     </Typography>
                   </div>
                 </CardContent>
