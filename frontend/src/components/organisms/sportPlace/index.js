@@ -48,6 +48,11 @@ function setNullIfEmpty(value) {
   return value === '' ? null : value;
 }
 
+function handlePlaces(data) {
+  const isFilled = isFilledArray(data?.searchPlaces);
+  return isFilled ? data?.searchPlaces.map((p) => ({ ...p, id: p.uid })) : null;
+}
+
 const SportPlace = ({ className, showAll, ...rest }) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -62,7 +67,7 @@ const SportPlace = ({ className, showAll, ...rest }) => {
   // 👓 Filtered Places
   const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(searchPlaceData);
   const { data, loading } = useQuery(GET_FILTERED_PLACES, filteredPlacesQueryOptions);
-  const places = isFilledArray(data?.searchPlaces) ? data?.searchPlaces : null;
+  const places = handlePlaces(data);
   const maxPlaceToSee = showAll && places ? places.length : 6;
 
   // 🎬 Change category or search-value

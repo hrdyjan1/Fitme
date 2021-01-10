@@ -74,7 +74,7 @@ const route = {
   sportPlaces: () => '/sportPlaces',
   editSportPlace: () => '/editSportPlace',
   trainerProfile: () => '/trainerProfile',
-  sportPlaceDetail: () => '/sportPlaceDetailPage/:id',
+  sportPlaceDetail: (id) => `/sportPlaceDetailPage/${id || ':id'}`,
   userProfileRoute,
 };
 
