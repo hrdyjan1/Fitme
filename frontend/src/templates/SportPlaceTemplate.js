@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   card: {
     boxShadow: '0 9px 18px 0 rgba(0, 0, 0, 0.1)',
     borderRadius: theme.spacing(2),
+    '&:hover': {
+      boxShadow: '0 9px 18px 0 rgba(0, 0, 0, 0.5)',
+    },
+    cursor: 'pointer',
   },
   cardMedia: {
     height: 290,
