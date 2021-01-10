@@ -138,7 +138,7 @@ function SportPlaceTemplate(props) {
             <Card className={classes.card} onClick={() => onClick(item.id)}>
               <CardMedia className={classes.cardMedia}>
                 <GalleryImage
-                  src="https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg"
+                  src={item.imageURL || 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg'}
                   alt={item.name}
                   className={classes.image}
                 />
