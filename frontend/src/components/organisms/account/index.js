@@ -17,9 +17,9 @@ const PLACE_DETAIL = gql`
         iid        
         imageURL
       }
-      tagList {
-          id
-          name
+      sportTypeList {
+        stid
+        sportTypeName
       }
       description
       latitude

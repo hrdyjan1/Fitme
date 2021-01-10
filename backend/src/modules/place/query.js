@@ -6,9 +6,10 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
   const place = placeArray[0];
 
   const pictureListArray = await dbConnection.query('SELECT * FROM placeGallery WHERE uid = ?;', [uid])
-  const pictureList = [pictureListArray[0]] || [];
-  const tagListArray = await dbConnection.query('SELECT * FROM tag WHERE uid = ?;', [uid])
-  const tagList = [tagListArray[0]] || [];
+
+  const sportTypeListArray = await dbConnection.query('SELECT * FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;', [uid]);
+
+  const trainerListArray = await dbConnection.query('SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM place p JOIN placeTrainer pt ON p.uid=pt.pid JOIN trainer t ON pt.tid=t.uid JOIN `user` u ON t.uid=u.id WHERE pt.pid = ?', [uid]);
 
   const user = (
     await dbConnection.query('SELECT * FROM user WHERE id = ?;', [uid])
@@ -19,15 +20,18 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
       id: place.id,
       ico: place.ico,
       name: place.name,
-      tagList: tagList,
+      // tagList: tagList,
       city: user.city || '',
       email: user.email || '',
       street: user.street || '',
-      pictureList: pictureList,
+      pictureList: pictureListArray || [],
+      sportTypeList: sportTypeListArray || [],
+      trainerList: trainerListArray || [],
       latitude: place.latitude || '',
       longitude: place.longitude || '',
       phoneNumber: user.phoneNumber || '',
       description: place.description || '',
+      imageURL: user.imageURL || '',
     };
   } else {
     throw new Error('Neexistující sportoviště.');
@@ -63,22 +67,22 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
 
 
 //TODO:-------SOLUTION FOR LAST SPRINT------
-// export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
-//
-//   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
-//
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch (error){
-//     throw new Error('Session neexistujícího uživatele')
-//   }
-//
-//   if (id) {
-//     return (await dbConnection.query(selectFacilitySportTypesQuery, [id]));
-//   }
-//   return null;
-// };
+export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
+
+  const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch (error){
+    throw new Error('Session neexistujícího uživatele')
+  }
+
+  if (id) {
+    return (await dbConnection.query(selectFacilitySportTypesQuery, [id]));
+  }
+  return null;
+};
 
 export const placeTrainers = async (_p, _c, { dbConnection, auth }) => {
 

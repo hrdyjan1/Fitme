@@ -13,9 +13,9 @@ const TRAINER_QUERY = gql`
       email
       phoneNumber
       description
-      tagList {
-        id
-        name
+      sportTypeList {
+        stid
+        sportTypeName
       }
       street
       city
