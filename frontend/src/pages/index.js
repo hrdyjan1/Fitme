@@ -8,6 +8,7 @@ import { UserProfilePage } from './UserProfilePage';
 import { TrainerProfilePage } from './TrainerProfilePage';
 import { SportPlacesPage } from './SportPlacesPage';
 import { PlaceProfilePage } from './PlaceProfilePage';
+import { SportPlaceDetailPage } from './SportPlaceDetailPage';
 
 export {
   HomePage,
@@ -17,7 +18,8 @@ export {
   PageNotFound,
   ResetPassword,
   UserProfilePage,
+  SportPlacesPage,
   PlaceProfilePage,
   TrainerProfilePage,
-  SportPlacesPage,
+  SportPlaceDetailPage,
 };

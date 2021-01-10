@@ -10,16 +10,6 @@ import { route } from 'src/constants/routes';
 import { isFilledArray } from 'src/constants/array';
 import { SportPlaceTemplate } from 'src/templates/SportPlaceTemplate';
 
-const GET_PLACES = gql`
-  query GetPlaces {
-    places {
-      uid
-      name
-      description
-    }
-  }
-`;
-
 const useStyles = makeStyles((theme) => ({
   ratingIcon: {
     color: colors.yellow[700],

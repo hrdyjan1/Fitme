@@ -15,6 +15,8 @@ import {
 import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { Search } from 'src/components/organisms';
+import { route } from 'src/constants/routes';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -87,6 +89,8 @@ function SportPlaceTemplate(props) {
   } = props;
 
   const classes = useStyles();
+  const history = useHistory();
+  const onClick = (id) => history.push(route.sportPlaceDetail(id));
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
@@ -127,7 +131,7 @@ function SportPlaceTemplate(props) {
       <Grid container spacing={isMd ? 4 : 2} style={{ marginTop: 20 }}>
         {places.slice(0, maxPlaceToSee).map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
-            <Card className={classes.card}>
+            <Card className={classes.card} onClick={() => onClick(item.id)}>
               <CardMedia className={classes.cardMedia}>
                 <Image
                   src="https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg"
