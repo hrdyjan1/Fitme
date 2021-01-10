@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
   image: {
     margin: 'auto',
     width: 'initial',
-    maxWidth: 420,
+    maxWidth: '100%',
     maxHeight: 420,
     height: 'initial',
   },
