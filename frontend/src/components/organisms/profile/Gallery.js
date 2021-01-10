@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import {
   useMediaQuery,
@@ -9,10 +9,12 @@ import {
   Divider,
   Box,
 } from '@material-ui/core';
-import { FormTitle, InputImageButton } from 'src/components/atoms'
-import { GalleryImage } from 'src/components/molecules'
+import { FormTitle, InputImageButton } from 'src/components/atoms';
+import { GalleryImage } from 'src/components/molecules';
 
-const Gallery = ({name, images, reFetchData, onSave, onDelete}) => {
+const Gallery = ({
+  name, images, reFetchData, onSave, onDelete,
+}) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -24,22 +26,21 @@ const Gallery = ({name, images, reFetchData, onSave, onDelete}) => {
 
   const onSaveImage = (image) => {
     onSave(image).then(() => {
-      reFetchData()
-    })
-  }
+      reFetchData();
+    });
+  };
 
   const onDeleteImage = (id) => {
     onDelete(id).then(() => {
-      reFetchData()
-    })
-  }
-
+      reFetchData();
+    });
+  };
 
   return (
     <div>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
-          <FormTitle title="Přidání nebo odebrání fotografie"/>
+          <FormTitle title="Přidání nebo odebrání fotografie" />
         </Grid>
         <Grid item xs={12}>
           <Divider />
@@ -47,7 +48,7 @@ const Gallery = ({name, images, reFetchData, onSave, onDelete}) => {
       </Grid>
       <Box marginY={4}>
         <GridList cellHeight={isMd ? 260 : 160} cols={3} spacing={isMd ? 24 : 8}>
-          {images.map((item, index) => ( item?.imageURL && (
+          {images.map((item, index) => (item?.imageURL && (
             <GridListTile key={index} cols={isMd ? 1 : 3}>
               <GalleryImage
                 title={name}
@@ -60,7 +61,7 @@ const Gallery = ({name, images, reFetchData, onSave, onDelete}) => {
         </GridList>
       </Box>
       <Grid item container justify="center" xs={12}>
-        <InputImageButton text="Přidat" onLoad={onSaveImage}/>
+        <InputImageButton text="Přidat" onLoad={onSaveImage} />
       </Grid>
     </div>
   );

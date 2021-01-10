@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Avatar, Box, Grid, ListItem, Typography } from '@material-ui/core'
-import CardBase from 'src/components/organisms/cardBase'
+import {
+  Button, Avatar, Box, Grid, ListItem, Typography,
+} from '@material-ui/core';
+import CardBase from 'src/components/organisms/cardBase';
 
 const useStyles = makeStyles((theme) => ({
   cardBase: {
@@ -48,7 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TrainerCard = ({ id, name, imageSrc, description, onDelete, loading }) => {
+const TrainerCard = ({
+  id, name, imageSrc, description, onDelete, loading,
+}) => {
   const classes = useStyles();
 
   return (

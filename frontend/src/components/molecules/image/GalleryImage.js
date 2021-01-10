@@ -2,7 +2,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {Button, Typography} from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GalleryImage = ({ title, src, srcSet, alt, onDelete }) => {
+const GalleryImage = ({
+  title, src, srcSet, alt, onDelete,
+}) => {
   const classes = useStyles();
 
   return (

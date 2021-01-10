@@ -26,7 +26,7 @@ const InputImageButton = ({ text, onLoad, loading }) => {
       />
       {text}
     </Button>
-  )
+  );
 };
 
 export { InputImageButton };

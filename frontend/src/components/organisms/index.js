@@ -19,7 +19,7 @@ import { Gallery } from './profile/Gallery';
 import { SportTypes } from './profile/SportTypes';
 import { AddSportTypeForm } from './profile/AddSportTypeForm';
 import { Trainers } from './profile/Trainers';
-import { AddTrainerForm } from './profile/AddTrainerForm'
+import { AddTrainerForm } from './profile/AddTrainerForm';
 import Search from './search';
 import SportPlace from './sportPlace';
 

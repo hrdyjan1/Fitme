@@ -1,15 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react';
 import {
   Grid,
   Box,
-  TextField, Button
-} from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab'
-import { InputLabel } from 'src/components/atoms'
+  TextField, Button,
+} from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
+import { InputLabel } from 'src/components/atoms';
 
-const AddTrainerForm = ({trainers, placeTrainers, reFetchData, onSave, loading}) => {
-  const [selectedTrainer, setSelectedTrainer] = React.useState(null)
+const AddTrainerForm = ({
+  trainers, placeTrainers, reFetchData, onSave, loading,
+}) => {
+  const [selectedTrainer, setSelectedTrainer] = React.useState(null);
 
   useEffect(() => {
     reFetchData();
@@ -17,23 +19,22 @@ const AddTrainerForm = ({trainers, placeTrainers, reFetchData, onSave, loading})
 
   const onSavePlaceTrainer = () => {
     onSave(selectedTrainer.id).then(() => {
-      setSelectedTrainer(null)
-      reFetchData()
-    })
-  }
+      setSelectedTrainer(null);
+      reFetchData();
+    });
+  };
 
   const hasPlaceTrainer = (trainer) => (
-    placeTrainers.some(placeTrainer => placeTrainer.id === trainer.stid)
-  )
-
+    placeTrainers.some((placeTrainer) => placeTrainer.id === trainer.stid)
+  );
 
   return (
     <div>
-      <InputLabel label="Přidání trenéra"/>
+      <InputLabel label="Přidání trenéra" />
       <Autocomplete
         id="combo-box-demo"
         options={trainers}
-        getOptionLabel={(option => `${option.firstName} ${option.lastName}`)}
+        getOptionLabel={((option) => `${option.firstName} ${option.lastName}`)}
         getOptionDisabled={(option) => hasPlaceTrainer(option)}
         onChange={(e, value) => setSelectedTrainer(value)}
         style={{ width: 300 }}
@@ -57,6 +58,6 @@ const AddTrainerForm = ({trainers, placeTrainers, reFetchData, onSave, loading})
       </Box>
     </div>
   );
-}
+};
 
 export { AddTrainerForm };

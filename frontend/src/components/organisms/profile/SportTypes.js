@@ -6,8 +6,8 @@ import {
   Grid,
   Divider,
 } from '@material-ui/core';
-import { FormTitle, SportTypeChip } from 'src/components/atoms'
-import { AddSportTypeForm} from 'src/components/organisms'
+import { FormTitle, SportTypeChip } from 'src/components/atoms';
+import { AddSportTypeForm } from 'src/components/organisms';
 
 const useStyles = makeStyles((theme) => ({
   titleCta: {
@@ -24,7 +24,7 @@ const SportTypes = ({
   onSave,
   onDelete,
   addSportTypeLoading,
-  deleteSportTypeLoading
+  deleteSportTypeLoading,
 }) => {
   const classes = useStyles();
 
@@ -37,13 +37,13 @@ const SportTypes = ({
     <div className={classes.root}>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
-          <FormTitle title="Disciplíny sportoviště"/>
+          <FormTitle title="Disciplíny sportoviště" />
         </Grid>
         <Grid item xs={12}>
           <Divider />
         </Grid>
         <Grid item xs={12} md={6}>
-          { placeSportTypes?.map(sportType => (
+          { placeSportTypes?.map((sportType) => (
             <SportTypeChip
               id={sportType.stid}
               text={sportType.sportTypeName}
@@ -51,7 +51,7 @@ const SportTypes = ({
               loading={deleteSportTypeLoading}
             />
           ))}
-          {placeSportTypes.length || <FormTitle title={'Žadné disciplíny' }/>}
+          {placeSportTypes.length || <FormTitle title="Žadné disciplíny" />}
         </Grid>
         <Grid item xs={12} md={6}>
           <AddSportTypeForm

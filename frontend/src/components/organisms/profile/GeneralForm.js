@@ -16,7 +16,9 @@ const USER_TYPE_ATHLETE = 'athlete';
 const USER_TYPE_PLACE_OWNER = 'place';
 const USER_TYPE_TRAINER = 'trainer';
 
-function GeneralForm ({data, reFetchData, onSave, loading }) {
+function GeneralForm({
+  data, reFetchData, onSave, loading,
+}) {
   const { user } = useUser();
   const theme = useTheme();
   const isUserPlaceOwner = user.type === USER_TYPE_PLACE_OWNER;
@@ -51,7 +53,7 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
     street: yupValidation.street,
     city: yupValidation.city,
     zipCode: yupValidation.zipCode,
-    country: yupValidation.country
+    country: yupValidation.country,
   };
 
   const trainerValidationSchema = {
@@ -67,11 +69,11 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
 
   const validationSchema = () => {
     switch (user.type) {
-      case USER_TYPE_ATHLETE: return yup.object().shape(athleteValidationSchema)
-      case USER_TYPE_PLACE_OWNER: return yup.object().shape(placeOwnerValidationSchema)
-      case USER_TYPE_TRAINER: return yup.object().shape(trainerValidationSchema)
+      case USER_TYPE_ATHLETE: return yup.object().shape(athleteValidationSchema);
+      case USER_TYPE_PLACE_OWNER: return yup.object().shape(placeOwnerValidationSchema);
+      case USER_TYPE_TRAINER: return yup.object().shape(trainerValidationSchema);
     }
-  }
+  };
 
   const onSubmit = (values) => {
     onSave(values).then(() => {
@@ -94,7 +96,7 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
                 <FormTitle title="Základní informace" />
               </Grid>
               <Grid item xs={12}>
-                <Divider/>
+                <Divider />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormikTextField
@@ -105,9 +107,9 @@ function GeneralForm ({data, reFetchData, onSave, loading }) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormikTextField
-                label="Příjmení"
-                name="lastName"
-                placeholder="Zadejte příjmení"
+                  label="Příjmení"
+                  name="lastName"
+                  placeholder="Zadejte příjmení"
                 />
               </Grid>
               {isUserPlaceOwner && (
