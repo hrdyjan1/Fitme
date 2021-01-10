@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
     padding: theme.spacing(6, 2),
     [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(12, 2),
+      padding: theme.spacing(8, 2),
     },
   },
   fullWidth: {

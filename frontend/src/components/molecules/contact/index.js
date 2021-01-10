@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Contact = (props) => {
-  const { className, phone, email, city, street } = props;
+  const {
+    data, title, className, phone, email, city, street, ...rest
+  } = props;
 
   const classes = useStyles();
 
@@ -42,7 +44,7 @@ const Contact = (props) => {
     <div className={clsx(classes.root, className)}>
       <div>
         <SectionHeader
-          title="Kontaktujte nás"
+          title="Kontaktujte mě"
           subtitle="Pokud se chcete na cokoliv zeptat, tak zde jsou důležité údaje, které by vám mohli pomoci."
           subtitleProps={{
             variant: 'body1',

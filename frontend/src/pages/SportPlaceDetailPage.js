@@ -6,10 +6,10 @@ import Section from 'src/components/organisms/Section';
 import { isFilledArray } from 'src/constants/array';
 import {
   Story,
-  HeroSportPlace,
   Team,
   Contact,
   ChipList,
+  HeroDetail,
   GallerySportPlace,
 } from 'src/components/molecules';
 import { SectionAlternate } from 'src/components/organisms';
@@ -29,6 +29,7 @@ const GET_PLACE = gql`
         sportTypeName
       }
       trainerList {
+        id
         imageURL
         firstName
         lastName
@@ -40,7 +41,7 @@ const GET_PLACE = gql`
   }
 `;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
     width: '100%',
@@ -48,14 +49,9 @@ const useStyles = makeStyles((theme) => ({
   sectionNoPaddingTop: {
     paddingTop: 0,
   },
-  sectionPartners: {
-    boxShadow: '0 5px 20px 0 rgba(90, 202, 157, 0.05)',
-    '& .section-alternate__content': {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
-    },
-  },
 }));
+
+const backgroundImgSrc = 'https://www.crossfitescape.com.au/wp-content/uploads/2015/04/Gym-Background1.png';
 
 const SportPlaceDetailPage = () => {
   const classes = useStyles();
@@ -71,6 +67,7 @@ const SportPlaceDetailPage = () => {
     label: t.sportTypeName,
   }));
   const trainerListData = trainerList.map((t) => ({
+    ...t,
     authorName: `${t.firstName} ${t.lastName}`,
     imageURL: t.imageURL,
   }));
@@ -86,7 +83,11 @@ const SportPlaceDetailPage = () => {
 
   return (
     <div className={classes.root}>
-      <HeroSportPlace name={data?.place.name} />
+      <HeroDetail
+        title={data?.place.name}
+        subtitle={`Zde je seznam informací ke sportovnímu místu ${data?.place.name}.`}
+        src={backgroundImgSrc}
+      />
       {shouldShowStory && (
         <Section>
           <Story
@@ -112,6 +113,7 @@ const SportPlaceDetailPage = () => {
       )}
       <Section>
         <Contact
+          title="Kontaktujte nás"
           city={data?.place.city}
           street={data?.place.street}
           phone={data?.place.phoneNumber}

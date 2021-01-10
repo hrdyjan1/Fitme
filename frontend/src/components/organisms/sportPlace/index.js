@@ -52,11 +52,13 @@ function setNullIfEmpty(value) {
 }
 
 function handlePlaces(data) {
-  const isFilled = isFilledArray(data?.searchPlaces);
-  return isFilled ? data?.searchPlaces.map((p) => ({ ...p, id: p.uid })) : null;
+  const isFilled = isFilledArray(data);
+  return isFilled ? data.map((p) => ({ ...p, id: p.uid })) : null;
 }
 
-const SportPlace = ({ className, showAll, ...rest }) => {
+const SportPlace = ({
+  sportData, className, includeFilter = true, showAll, ...rest
+}) => {
   const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
@@ -70,13 +72,9 @@ const SportPlace = ({ className, showAll, ...rest }) => {
   const categoriesOptions = handleCategoriesOptions(sportTypesData);
 
   // 👓 Filtered Places
-  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(
-    searchPlaceData
-  );
-  const { data, loading } = useQuery(
-    GET_FILTERED_PLACES,
-    filteredPlacesQueryOptions
-  );
+  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(searchPlaceData);
+  const { data: filteredData, loading } = useQuery(GET_FILTERED_PLACES, filteredPlacesQueryOptions);
+  const data = sportData || filteredData?.searchPlaces;
   const places = handlePlaces(data);
   const maxPlaceToSee = showAll && places ? places.length : 6;
 
@@ -124,6 +122,7 @@ const SportPlace = ({ className, showAll, ...rest }) => {
       loading={loading}
       showAll={showAll}
       className={className}
+      includeFilter={includeFilter}
       maxPlaceToSee={maxPlaceToSee}
       goToSportPlaces={goToSportPlaces}
       onCategoryChange={onCategoryChange}

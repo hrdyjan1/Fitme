@@ -5,7 +5,7 @@ import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules';
 import Section from 'src/components/organisms/Section';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     height: '100%',
@@ -13,12 +13,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
   },
   image: {
+    width: '100%',
     minHeight: 400,
     maxHeight: 600,
     objectFit: 'cover',
-    [theme.breakpoints.down('sm')]: {
-      width: 'auto',
-    },
   },
   textWhite: {
     color: 'white',
@@ -36,14 +34,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HeroSportPlace = (props) => {
-  const { className, name } = props;
+const HeroDetail = (props) => {
+  const {
+    className, title, subtitle, src, ...rest
+  } = props;
   const classes = useStyles();
 
   return (
     <div className={clsx(classes.root, className)}>
       <Image
-        src="https://topfigurefitness.cz/wp-content/uploads/2015/03/bg-sport-new.png"
+        src={src}
         alt="Name"
         className={classes.image}
         lazyProps={{
@@ -53,8 +53,8 @@ const HeroSportPlace = (props) => {
       />
       <Section className={classes.section}>
         <SectionHeader
-          title={name}
-          subtitle={`Zde je seznam informací ke sportovnímu místu ${name}`}
+          title={title}
+          subtitle={subtitle}
           align="left"
           data-aos="fade-up"
           disableGutter
@@ -71,4 +71,4 @@ const HeroSportPlace = (props) => {
   );
 };
 
-export { HeroSportPlace };
+export { HeroDetail };

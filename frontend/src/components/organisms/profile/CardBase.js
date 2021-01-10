@@ -3,6 +3,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent } from '@material-ui/core';
+import { noop } from 'src/constants/functions/basic';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardBase = ({ className, children }) => {
+const CardBase = ({ className, onClick = noop, children }) => {
   const classes = useStyles();
 
   return (
-    <Card className={clsx('card-base', classes.root, className)}>
+    <Card className={clsx('card-base', classes.root, className)} onClick={onClick}>
       <CardContent className={clsx('card-base__content', classes.content)}>
         {children}
       </CardContent>

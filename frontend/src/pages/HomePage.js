@@ -54,7 +54,7 @@ export function HomePage() {
         <Overview />
       </Section>
       <Section>
-        <SportPlace />
+        <SportPlace includeFilter={false} />
       </Section>
     </div>
   );

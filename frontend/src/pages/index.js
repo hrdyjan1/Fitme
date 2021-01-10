@@ -8,6 +8,7 @@ import { UserProfilePage } from './UserProfilePage';
 import { TrainerProfilePage } from './TrainerProfilePage';
 import { SportPlacesPage } from './SportPlacesPage';
 import { PlaceProfilePage } from './PlaceProfilePage';
+import { TrainerDetailPage } from './TrainerDetailPage';
 import { SportPlaceDetailPage } from './SportPlaceDetailPage';
 
 export {
@@ -20,6 +21,7 @@ export {
   UserProfilePage,
   SportPlacesPage,
   PlaceProfilePage,
+  TrainerDetailPage,
   TrainerProfilePage,
   SportPlaceDetailPage,
 };
