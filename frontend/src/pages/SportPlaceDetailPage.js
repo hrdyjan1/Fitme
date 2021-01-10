@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
 import Section from 'src/components/organisms/Section';
+import { isFilledArray } from 'src/constants/array';
 import {
   Story,
   HeroSportPlace,
@@ -56,12 +57,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const isDebug = true;
-
 const SportPlaceDetailPage = () => {
   const classes = useStyles();
   const params = useParams();
-  const uid = !isDebug ? params.id : '8de77948-2f30-4aa6-8cc2-37d0b47039c6';
+  const uid = params.id;
   const { data } = useQuery(GET_PLACE, { variables: { uid } });
   const trainerList = data?.place.trainerList || [];
   const pictureTypeList = data?.place.pictureList || [];
@@ -80,21 +79,37 @@ const SportPlaceDetailPage = () => {
     cols: 2,
   }));
 
+  const shouldShowStory = !!data?.place.description;
+  const shouldShowCategory = isFilledArray(chipListData);
+  const shouldShowTrainers = isFilledArray(trainerListData);
+  const shouldShowPictures = isFilledArray(pictureListData);
+
   return (
     <div className={classes.root}>
       <HeroSportPlace name={data?.place.name} />
-      <Section>
-        <Story description={data?.place.description} imageURL={data?.place.imageURL} />
-      </Section>
-      <SectionAlternate>
-        <ChipList data={chipListData} />
-      </SectionAlternate>
-      <Section>
-        <Team data={trainerListData} />
-      </Section>
-      <SectionAlternate>
-        <GallerySportPlace data={pictureListData} />
-      </SectionAlternate>
+      {shouldShowStory && (
+        <Section>
+          <Story
+            description={data?.place.description}
+            imageURL={data?.place.imageURL}
+          />
+        </Section>
+      )}
+      {shouldShowCategory && (
+        <SectionAlternate>
+          <ChipList data={chipListData} />
+        </SectionAlternate>
+      )}
+      {shouldShowTrainers && (
+        <Section>
+          <Team data={trainerListData} />
+        </Section>
+      )}
+      {shouldShowPictures && (
+        <SectionAlternate>
+          <GallerySportPlace data={pictureListData} />
+        </SectionAlternate>
+      )}
       <Section>
         <Contact
           city={data?.place.city}

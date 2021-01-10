@@ -63,11 +63,13 @@ const Story = (props) => {
           md={6}
           data-aos="fade-up"
         >
+          {imageURL && (
           <Image
             src={imageURL}
             alt="Our story"
             className={classes.image}
           />
+          )}
         </Grid>
       </Grid>
     </div>
