@@ -90,54 +90,8 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
     return false;
   }
 };
-
-export const addTag = async (_, { name }, { dbConnection, auth }) => {
-
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch  (error){
-    throw new Error('Session neexistujícího uživatele');
-  }
-
-  try {
-    const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
-
-    if (id) {
-      await dbConnection.query(insertTagQuery, [id, name])
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-
-export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch  (error){
-    throw new Error('Session neexistujícího uživatele');
-  }
-
-  try {
-    const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
-
-    if (id) {
-      await dbConnection.query(deleteTagQuery, [id, name])
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-
-//TODO:-------SOLUTION FOR LAST SPRINT------
-// export const addSportType = async (_, stid, {dbConnection, auth}) => {
+// //DEPRECATED - DELETE
+// export const addTag = async (_, { name }, { dbConnection, auth }) => {
 //
 //   let id = null;
 //   try {
@@ -147,10 +101,10 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //   }
 //
 //   try {
-//     const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
+//     const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
 //
 //     if (id) {
-//       await dbConnection.query(insertSportTypeQuery, [id, stid])
+//       await dbConnection.query(insertTagQuery, [id, name])
 //       return true;
 //     } else {
 //       return false;
@@ -159,9 +113,8 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //     return false;
 //   }
 // };
-//TODO:-------SOLUTION FOR LAST SPRINT------
-// export const removeSportType = async (_, stid, {dbConnection, auth}) => {
 //
+// export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //   let id = null;
 //   try {
 //     id = await getUser(auth);
@@ -170,9 +123,10 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //   }
 //
 //   try {
-//     const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
+//     const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
+//
 //     if (id) {
-//       await dbConnection.query(removeSportTypeQuery, [id, stid])
+//       await dbConnection.query(deleteTagQuery, [id, name])
 //       return true;
 //     } else {
 //       return false;
@@ -181,6 +135,52 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
 //     return false;
 //   }
 // };
+
+//TODO:-------SOLUTION FOR LAST SPRINT------
+export const addSportType = async (_, stid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
+
+    if (id) {
+      await dbConnection.query(insertSportTypeQuery, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+//TODO:-------SOLUTION FOR LAST SPRINT------
+export const removeSportType = async (_, stid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
+    if (id) {
+      await dbConnection.query(removeSportTypeQuery, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
 
 export const removeTrainer = async (_, tid, {dbConnection, auth}) => {
 

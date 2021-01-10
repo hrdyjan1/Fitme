@@ -27,6 +27,7 @@ const typeDefs = gql`
 
   #TODO:-------SOLUTION FOR LAST SPRINT------ 
   type SportType {
+    stid: String!
     sportTypeName: String!
   }
 #  
@@ -77,7 +78,9 @@ const typeDefs = gql`
     email: String!
     phoneNumber: String!
     description: String!
-    tagList: [Tag]!
+    placeList: [Place]!
+    sportTypeList: [SportType]
+    #    tagList: [Tag]!
     street: String!
     city: String!
     zipCode: String!
@@ -94,10 +97,13 @@ const typeDefs = gql`
     description: String!
     latitude: String!
     longitude: String!
-    pictureList: [PlaceImage]!
-    tagList: [Tag]!
+    pictureList: [PlaceImage]
+    sportTypeList: [SportType]
+    trainerList: [Trainer]
+#    tagList: [Tag]!
     street: String!
     city: String!
+    imageURL: String!
   }
 
   # No arrays
@@ -131,7 +137,7 @@ const typeDefs = gql`
 #TODO:-------SOLUTION FOR LAST SPRINT------ 
     allSportTypes: [SportType]!
     allTrainers: [Trainer]!
-#    placeSportTypes: [SportType]!
+    placeSportTypes: [SportType]!
     placeTrainers: [Trainer]!
   }
 
@@ -198,8 +204,8 @@ const typeDefs = gql`
     addTrainer(tid: String!): Boolean!
     removeTrainer(tid: String!): Boolean!
 #TODO:-------SOLUTION FOR LAST SPRINT------ 
-#    addSportType(stid: String!): Boolean!
-#    removeSportType(stid: String!): Boolean!
+    addSportType(stid: String!): Boolean!
+    removeSportType(stid: String!): Boolean!
   }
 `;
 
