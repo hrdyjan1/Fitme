@@ -14,9 +14,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Story = (props) => {
-  const {
-    className, description, imageURL,
-  } = props;
+  const { className, description, imageURL } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -64,11 +62,7 @@ const Story = (props) => {
           data-aos="fade-up"
         >
           {imageURL && (
-          <Image
-            src={imageURL}
-            alt="Our story"
-            className={classes.image}
-          />
+            <Image src={imageURL} alt="Our story" className={classes.image} />
           )}
         </Grid>
       </Grid>

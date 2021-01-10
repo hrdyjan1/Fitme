@@ -9,12 +9,12 @@ const PLACE_QUERY = gql`
     place(uid: $userid) {
       id
       firstName
-      lastName  
+      lastName
       name
       phoneNumber
       ico
       pictureList {
-        iid        
+        iid
         imageURL
       }
       sportTypeList {
@@ -153,123 +153,148 @@ function PlaceProfilePage() {
   const { user } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
 
-  const placeFetcher = useQuery(PLACE_QUERY, { variables: { userid: user.id } });
+  const placeFetcher = useQuery(PLACE_QUERY, {
+    variables: { userid: user.id },
+  });
   const sportTypesFetcher = useQuery(SPORT_TYPES_QUERY);
   const placeSportTypesFetcher = useQuery(PLACE_SPORT_TYPES_QUERY);
   const trainersFetcher = useQuery(TRAINERS_QUERY);
   const placeTrainersFetcher = useQuery(PLACE_TRAINERS_QUERY);
 
   const place = {
-    mutationRequest: (values) => placeMutationRequest({
-      variables: {
-        id: placeFetcher.data.place.id,
-        uid: user.id,
-        ...values,
-      },
-    }),
+    mutationRequest: (values) =>
+      placeMutationRequest({
+        variables: {
+          id: placeFetcher.data.place.id,
+          uid: user.id,
+          ...values,
+        },
+      }),
     onCompleted: () => showMessage('Základní informace byly aktualizovány.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const password = {
-    mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
-    onCompleted: (data) => (data?.updatePassword
-      ? showMessage('Heslo bylo změněno.')
-      : showErrorMessage('Heslo se nepodařilo změnit.')),
+    mutationRequest: (values) =>
+      passwordMutationRequest({ variables: { ...values } }),
+    onCompleted: (data) =>
+      data?.updatePassword
+        ? showMessage('Heslo bylo změněno.')
+        : showErrorMessage('Heslo se nepodařilo změnit.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const placeImage = {
-    uploadMutationRequest: (image) => uploadPlaceImageMutationRequest({ variables: { file: image } }),
-    deleteMutationRequest: (id) => deletePlaceImageMutationRequest({ variables: { iid: id } }),
-    onUploadCompleted: (data) => (data?.uploadPlaceImage
-      ? showMessage('Fotka sportoviště byla úspěšně uložena.')
-      : showErrorMessage('Fotku sportoviště se nepodařilo uložit.')),
-    onDeleteCompleted: (data) => (data?.deletePlaceImage
-      ? showMessage('Fotka sportoviště byla úspěšně odstraněna.')
-      : showErrorMessage('Fotku sportoviště se nepodařilo odstranit.')),
+    uploadMutationRequest: (image) =>
+      uploadPlaceImageMutationRequest({ variables: { file: image } }),
+    deleteMutationRequest: (id) =>
+      deletePlaceImageMutationRequest({ variables: { iid: id } }),
+    onUploadCompleted: (data) =>
+      data?.uploadPlaceImage
+        ? showMessage('Fotka sportoviště byla úspěšně uložena.')
+        : showErrorMessage('Fotku sportoviště se nepodařilo uložit.'),
+    onDeleteCompleted: (data) =>
+      data?.deletePlaceImage
+        ? showMessage('Fotka sportoviště byla úspěšně odstraněna.')
+        : showErrorMessage('Fotku sportoviště se nepodařilo odstranit.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const sportType = {
-    addMutationRequest: (id) => addSportTypeMutationRequest({ variables: { stid: id } }),
-    deleteMutationRequest: (id) => deleteSportTypeMutationRequest({ variables: { stid: id } }),
-    onAddCompleted: (data) => (data?.addSportType
-      ? showMessage('Disciplína sportoviště byla úspěšně přidána.')
-      : showErrorMessage('Disciplínu sportoviště se nepodařilo přidat.')),
-    onDeleteCompleted: (data) => (data?.deleteSportType
-      ? showMessage('Disciplína sportoviště byla úspěšně odebrána.')
-      : showErrorMessage('Disciplínu sportoviště se nepodařilo odebrat.')),
+    addMutationRequest: (id) =>
+      addSportTypeMutationRequest({ variables: { stid: id } }),
+    deleteMutationRequest: (id) =>
+      deleteSportTypeMutationRequest({ variables: { stid: id } }),
+    onAddCompleted: (data) =>
+      data?.addSportType
+        ? showMessage('Disciplína sportoviště byla úspěšně přidána.')
+        : showErrorMessage('Disciplínu sportoviště se nepodařilo přidat.'),
+    onDeleteCompleted: (data) =>
+      data?.deleteSportType
+        ? showMessage('Disciplína sportoviště byla úspěšně odebrána.')
+        : showErrorMessage('Disciplínu sportoviště se nepodařilo odebrat.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const placeTrainer = {
-    addMutationRequest: (id) => addPlaceTrainerMutationRequest({ variables: { tid: id } }),
-    deleteMutationRequest: (id) => deleteTrainerMutationRequest({ variables: { tid: id } }),
-    onAddCompleted: (data) => (data?.addTrainer
-      ? showMessage('Trenér byl úspěšně přidán.')
-      : showErrorMessage('Trenéra se nepodařilo přidat.')),
-    onDeleteCompleted: (data) => (data?.deleteTrainer
-      ? showMessage('Trenér byl úspěšně odebrán.')
-      : showErrorMessage('Trenéra se nepodařilo odebrat.')),
+    addMutationRequest: (id) =>
+      addPlaceTrainerMutationRequest({ variables: { tid: id } }),
+    deleteMutationRequest: (id) =>
+      deleteTrainerMutationRequest({ variables: { tid: id } }),
+    onAddCompleted: (data) =>
+      data?.addTrainer
+        ? showMessage('Trenér byl úspěšně přidán.')
+        : showErrorMessage('Trenéra se nepodařilo přidat.'),
+    onDeleteCompleted: (data) =>
+      data?.deleteTrainer
+        ? showMessage('Trenér byl úspěšně odebrán.')
+        : showErrorMessage('Trenéra se nepodařilo odebrat.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const [placeMutationRequest, placeMutationRequestState] = useMutation(
-    PLACE_BASICS_MUTATION, {
+    PLACE_BASICS_MUTATION,
+    {
       onCompleted: place.onCompleted,
       onError: place.onError,
-    },
+    }
   );
 
   const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION, {
+    PASSWORD_MUTATION,
+    {
       onCompleted: password.onCompleted,
       onError: password.onError,
-    },
+    }
   );
 
-  const [uploadPlaceImageMutationRequest, uploadPlaceImageMutationRequestState] = useMutation(
-    UPLOAD_IMAGE_MUTATION, {
-      onCompleted: placeImage.onUploadCompleted,
-      onError: placeImage.onError,
-    },
-  );
+  const [
+    uploadPlaceImageMutationRequest,
+    uploadPlaceImageMutationRequestState,
+  ] = useMutation(UPLOAD_IMAGE_MUTATION, {
+    onCompleted: placeImage.onUploadCompleted,
+    onError: placeImage.onError,
+  });
 
-  const [deletePlaceImageMutationRequest, deletePlaceImageMutationRequestState] = useMutation(
-    DELETE_IMAGE_MUTATION, {
-      onCompleted: placeImage.onDeleteCompleted,
-      onError: placeImage.onError,
-    },
-  );
+  const [
+    deletePlaceImageMutationRequest,
+    deletePlaceImageMutationRequestState,
+  ] = useMutation(DELETE_IMAGE_MUTATION, {
+    onCompleted: placeImage.onDeleteCompleted,
+    onError: placeImage.onError,
+  });
 
-  const [addSportTypeMutationRequest, addSportTypeMutationRequestState] = useMutation(
-    ADD_SPORT_TYPE_MUTATION, {
-      onCompleted: sportType.onAddCompleted,
-      onError: sportType.onError,
-    },
-  );
+  const [
+    addSportTypeMutationRequest,
+    addSportTypeMutationRequestState,
+  ] = useMutation(ADD_SPORT_TYPE_MUTATION, {
+    onCompleted: sportType.onAddCompleted,
+    onError: sportType.onError,
+  });
 
-  const [deleteSportTypeMutationRequest, deleteSportTypeMutationRequestState] = useMutation(
-    DELETE_SPORT_TYPE_MUTATION, {
-      onCompleted: sportType.onDeleteCompleted,
-      onError: sportType.onError,
-    },
-  );
+  const [
+    deleteSportTypeMutationRequest,
+    deleteSportTypeMutationRequestState,
+  ] = useMutation(DELETE_SPORT_TYPE_MUTATION, {
+    onCompleted: sportType.onDeleteCompleted,
+    onError: sportType.onError,
+  });
 
-  const [addPlaceTrainerMutationRequest, addPlaceTrainerMutationRequestState] = useMutation(
-    ADD_TRAINER_MUTATION, {
-      onCompleted: placeTrainer.onAddCompleted,
-      onError: placeTrainer.onError,
-    },
-  );
+  const [
+    addPlaceTrainerMutationRequest,
+    addPlaceTrainerMutationRequestState,
+  ] = useMutation(ADD_TRAINER_MUTATION, {
+    onCompleted: placeTrainer.onAddCompleted,
+    onError: placeTrainer.onError,
+  });
 
-  const [deleteTrainerMutationRequest, deletePlaceTrainerMutationRequestState] = useMutation(
-    DELETE_TRAINER_MUTATION, {
-      onCompleted: placeTrainer.onDeleteCompleted,
-      onError: placeTrainer.onError,
-    },
-  );
+  const [
+    deleteTrainerMutationRequest,
+    deletePlaceTrainerMutationRequestState,
+  ] = useMutation(DELETE_TRAINER_MUTATION, {
+    onCompleted: placeTrainer.onDeleteCompleted,
+    onError: placeTrainer.onError,
+  });
 
   return (
     <PlaceProfileTemplate

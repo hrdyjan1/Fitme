@@ -1,11 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  useMediaQuery,
-  Grid,
-  Divider,
-} from '@material-ui/core';
+import { useMediaQuery, Grid, Divider } from '@material-ui/core';
 import { FormTitle } from 'src/components/atoms';
 import { TrainerCard } from 'src/components/molecules';
 import { AddTrainerForm } from 'src/components/organisms';
@@ -57,7 +53,9 @@ const Trainers = ({
               />
             </Grid>
           ))}
-          {placeTrainers.length || <FormTitle title="Sportoviště nemá žádné trenéry" />}
+          {placeTrainers.length || (
+            <FormTitle title="Sportoviště nemá žádné trenéry" />
+          )}
         </Grid>
         <Grid item xs={12} md={6}>
           <AddTrainerForm
@@ -68,7 +66,6 @@ const Trainers = ({
             loading={addTrainerLoading}
           />
         </Grid>
-
       </Grid>
     </div>
   );

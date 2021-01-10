@@ -46,11 +46,14 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(1),
     },
   },
-
 }));
 
 function Search({
-  options, placeholder, label, freeSolo = false, onInputChange = noop,
+  options,
+  placeholder,
+  label,
+  freeSolo = false,
+  onInputChange = noop,
 }) {
   const classes = useStyles();
 
@@ -67,7 +70,7 @@ function Search({
             getOptionLabel={(option) => option.title}
             renderInput={(params) => (
               <TextField
-              // size="medium"
+                // size="medium"
                 variant="outlined"
                 placeholder={placeholder}
                 label={label}
@@ -87,7 +90,6 @@ function Search({
             )}
           />
         </FormControl>
-
       </div>
     </Section>
   );

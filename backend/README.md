@@ -1,15 +1,18 @@
 # Fit.me: Backend
 
-Basic info for Fit.me app backend usage 
+Basic info for Fit.me app backend usage
+
 ## Requirements
 
 - Node.js v12 (or later)
 - Yarn
+
 ## Setup ENV Variables
 
 Edit `.env` file (DB user, password, ...)
 
 Mandatory fields:
+
 - PORT (default= 4000)
 - JWT_SECRET
 - DB_HOST

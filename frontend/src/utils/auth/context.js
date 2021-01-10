@@ -13,8 +13,8 @@ function createContextValue({ token: t, setState }) {
   };
 }
 
-const Context = React.createContext(createContextValue(
-  { token: initialState.token, setState: noop },
-));
+const Context = React.createContext(
+  createContextValue({ token: initialState.token, setState: noop })
+);
 
 export { Context, createContextValue, initialState };

@@ -1,17 +1,11 @@
 import React, { useEffect } from 'react';
-import {
-  useMediaQuery,
-  Grid,
-  Divider,
-} from '@material-ui/core';
+import { useMediaQuery, Grid, Divider } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
 import { ProfilePicture } from 'src/components/molecules';
 import { FormTitle } from 'src/components/atoms';
 
-function ProfilePictureForm({
-  imageURL, reFetchUser, onSave, loading,
-}) {
+function ProfilePictureForm({ imageURL, reFetchUser, onSave, loading }) {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,

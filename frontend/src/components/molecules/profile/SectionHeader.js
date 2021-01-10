@@ -3,18 +3,10 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
 const SectionHeader = (props) => {
-  const {
-    title,
-    subtitle,
-    titleProps,
-    subtitleProps,
-  } = props;
+  const { title, subtitle, titleProps, subtitleProps } = props;
 
   return (
-    <Grid
-      container
-      spacing={2}
-    >
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography
           variant="h3"

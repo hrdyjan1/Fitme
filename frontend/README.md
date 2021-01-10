@@ -15,6 +15,7 @@ yarn install
 Edit `.env` file (DB user, password, ...)
 
 Mandatory value:
+
 - REACT_APP_GRAPHQL_API (default=http://localhost:4000/graphql)
 
 ## Available Scripts

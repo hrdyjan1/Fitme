@@ -28,7 +28,7 @@ const typeDefs = gql`
     stid: Int!
     sportTypeName: String!
   }
-  
+
   type User {
     id: String!
     email: String!
@@ -39,7 +39,7 @@ const typeDefs = gql`
     lockedToken: String!
     type: String!
   }
-  
+
   type UserDetail {
     email: String
     nickname: String
@@ -58,7 +58,7 @@ const typeDefs = gql`
     uid: String
     imageURL: String!
   }
-  
+
   type Tag {
     id: String!
     uid: String
@@ -105,7 +105,7 @@ const typeDefs = gql`
     token: String!
     user: User!
   }
-  
+
   type Query {
     todo: String!
     users: [User]!

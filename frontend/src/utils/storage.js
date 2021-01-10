@@ -2,7 +2,10 @@ const AUTH_KEY = 'auth';
 
 function setStorage(state, item = AUTH_KEY, isObjectType = true) {
   return window.localStorage
-    ? window.localStorage.setItem(item, isObjectType ? JSON.stringify(state) : state)
+    ? window.localStorage.setItem(
+        item,
+        isObjectType ? JSON.stringify(state) : state
+      )
     : undefined;
 }
 

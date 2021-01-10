@@ -11,7 +11,8 @@ function PageNotFound() {
 
   if (verToken) {
     return <Verification token={verToken} />;
-  } if (lockToken) {
+  }
+  if (lockToken) {
     return <ResetPassword token={lockToken} />;
   }
   return (

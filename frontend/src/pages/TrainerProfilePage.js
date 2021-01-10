@@ -77,39 +77,47 @@ function TrainerProfilePage() {
   };
 
   const password = {
-    mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
+    mutationRequest: (values) =>
+      passwordMutationRequest({ variables: { ...values } }),
     onCompleted: () => showMessage('Heslo bylo změněno.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const profileImage = {
-    mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
-    onCompleted: () => showMessage('Profilová fotka byla úspěšně aktualizována.'),
+    mutationRequest: (image) =>
+      profileImageMutationRequest({ variables: { file: image } }),
+    onCompleted: () =>
+      showMessage('Profilová fotka byla úspěšně aktualizována.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
-  const trainerFetcher = useQuery(TRAINER_QUERY, { variables: { userid: user.id } });
+  const trainerFetcher = useQuery(TRAINER_QUERY, {
+    variables: { userid: user.id },
+  });
 
   const [trainerMutationRequest, trainerMutationRequestState] = useMutation(
-    TRAINER_MUTATION, {
+    TRAINER_MUTATION,
+    {
       onCompleted: trainer.onCompleted,
       onError: trainer.onError,
-    },
+    }
   );
 
   const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION, {
+    PASSWORD_MUTATION,
+    {
       onCompleted: password.onCompleted,
       onError: password.onError,
-    },
+    }
   );
 
-  const [profileImageMutationRequest, profileImageMutationRequestState] = useMutation(
-    PROFILE_IMAGE_MUTATION, {
-      onCompleted: profileImage.onCompleted,
-      onError: profileImage.onError,
-    },
-  );
+  const [
+    profileImageMutationRequest,
+    profileImageMutationRequestState,
+  ] = useMutation(PROFILE_IMAGE_MUTATION, {
+    onCompleted: profileImage.onCompleted,
+    onError: profileImage.onError,
+  });
 
   return (
     <TrainerProfileTemplate

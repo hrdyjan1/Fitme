@@ -17,10 +17,12 @@ import { useAuth } from 'src/utils/auth/index';
 
 const UNAUTHENTICATED_CODE = 'UNAUTHENTICATED';
 
-const hasUnauthenticatedErrorCode = (errors) => errors
-  && errors.some((error) => error.extensions.code === UNAUTHENTICATED_CODE);
+const hasUnauthenticatedErrorCode = (errors) =>
+  errors &&
+  errors.some((error) => error.extensions.code === UNAUTHENTICATED_CODE);
 
-const hasNetworkStatusCode = (error, code) => error && error.statusCode === code;
+const hasNetworkStatusCode = (error, code) =>
+  error && error.statusCode === code;
 
 const httpLink = createHttpLink({
   uri: config.GRAPHQL_API,
@@ -52,8 +54,8 @@ export function EnhancedAppoloProvider({ children }) {
 
   const logoutLink = onError(({ graphQLErrors, networkError }) => {
     if (
-      hasUnauthenticatedErrorCode(graphQLErrors)
-      || hasNetworkStatusCode(networkError, 401)
+      hasUnauthenticatedErrorCode(graphQLErrors) ||
+      hasNetworkStatusCode(networkError, 401)
     ) {
       handleSignout();
     }

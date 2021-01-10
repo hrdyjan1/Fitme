@@ -180,7 +180,10 @@ export function SignUpDialog({ show, close }) {
       </Toolbar>
       <DialogContent>
         <Box textAlign="center" justifyContent="center">
-          <SignUpForm onSave={onSave} loading={loadingAthlete || loadingPlace || loadingTrainer} />
+          <SignUpForm
+            onSave={onSave}
+            loading={loadingAthlete || loadingPlace || loadingTrainer}
+          />
         </Box>
       </DialogContent>
     </Dialog>

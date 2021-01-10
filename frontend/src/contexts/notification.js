@@ -39,14 +39,16 @@ function NotificationProvider({ children, autoHideDuration = 3000 }) {
 
   return (
     <>
-      <Snackbar open={isOpen} autoHideDuration={autoHideDuration} onClose={closeMessage}>
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={autoHideDuration}
+        onClose={closeMessage}
+      >
         <Alert severity={severity} onClose={closeMessage}>
           {message}
         </Alert>
       </Snackbar>
-      <Provider value={value}>
-        {children}
-      </Provider>
+      <Provider value={value}>{children}</Provider>
     </>
   );
 }

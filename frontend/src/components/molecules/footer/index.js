@@ -129,7 +129,11 @@ const Footer = ({ pages, className, ...rest }) => {
           </Typography>
         </ListItem>
         {item.pages.map((page) => (
-          <ListItem disableGutters key={page.title} className={classes.menuGroupItem}>
+          <ListItem
+            disableGutters
+            key={page.title}
+            className={classes.menuGroupItem}
+          >
             {page.href.includes('http') ? (
               <Typography
                 variant="body2"
@@ -144,7 +148,11 @@ const Footer = ({ pages, className, ...rest }) => {
                 variant="body2"
                 component="p"
                 onClick={goHome}
-                className={clsx(classes.navLink, classes.navLinkInternal, 'submenu-item')}
+                className={clsx(
+                  classes.navLink,
+                  classes.navLinkInternal,
+                  'submenu-item'
+                )}
               >
                 {page.title}
               </Typography>
@@ -156,9 +164,7 @@ const Footer = ({ pages, className, ...rest }) => {
   };
 
   const Pages = () => {
-    const {
-      profile, sportPlaces, web, external,
-    } = pages.web.children;
+    const { profile, sportPlaces, web, external } = pages.web.children;
     return (
       <div className={classes.menu}>
         <MenuGroup item={profile} />

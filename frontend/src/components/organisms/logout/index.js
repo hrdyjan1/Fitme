@@ -63,12 +63,22 @@ function LogoutDialog({ show, close }) {
               spacing={2}
             >
               <Grid item>
-                <Button variant="outlined" color="secondary" size="large" onClick={onLogout}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={onLogout}
+                >
                   Ano
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary" size="large" onClick={close}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={close}
+                >
                   Ne
                 </Button>
               </Grid>

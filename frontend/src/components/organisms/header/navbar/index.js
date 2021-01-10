@@ -11,14 +11,8 @@ import {
   Button,
   STYLES,
 } from 'src/components/organisms/header/navbar/components/Button';
-import {
-  SignInDialog,
-  SignUpDialog,
-} from 'src/pages';
-import {
-  LogoutDialog,
-  ForgotPassDialog,
-} from 'src/components/organisms';
+import { SignInDialog, SignUpDialog } from 'src/pages';
+import { LogoutDialog, ForgotPassDialog } from 'src/components/organisms';
 import { useAuth } from 'src/utils/auth';
 import { useUser } from 'src/contexts/user';
 
@@ -58,24 +52,28 @@ function Navbar() {
     setSignInVisible,
     setSignUpHidden,
     setForgotPassHidden,
-    deactivate,
+    deactivate
   );
   const onSignUpClick = compose(
     setSignUpVisible,
     setSignInHidden,
     setForgotPassHidden,
-    deactivate,
+    deactivate
   );
   const onForgotPassClick = compose(
     setForgotPassVisible,
     setSignInHidden,
     setSignUpHidden,
-    deactivate,
+    deactivate
   );
 
   return (
     <nav className="NavbarItems">
-      <h1 className="navbar-logo" onClick={goHomeDeactivate} onKeyPress={goHomeDeactivate}>
+      <h1
+        className="navbar-logo"
+        onClick={goHomeDeactivate}
+        onKeyPress={goHomeDeactivate}
+      >
         Fit.me
         <i className="fas fa-basketball-ball fa-logo" />
       </h1>
@@ -102,9 +100,7 @@ function Navbar() {
           <>
             <Button onClick={onUserNameClick}>
               <i className="fas fa-user" />
-              {user.firstName}
-              {' '}
-              {user.lastName}
+              {user.firstName} {user.lastName}
             </Button>
             <Button style={STYLES[1]} onClick={onLogoutClick}>
               Odhlásit se
@@ -113,7 +109,9 @@ function Navbar() {
         ) : (
           <>
             <Button onClick={onSignInClick}>Přihlásit se</Button>
-            <Button onClick={onSignUpClick} style={STYLES[2]}>Zaregistrovat se</Button>
+            <Button onClick={onSignUpClick} style={STYLES[2]}>
+              Zaregistrovat se
+            </Button>
           </>
         )}
       </ul>

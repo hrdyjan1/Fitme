@@ -48,9 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GalleryImage = ({
-  title, src, srcSet, alt, onDelete,
-}) => {
+const GalleryImage = ({ title, src, srcSet, alt, onDelete }) => {
   const classes = useStyles();
 
   return (
@@ -63,12 +61,7 @@ const GalleryImage = ({
         width="100%"
         height="100%"
       />
-      <div
-        className={clsx(
-          'folio__info-wrapper',
-          classes.folioInfoWrapper,
-        )}
-      >
+      <div className={clsx('folio__info-wrapper', classes.folioInfoWrapper)}>
         <div>
           <Typography variant="h6" className={classes.folioTitle}>
             {title}

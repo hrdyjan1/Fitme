@@ -1,13 +1,20 @@
-import {EMAIL, sendEmail} from "../../utils/email";
-import getUser from '../user/helper'
-import {generalSignup} from "../../constants/generalSignup";
+import { EMAIL, sendEmail } from '../../utils/email';
+import getUser from '../user/helper';
+import { generalSignup } from '../../constants/generalSignup';
 
 export const signupTrainer = async (
   _,
   { firstName, lastName, ico, email, password },
   { dbConnection },
 ) => {
-  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'trainer')
+  const { id, verificationToken, token } = await generalSignup(
+    dbConnection,
+    email,
+    password,
+    firstName,
+    lastName,
+    'trainer',
+  );
 
   await dbConnection.query(
     `INSERT INTO trainer (uid, ico)
@@ -70,5 +77,9 @@ export const updateTrainer = async (
     )
   ).affectedRows;
 
-  return updatedTrainerRows === 1 && updatedUserRows === 1 && updatedAddressRows === 1;
+  return (
+    updatedTrainerRows === 1 &&
+    updatedUserRows === 1 &&
+    updatedAddressRows === 1
+  );
 };

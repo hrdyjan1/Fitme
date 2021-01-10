@@ -2,7 +2,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, Avatar, Box, Grid, ListItem, Typography,
+  Button,
+  Avatar,
+  Box,
+  Grid,
+  ListItem,
+  Typography,
 } from '@material-ui/core';
 import CardBase from 'src/components/organisms/cardBase';
 
@@ -51,7 +56,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TrainerCard = ({
-  id, name, imageSrc, description, onDelete, loading,
+  id,
+  name,
+  imageSrc,
+  description,
+  onDelete,
+  loading,
 }) => {
   const classes = useStyles();
 
@@ -59,13 +69,7 @@ const TrainerCard = ({
     <CardBase className={classes.cardBase}>
       <ListItem disableGutters className={classes.listItem}>
         <Grid container>
-          <Grid
-            item
-            xs={8}
-            container
-            direction="column"
-            justify="center"
-          >
+          <Grid item xs={8} container direction="column" justify="center">
             <Typography>{name}</Typography>
           </Grid>
           <Grid item xs={4} justify="center">
@@ -79,7 +83,12 @@ const TrainerCard = ({
             </Box>
           </Grid>
           <Grid item sm={12}>
-            <Button onClick={() => onDelete(id)} variant="contained" color="secondary" disabled={loading}>
+            <Button
+              onClick={() => onDelete(id)}
+              variant="contained"
+              color="secondary"
+              disabled={loading}
+            >
               Odstranit
             </Button>
           </Grid>

@@ -1,17 +1,21 @@
 import React from 'react';
 
-import { createContextValue, Context, initialState } from 'src/utils/auth/context';
+import {
+  createContextValue,
+  Context,
+  initialState,
+} from 'src/utils/auth/context';
 import { usePersistedAuth } from 'src/utils/auth/usePersistedAuth';
 
 function AuthProvider({ children }) {
   const [state, setState] = usePersistedAuth(initialState);
 
-  const contextValue = React.useMemo(() => createContextValue({ token: state.token, setState }),
-    [state.token, setState]);
-
-  return (
-    <Context.Provider value={contextValue}>{children}</Context.Provider>
+  const contextValue = React.useMemo(
+    () => createContextValue({ token: state.token, setState }),
+    [state.token, setState]
   );
+
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
 
 function useAuth() {

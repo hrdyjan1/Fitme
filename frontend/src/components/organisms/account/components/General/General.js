@@ -17,9 +17,9 @@ import { useUser } from 'src/contexts/user';
 import { useNotification } from 'src/contexts/notification';
 
 const UPDATE_PLACE_BASICS = gql`
-    mutation UpdatePlace($placeBasics: PlaceBasics!) {
-        updatePlaceBasics(placeBasics: $placeBasics)
-    }
+  mutation UpdatePlace($placeBasics: PlaceBasics!) {
+    updatePlaceBasics(placeBasics: $placeBasics)
+  }
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -55,11 +55,14 @@ const General = (props) => {
   });
 
   const onSubmit = (values) => {
-    updatePlaceBasics({ variables: { placeBasics: { ...values, id: place.id, uid: user.id } } })
+    updatePlaceBasics({
+      variables: { placeBasics: { ...values, id: place.id, uid: user.id } },
+    })
       .then(() => {
         setInitialValues(values);
         showMessage('Změna proběhla úspěšně.');
-      }).catch(() => showErrorMessage('Během změny nastala chyba.'));
+      })
+      .catch(() => showErrorMessage('Během změny nastala chyba.'));
   };
 
   const prepareLabel = (label) => (

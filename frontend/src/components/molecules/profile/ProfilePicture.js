@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Box, Card, CardMedia,
-} from '@material-ui/core';
+import { Box, Card, CardMedia } from '@material-ui/core';
 import { InputImageButton, ProfileImageButton } from 'src/components/atoms';
 
 function ProfilePicture({ imageURL, loading, onSave }) {
@@ -28,19 +26,19 @@ function ProfilePicture({ imageURL, loading, onSave }) {
           width="200px"
         />
       </Card>
-      { !isLoaded && (
-      <InputImageButton
-        text="Změnit profilovou fotku"
-        onLoad={onload}
-        loading={loading}
-      />
+      {!isLoaded && (
+        <InputImageButton
+          text="Změnit profilovou fotku"
+          onLoad={onload}
+          loading={loading}
+        />
       )}
-      { isLoaded && (
-      <ProfileImageButton
-        text="Uložit"
-        onClick={onSaveClick}
-        loading={loading}
-      />
+      {isLoaded && (
+        <ProfileImageButton
+          text="Uložit"
+          onClick={onSaveClick}
+          loading={loading}
+        />
       )}
     </Box>
   );

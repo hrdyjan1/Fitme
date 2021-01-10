@@ -23,9 +23,21 @@ export function Routes() {
           <Route path={route.home()} exact component={HomePage} />
           <Route path={route.profile()} exact component={UserProfilePage} />
           <Route path={route.sportPlaces()} exact component={SportPlacesPage} />
-          <Route path={route.editSportPlace()} exact component={PlaceProfilePage} />
-          <Route path={route.trainerProfile()} exact component={TrainerProfilePage} />
-          <Route path={route.sportPlaceDetail()} exact component={SportPlaceDetailPage} />
+          <Route
+            path={route.editSportPlace()}
+            exact
+            component={PlaceProfilePage}
+          />
+          <Route
+            path={route.trainerProfile()}
+            exact
+            component={TrainerProfilePage}
+          />
+          <Route
+            path={route.sportPlaceDetail()}
+            exact
+            component={SportPlaceDetailPage}
+          />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>

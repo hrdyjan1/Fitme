@@ -107,13 +107,13 @@ function ResetPassword({ token }) {
                         label="Heslo"
                         onChange={formikBag.handleChange}
                         error={Boolean(
-                          form.errors.newPassword && form.touched.newPassword,
+                          form.errors.newPassword && form.touched.newPassword
                         )}
                         onBlur={formikBag.handleBlur}
                         helperText={
-                          form.errors.newPassword
-                          && form.touched.newPassword
-                          && String(form.errors.newPassword)
+                          form.errors.newPassword &&
+                          form.touched.newPassword &&
+                          String(form.errors.newPassword)
                         }
                         variant="filled"
                         fullWidth
@@ -137,13 +137,14 @@ function ResetPassword({ token }) {
                         label="Heslo znova"
                         onChange={formikBag.handleChange}
                         error={Boolean(
-                          form.errors.newPasswordCheck && form.touched.newPasswordCheck,
+                          form.errors.newPasswordCheck &&
+                            form.touched.newPasswordCheck
                         )}
                         onBlur={formikBag.handleBlur}
                         helperText={
-                          form.errors.newPasswordCheck
-                          && form.touched.newPasswordCheck
-                          && String(form.errors.newPasswordCheck)
+                          form.errors.newPasswordCheck &&
+                          form.touched.newPasswordCheck &&
+                          String(form.errors.newPasswordCheck)
                         }
                         variant="filled"
                         fullWidth

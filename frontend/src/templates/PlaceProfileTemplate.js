@@ -88,22 +88,19 @@ function PlaceProfileTemplate({
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
-  const isLoading = (
-    passwordLoading
-    || placeLoading
-    || uploadPlaceImageLoading
-    || deletePlaceImageLoading
-    || addSportTypeLoading
-    || deleteSportTypeLoading
-    || addPlaceTrainerLoading
-    || deletePlaceTrainerLoading
-  );
+  const isLoading =
+    passwordLoading ||
+    placeLoading ||
+    uploadPlaceImageLoading ||
+    deletePlaceImageLoading ||
+    addSportTypeLoading ||
+    deleteSportTypeLoading ||
+    addPlaceTrainerLoading ||
+    deletePlaceTrainerLoading;
 
   return (
     <div className={classes.root}>
-      {isLoading && (
-        <LinearProgress />
-      )}
+      {isLoading && <LinearProgress />}
       <ProfileHeader
         title="Váš profil sportoviště"
         subtitle="Zde si můžete změnit veškeré údaje o vašem sportovišti."
@@ -112,7 +109,11 @@ function PlaceProfileTemplate({
         <SectionAlternate className={classes.section}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={3}>
-              <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId} />
+              <ProfileMenu
+                pages={subPages}
+                pageId={pageId}
+                setPageId={setPageId}
+              />
             </Grid>
             <Grid item xs={12} md={9}>
               <CardBase>
@@ -134,7 +135,10 @@ function PlaceProfileTemplate({
                   />
                 </TabPanel>
                 <TabPanel value={pageId} index="password">
-                  <PasswordForm onSave={onSavePassword} loading={passwordLoading} />
+                  <PasswordForm
+                    onSave={onSavePassword}
+                    loading={passwordLoading}
+                  />
                 </TabPanel>
                 <TabPanel value={pageId} index="tags">
                   <SportTypes

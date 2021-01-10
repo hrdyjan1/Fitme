@@ -100,7 +100,6 @@ const Gallery = (props) => {
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <Grid container spacing={isMd ? 4 : 2}>
-
         <Grid item xs={12}>
           <Typography variant="h6" color="textPrimary">
             Přidání nebo odebrání fotografie
@@ -112,9 +111,16 @@ const Gallery = (props) => {
       </Grid>
 
       <Box marginY={4}>
-        <GridList cellHeight={isMd ? 260 : 160} cols={3} spacing={isMd ? 24 : 8}>
+        <GridList
+          cellHeight={isMd ? 260 : 160}
+          cols={3}
+          spacing={isMd ? 24 : 8}
+        >
           {data.map((item) => (
-            <GridListTile key={item.toString()} cols={isMd ? item.cols : 3 || 1}>
+            <GridListTile
+              key={item.toString()}
+              cols={isMd ? item.cols : 3 || 1}
+            >
               <div className={classes.folioItem}>
                 <GalleryImage
                   src={item.cover}
@@ -125,7 +131,7 @@ const Gallery = (props) => {
                 <div
                   className={clsx(
                     'folio__info-wrapper',
-                    classes.folioInfoWrapper,
+                    classes.folioInfoWrapper
                   )}
                 >
                   <div className={classes.folioInfo}>
@@ -143,12 +149,7 @@ const Gallery = (props) => {
         </GridList>
       </Box>
       <Grid item container justify="center" xs={12}>
-        <Button
-          variant="contained"
-          type="submit"
-          color="primary"
-          size="large"
-        >
+        <Button variant="contained" type="submit" color="primary" size="large">
           Přidat
         </Button>
       </Grid>

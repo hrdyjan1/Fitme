@@ -73,41 +73,51 @@ function TrainerProfileTemplate({
       {(passwordLoading || trainerLoading || profileImageLoading) && (
         <LinearProgress />
       )}
-      <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje." />
+      <ProfileHeader
+        title="Váš profil trenéra"
+        subtitle="Zde si můžete změnit veškeré vaše údaje."
+      />
       {trainer && (
-      <SectionAlternate className={classes.section}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={3}>
-            <ProfileMenu pages={subPages} pageId={pageId} setPageId={setPageId} />
+        <SectionAlternate className={classes.section}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={3}>
+              <ProfileMenu
+                pages={subPages}
+                pageId={pageId}
+                setPageId={setPageId}
+              />
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <CardBase>
+                <TabPanel value={pageId} index="general">
+                  <GeneralForm
+                    data={trainer}
+                    reFetchData={reFetchTrainer}
+                    onSave={onSaveTrainer}
+                    loading={trainerLoading}
+                  />
+                </TabPanel>
+                <TabPanel value={pageId} index="profilePhoto">
+                  <ProfilePictureForm
+                    imageURL={trainer?.imageURL}
+                    reFetchUser={reFetchTrainer}
+                    onSave={onSaveProfileImage}
+                    loading={profileImageLoading}
+                  />
+                </TabPanel>
+                <TabPanel value={pageId} index="password">
+                  <PasswordForm
+                    onSave={onSavePassword}
+                    loading={passwordLoading}
+                  />
+                </TabPanel>
+                <TabPanel value={pageId} index="tags">
+                  <Notifications place={trainer} />
+                </TabPanel>
+              </CardBase>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={9}>
-            <CardBase>
-              <TabPanel value={pageId} index="general">
-                <GeneralForm
-                  data={trainer}
-                  reFetchData={reFetchTrainer}
-                  onSave={onSaveTrainer}
-                  loading={trainerLoading}
-                />
-              </TabPanel>
-              <TabPanel value={pageId} index="profilePhoto">
-                <ProfilePictureForm
-                  imageURL={trainer?.imageURL}
-                  reFetchUser={reFetchTrainer}
-                  onSave={onSaveProfileImage}
-                  loading={profileImageLoading}
-                />
-              </TabPanel>
-              <TabPanel value={pageId} index="password">
-                <PasswordForm onSave={onSavePassword} loading={passwordLoading} />
-              </TabPanel>
-              <TabPanel value={pageId} index="tags">
-                <Notifications place={trainer} />
-              </TabPanel>
-            </CardBase>
-          </Grid>
-        </Grid>
-      </SectionAlternate>
+        </SectionAlternate>
       )}
     </div>
   );

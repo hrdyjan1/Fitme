@@ -14,7 +14,11 @@ import { Field, Form, Formik } from 'formik';
 import useTheme from '@material-ui/core/styles/useTheme';
 
 import {
-  initialFormValues, validate, FORGOT_PASS, handleInvalidEmail, handleValidEmail,
+  initialFormValues,
+  validate,
+  FORGOT_PASS,
+  handleInvalidEmail,
+  handleValidEmail,
 } from 'src/components/organisms/forgotPass/helpers';
 import { useMutation } from '@apollo/client';
 import { useNotification } from 'src/contexts/notification';
@@ -43,7 +47,9 @@ function ForgotPassDialog({ show, close }) {
       >
         <div />
         <Box color="white">
-          <Typography variant="h6">Zapomenuté heslo do aplikace FitMe</Typography>
+          <Typography variant="h6">
+            Zapomenuté heslo do aplikace FitMe
+          </Typography>
         </Box>
         <IconButton onClick={close}>
           <Close fontSize="large" style={{ color: 'white' }} />
@@ -79,9 +85,9 @@ function ForgotPassDialog({ show, close }) {
                         error={Boolean(form.errors.email && form.touched.email)}
                         onBlur={formikBag.handleBlur}
                         helperText={
-                          form.errors.email
-                          && form.touched.email
-                          && String(form.errors.email)
+                          form.errors.email &&
+                          form.touched.email &&
+                          String(form.errors.email)
                         }
                         variant="filled"
                         fullWidth

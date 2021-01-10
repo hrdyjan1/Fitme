@@ -5,7 +5,7 @@ import { Cloudinary } from '../../utils/cloudinary';
 import { createToken } from '../../libs/token';
 import { EMAIL, sendEmail } from '../../utils/email';
 import getUser from './helper';
-import {generalSignup} from "../../constants/generalSignup";
+import { generalSignup } from '../../constants/generalSignup';
 
 export const signin = async (_, { email, password }, { dbConnection }) => {
   const user = (
@@ -31,7 +31,14 @@ export const signup = async (
   { firstName, lastName, email, password },
   { dbConnection },
 ) => {
-  const { id, verificationToken, token } = await generalSignup(dbConnection, email, password, firstName, lastName, 'athlete');
+  const { id, verificationToken, token } = await generalSignup(
+    dbConnection,
+    email,
+    password,
+    firstName,
+    lastName,
+    'athlete',
+  );
 
   await dbConnection.query(
     `INSERT INTO athlete (uid)
@@ -40,7 +47,12 @@ export const signup = async (
   );
 
   const emailText = `Dobrý den, gratulujeme, registrace do systému Fit.me proběhla úspěšně. Zbývá ověřit tuto emailovou adresu \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Fit.me - Potvrzení registrace do systému', emailText);
+  await sendEmail(
+    EMAIL.header,
+    email,
+    'Fit.me - Potvrzení registrace do systému',
+    emailText,
+  );
 
   const user = { id, email, firstName, lastName, verified: 0 };
 
@@ -115,20 +127,33 @@ export const updatePassword = async (_, args, { dbConnection, auth }) => {
   await dbConnection.query(updatePasswordQuery, [newHashedPassword, id]);
 
   return true;
-}
+};
 
 export const updateUser = async (_, args, { dbConnection, auth }) => {
-  const { email, firstName, lastName, nickname, phoneNumber, street, city, zipCode, country } = args;
+  const {
+    email,
+    firstName,
+    lastName,
+    nickname,
+    phoneNumber,
+    street,
+    city,
+    zipCode,
+    country,
+  } = args;
 
-  const selectUserQuery = 'SELECT email, firstName, lastName, ath.nickname, phoneNumber, a.street, a.city, a.zipCode, a.country FROM `user` u JOIN Address a ON u.id = a.uid JOIN athlete ath ON u.id = ath.uid WHERE id = ?;';
-  const updateUserQuery = 'UPDATE user SET email = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE id = ?;';
-  const updateAddressQuery = 'UPDATE Address SET street = ?, city = ?, zipCode = ?, country = ? WHERE uid = ?;';
+  const selectUserQuery =
+    'SELECT email, firstName, lastName, ath.nickname, phoneNumber, a.street, a.city, a.zipCode, a.country FROM `user` u JOIN Address a ON u.id = a.uid JOIN athlete ath ON u.id = ath.uid WHERE id = ?;';
+  const updateUserQuery =
+    'UPDATE user SET email = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE id = ?;';
+  const updateAddressQuery =
+    'UPDATE Address SET street = ?, city = ?, zipCode = ?, country = ? WHERE uid = ?;';
   const updateAthleteQuery = 'UPDATE athlete SET nickname = ? WHERE uid = ?;';
 
   let id = null;
   try {
     id = await getUser(auth);
-  } catch  (error){
+  } catch (error) {
     throw new Error('Session neexistujícího uživatele');
   }
 
@@ -150,7 +175,7 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
     getDefinedValue(firstName, user.firstName),
     getDefinedValue(lastName, user.lastName),
     getDefinedValue(phoneNumber, user.phoneNumber),
-    id
+    id,
   ]);
 
   await dbConnection.query(updateAddressQuery, [
@@ -158,16 +183,16 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
     getDefinedValue(city, user.city),
     getDefinedValue(zipCode, user.zipCode),
     getDefinedValue(country, user.country),
-    id
+    id,
   ]);
 
   await dbConnection.query(updateAthleteQuery, [
     getDefinedValue(nickname, user.nickname),
-    id
+    id,
   ]);
 
   return true;
-}
+};
 
 export const uploadProfileImage = async (_, { file }, ctx) => {
   const { auth, dbConnection } = ctx;
@@ -187,13 +212,14 @@ export const uploadProfileImage = async (_, { file }, ctx) => {
   }
 };
 
-export const addSportType = async (_, stid, {dbConnection, auth}) => {
+export const addSportType = async (_, stid, { dbConnection, auth }) => {
   try {
     const id = await getUser(auth);
-    const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
+    const insertSportTypeQuery =
+      'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
 
     if (id) {
-      await dbConnection.query(insertSportTypeQuery, [id, stid])
+      await dbConnection.query(insertSportTypeQuery, [id, stid]);
       return true;
     } else {
       return false;
@@ -203,19 +229,19 @@ export const addSportType = async (_, stid, {dbConnection, auth}) => {
   }
 };
 
-export const removeSportType = async (_, stid, {dbConnection, auth}) => {
-
+export const removeSportType = async (_, stid, { dbConnection, auth }) => {
   let id = null;
   try {
     id = await getUser(auth);
-  } catch  (error){
+  } catch (error) {
     throw new Error('Session neexistujícího uživatele');
   }
 
   try {
-    const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
+    const removeSportTypeQuery =
+      'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
     if (id) {
-      await dbConnection.query(removeSportTypeQuery, [id, stid])
+      await dbConnection.query(removeSportTypeQuery, [id, stid]);
       return true;
     } else {
       return false;

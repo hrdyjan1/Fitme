@@ -2,9 +2,7 @@
 import React from 'react';
 import { Chip } from '@material-ui/core';
 
-const SportTypeChip = ({
-  id, text, onDelete, loading,
-}) => (
+const SportTypeChip = ({ id, text, onDelete, loading }) => (
   <Chip
     size="small"
     label={text}

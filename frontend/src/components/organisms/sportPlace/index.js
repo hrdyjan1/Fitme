@@ -42,7 +42,9 @@ function handleCategoriesOptions(data) {
 }
 
 function handleFilterPlacesQueryOptions(data) {
-  return { variables: { containedName: data.searchValue, sportType: data.category } };
+  return {
+    variables: { containedName: data.searchValue, sportType: data.category },
+  };
 }
 
 function setNullIfEmpty(value) {
@@ -61,13 +63,20 @@ const SportPlace = ({ className, showAll, ...rest }) => {
   const [category, setCategory] = React.useState('');
   const [searchValue, setSearchValue] = React.useState('');
   const { data: sportTypesData } = useQuery(GET_ALL_SPORT_TYPES);
-  const [searchPlaceData, setSearchPlaceData] = React.useState(initialSearchPlaceData);
+  const [searchPlaceData, setSearchPlaceData] = React.useState(
+    initialSearchPlaceData
+  );
 
   const categoriesOptions = handleCategoriesOptions(sportTypesData);
 
   // 👓 Filtered Places
-  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(searchPlaceData);
-  const { data, loading } = useQuery(GET_FILTERED_PLACES, filteredPlacesQueryOptions);
+  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(
+    searchPlaceData
+  );
+  const { data, loading } = useQuery(
+    GET_FILTERED_PLACES,
+    filteredPlacesQueryOptions
+  );
   const places = handlePlaces(data);
   const maxPlaceToSee = showAll && places ? places.length : 6;
 
@@ -84,7 +93,10 @@ const SportPlace = ({ className, showAll, ...rest }) => {
   const handleFilterClick = () => {
     const validCategory = setNullIfEmpty(category);
     const validSearchValue = setNullIfEmpty(searchValue);
-    setSearchPlaceData({ category: validCategory, searchValue: validSearchValue });
+    setSearchPlaceData({
+      category: validCategory,
+      searchValue: validSearchValue,
+    });
   };
 
   const rating = (count) => {
@@ -94,10 +106,10 @@ const SportPlace = ({ className, showAll, ...rest }) => {
         <i
           className={clsx(
             i <= count ? 'fas fa-star' : 'far fa-star',
-            classes.ratingIcon,
+            classes.ratingIcon
           )}
           key={i}
-        />,
+        />
       );
     }
 

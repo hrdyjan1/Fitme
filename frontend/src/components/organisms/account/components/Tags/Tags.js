@@ -97,7 +97,6 @@ const Notifications = (props) => {
             color="primary"
             onDelete={noop}
           />
-
         </Grid>
         <Grid item xs={12} md={6}>
           <div>
@@ -130,7 +129,6 @@ const Notifications = (props) => {
             </Grid>
           </Box>
         </Grid>
-
       </Grid>
     </div>
   );
