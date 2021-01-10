@@ -11,24 +11,28 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
 
   const trainerListArray = await dbConnection.query('SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM place p JOIN placeTrainer pt ON p.uid=pt.pid JOIN trainer t ON pt.tid=t.uid JOIN `user` u ON t.uid=u.id WHERE pt.pid = ?', [uid]);
 
+  const address = (
+    await dbConnection.query('SELECT * FROM Address WHERE uid = ?', [uid])
+  )[0];
+
   const user = (
     await dbConnection.query('SELECT * FROM user WHERE id = ?;', [uid])
   )[0];
 
-  if (place && user) {
+  if (place && user && address) {
     return {
       id: place.id,
       ico: place.ico,
       name: place.name,
       // tagList: tagList,
-      city: user.city || '',
+      city: address.city || '',
       email: user.email || '',
-      street: user.street || '',
+      street: address.street || '',
       pictureList: pictureListArray || [],
       sportTypeList: sportTypeListArray || [],
       trainerList: trainerListArray || [],
-      latitude: place.latitude || '',
-      longitude: place.longitude || '',
+      zipCode: address.zipCode || '',
+      country: address.country || '',
       phoneNumber: user.phoneNumber || '',
       description: place.description || '',
       imageURL: user.imageURL || '',
@@ -43,7 +47,7 @@ export { singlePlace as place };
 export const searchPlaces = async (_, { containedName, sportType }, {dbConnection} ) => {
 
   const selectFilteredPlacesQuery =
-    `SELECT DISTINCT name, description, latitude, longitude, uid 
+    `SELECT DISTINCT name, description, uid 
     FROM place p 
     LEFT JOIN userSportType pst USING (uid)
     LEFT JOIN sportType st USING (stid)`;
