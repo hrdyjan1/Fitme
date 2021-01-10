@@ -13,7 +13,8 @@ const useStyles = makeStyles(() => ({
     overflow: 'hidden',
   },
   image: {
-    width: '100%',
+    width: 'initial',
+    maxWidth: '100%',
     minHeight: 400,
     maxHeight: 600,
     objectFit: 'cover',
