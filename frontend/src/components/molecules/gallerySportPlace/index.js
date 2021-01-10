@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 const GallerySportPlace = (props) => {
   const { data, className, ...rest } = props;
   const classes = useStyles();
-  console.log(data);
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
