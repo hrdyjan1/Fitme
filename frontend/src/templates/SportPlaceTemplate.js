@@ -12,7 +12,7 @@ import {
   Typography,
   CircularProgress,
 } from '@material-ui/core';
-import { GalleryImage } from 'src/components/molecules/image/GalleryImage';
+import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { Search } from 'src/components/organisms';
 import { route } from 'src/constants/routes';
@@ -137,7 +137,7 @@ function SportPlaceTemplate(props) {
           <Grid item xs={12} sm={6} md={4} key={item.id} data-aos="fade-up">
             <Card className={classes.card} onClick={() => onClick(item.id)}>
               <CardMedia className={classes.cardMedia}>
-                <GalleryImage
+                <Image
                   src={item.imageURL || 'https://i.ytimg.com/vi/w-oHc3Fk9Xo/maxresdefault.jpg'}
                   alt={item.name}
                   className={classes.image}
