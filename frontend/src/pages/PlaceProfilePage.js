@@ -17,10 +17,6 @@ const PLACE_QUERY = gql`
         iid        
         imageURL
       }
-      tagList {
-          id
-          name
-      }
       description
       latitude
       longitude
