@@ -60,7 +60,7 @@ function GeneralForm({
 
   const placeOwnerValidationSchema = {
     ...trainerValidationSchema,
-    name: yupValidation.name,
+    name: yupValidation.organization,
   };
 
   const validationSchema = () => {
