@@ -22,8 +22,8 @@ const PLACE_DETAIL = gql`
         sportTypeName
       }
       description
-      latitude
-      longitude
+      zipCode
+      country
       city
       street
       email
