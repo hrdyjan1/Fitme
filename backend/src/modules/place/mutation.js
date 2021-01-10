@@ -84,51 +84,6 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
   }
 };
 
-export const addTag = async (_, { name }, { dbConnection, auth }) => {
-
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch  (error){
-    throw new Error('Session neexistujícího uživatele');
-  }
-
-  try {
-    const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
-
-    if (id) {
-      await dbConnection.query(insertTagQuery, [id, name])
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-
-export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch  (error){
-    throw new Error('Session neexistujícího uživatele');
-  }
-
-  try {
-    const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
-
-    if (id) {
-      await dbConnection.query(deleteTagQuery, [id, name])
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-
 export const removeTrainer = async (_, tid, {dbConnection, auth}) => {
 
   let id = null;

@@ -17,9 +17,11 @@ const PLACE_QUERY = gql`
         iid        
         imageURL
       }
+      sportTypeList {
+        stid
+        sportTypeName
+      }
       description
-      latitude
-      longitude
       city
       street
       zipCode
@@ -82,8 +84,6 @@ const PLACE_BASICS_MUTATION = gql`
     $email: String
     $phoneNumber: String
     $description: String
-    $latitude: String
-    $longitude: String
     $street: String
     $city: String
     $zipCode: String
@@ -99,8 +99,6 @@ const PLACE_BASICS_MUTATION = gql`
       email: $email
       phoneNumber: $phoneNumber
       description: $description
-      latitude: $latitude
-      longitude: $longitude
       street: $street
       city: $city
       zipCode: $zipCode

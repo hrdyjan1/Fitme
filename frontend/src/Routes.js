@@ -10,7 +10,8 @@ import {
   UserProfilePage,
   SportPlacesPage,
   TrainerProfilePage,
-  PlaceProfilePage
+  PlaceProfilePage,
+  SportPlaceDetailPage,
 } from 'src/pages';
 
 export function Routes() {
@@ -24,6 +25,7 @@ export function Routes() {
           <Route path={route.sportPlaces()} exact component={SportPlacesPage} />
           <Route path={route.editSportPlace()} exact component={PlaceProfilePage} />
           <Route path={route.trainerProfile()} exact component={TrainerProfilePage} />
+          <Route path={route.sportPlaceDetail()} exact component={SportPlaceDetailPage} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>

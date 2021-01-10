@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import Hero from 'src/components/spec/hero/Hero';
+import { Hero } from 'src/components/molecules';
 import Section from 'src/components/organisms/Section';
 import Overview from 'src/components/spec/Overview';
 import SportPlace from 'src/components/organisms/sportPlace';

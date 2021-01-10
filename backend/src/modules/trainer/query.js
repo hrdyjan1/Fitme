@@ -3,8 +3,10 @@ const singleTrainer = async (_, { uid }, { dbConnection }) => {
   const trainerArray = await dbConnection.query('SELECT * FROM trainer WHERE uid = ?', [uid])
   const trainer = trainerArray[0];
 
-  const tagListArray = await dbConnection.query('SELECT * FROM tag WHERE uid = ?;', [uid])
-  const tagList = tagListArray[0] || []
+  const sportTypeListArray = await dbConnection.query('SELECT * FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;', [uid]);
+
+  //TODO: this is not working every time, I will fix it ASAP
+  const placeListArray = await  dbConnection.query('SELECT p.uid, p.name, p.description, u.imageURL FROM trainer t JOIN placeTrainer pt ON t.uid=pt.tid JOIN place p ON pt.pid=p.uid JOIN `user` u ON p.uid=u.id WHERE pt.tid = ?', [uid]);
 
   const address = (
     await dbConnection.query('SELECT * FROM Address WHERE uid = ?', [uid])
@@ -19,7 +21,9 @@ const singleTrainer = async (_, { uid }, { dbConnection }) => {
       firstName: user.firstName,
       lastName: user.lastName,
       ico: trainer.ico,
-      tagList: tagList,
+      // tagList: tagList,
+      sportTypeList: sportTypeListArray || [],
+      placeList: placeListArray || [],
       email: user.email || '',
       city: address.city || '',
       street: address.street || '',
