@@ -66,8 +66,6 @@ const Team = (props) => {
     defaultMatches: true,
   });
 
-  console.log(data);
-
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader

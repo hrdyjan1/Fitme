@@ -18,7 +18,6 @@ const AddSportTypeForm = ({
   }, []);
 
   const onSavePlaceSportType = () => {
-    console.log();
     onSave(selectedSportType.stid).then(() => {
       setSelectedSportType(null);
       reFetchData();
