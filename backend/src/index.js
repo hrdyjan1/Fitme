@@ -24,15 +24,10 @@ const typeDefs = gql`
     imageURL: String
   }
 
-  #TODO:-------SOLUTION FOR LAST SPRINT------ 
   type SportType {
-    stid: String!
+    stid: Int!
     sportTypeName: String!
   }
-#  
-#  input SportTypeInput {
-#    sportTypeName: String!
-#  }
   
   type User {
     id: String!
@@ -89,37 +84,21 @@ const typeDefs = gql`
 
   type PlaceDetail {
     id: String!
+    firstName: String!
+    lastName: String!
     name: String!
     ico: String!
     email: String!
     phoneNumber: String!
     description: String!
-#    latitude: String!
-#    longitude: String!
     zipCode: String!
     country: String!
     pictureList: [PlaceImage]
     sportTypeList: [SportType]
     trainerList: [Trainer]
-#    tagList: [Tag]!
     street: String!
     city: String!
     imageURL: String!
-  }
-
-  # No arrays
-  input PlaceBasics {
-    id: String!
-    uid: String!
-    name: String!
-    ico: String!
-    email: String!
-    phoneNumber: String!
-    description: String!
-    zipCode: String!
-    country: String!
-    street: String!
-    city: String!
   }
 
   type AuthInfo {
@@ -135,10 +114,9 @@ const typeDefs = gql`
     place(uid: String!): PlaceDetail!
     trainer(uid: String!): TrainerDetail!
     searchPlaces(containedName: String, sportType: String): [Place!]!
-#TODO:-------SOLUTION FOR LAST SPRINT------ 
     allSportTypes: [SportType]!
     allTrainers: [Trainer]!
-    placeSportTypes: [SportType]!
+    userSportTypes: [SportType]!
     placeTrainers: [Trainer]!
   }
 
@@ -197,16 +175,29 @@ const typeDefs = gql`
       ico: String!
       name: String!
     ): AuthInfo!
-    updatePlaceBasics(placeBasics: PlaceBasics!): Boolean
-    deletePlaceImage(iid: String!): Boolean!
+    updatePlaceBasics(
+      id: String!
+      uid: String!
+      firstName: String
+      lastName: String
+      name: String
+      ico: String
+      email: String
+      phoneNumber: String
+      description: String
+      street: String
+      city: String
+      zipCode: String
+      country: String
+    ): Boolean
+    deletePlaceImage(iid: Int!): Boolean!
     uploadPlaceImage(file: String!): Boolean!
     addTag(name: String!): Boolean!
     deleteTag(name: String!): Boolean!
     addTrainer(tid: String!): Boolean!
     removeTrainer(tid: String!): Boolean!
-#TODO:-------SOLUTION FOR LAST SPRINT------ 
-    addSportType(stid: String!): Boolean!
-    removeSportType(stid: String!): Boolean!
+    addSportType(stid: Int!): Boolean!
+    removeSportType(stid: Int!): Boolean!
   }
 `;
 

@@ -84,8 +84,8 @@ function TrainerProfileTemplate({
             <CardBase>
               <TabPanel value={pageId} index="general">
                 <GeneralForm
-                  user={trainer}
-                  reFetchUser={reFetchTrainer}
+                  data={trainer}
+                  reFetchData={reFetchTrainer}
                   onSave={onSaveTrainer}
                   loading={trainerLoading}
                 />

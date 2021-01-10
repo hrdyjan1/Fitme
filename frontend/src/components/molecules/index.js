@@ -9,6 +9,8 @@ import { Team } from './team';
 import { Contact } from './contact';
 import { GallerySportPlace } from './gallerySportPlace';
 import { ChipList } from './chipList';
+import { GalleryImage } from './image/GalleryImage';
+import { TrainerCard } from './profile/TrainerCard';
 import { Footer } from './footer';
 import { Overview } from './overview';
 
@@ -26,4 +28,6 @@ export {
   Story,
   Hero,
   Team,
+  GalleryImage,
+  TrainerCard,
 };

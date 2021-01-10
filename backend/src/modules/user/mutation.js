@@ -7,25 +7,6 @@ import { EMAIL, sendEmail } from '../../utils/email';
 import getUser from './helper';
 import {generalSignup} from "../../constants/generalSignup";
 
-export const verify = async (_, { token }, { dbConnection }) => {
-  const user = (
-    await dbConnection.query(`SELECT * FROM user WHERE verificationToken = ?`, [
-      token,
-    ])
-  )[0];
-
-  if (user) {
-    if (!user.verified) {
-      await dbConnection.query(
-        `UPDATE user SET verified = true WHERE verificationToken = ?;`,
-        [token],
-      );
-      return true;
-    }
-  }
-  return false;
-};
-
 export const signin = async (_, { email, password }, { dbConnection }) => {
   const user = (
     await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [email])
@@ -197,6 +178,44 @@ export const uploadProfileImage = async (_, { file }, ctx) => {
     if (id) {
       const { url } = await Cloudinary.v2.uploader.upload(file);
       await dbConnection.query(updateImageURLQuery, [url, id]);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const addSportType = async (_, stid, {dbConnection, auth}) => {
+  try {
+    const id = await getUser(auth);
+    const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
+
+    if (id) {
+      await dbConnection.query(insertSportTypeQuery, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const removeSportType = async (_, stid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
+    if (id) {
+      await dbConnection.query(removeSportTypeQuery, [id, stid])
       return true;
     } else {
       return false;

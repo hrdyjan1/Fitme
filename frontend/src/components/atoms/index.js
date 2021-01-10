@@ -5,8 +5,10 @@ import { ProfileTitle } from './titles/ProfileTitle';
 import { ProfileSubtitle } from './titles/ProfileSubtitle';
 import { FormTitle } from './titles/FormTitle';
 import { FormButton } from './buttons/FormButton';
-import { ImageButton } from './buttons/ImageButton';
-import { InputFileButton } from './buttons/InputFileButton';
+import { ProfileImageButton } from './buttons/ProfileImageButton';
+import { InputImageButton } from './buttons/InputImageButton';
+import { SportTypeChip } from './chips/SportTypeChip'
+import { TextInput } from './inputs/TextInput'
 import { Icon } from './icon';
 
 export {
@@ -17,7 +19,9 @@ export {
   FormTitle,
   InputLabel,
   FormButton,
-  ImageButton,
-  InputFileButton,
-  Icon,
-};
+  ProfileImageButton,
+  InputImageButton,
+  SportTypeChip,
+  TextInput,
+  Icon
+}

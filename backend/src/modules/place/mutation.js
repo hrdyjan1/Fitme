@@ -6,34 +6,21 @@ import { generalSignup } from "../../constants/generalSignup";
 
 export const updatePlaceBasics = async (
   _,
-  { placeBasics },
+  { id, uid, firstName, lastName, name, ico, email, phoneNumber, description, street, city, zipCode, country },
   { dbConnection },
 ) => {
-  const {
-    id,
-    uid,
-    name,
-    ico,
-    email,
-    phoneNumber,
-    description,
-    zipCode,
-    country,
-    street,
-    city,
-  } = placeBasics;
 
   const updatedPlaceRows = (
     await dbConnection.query(
-      `UPDATE place SET name = ?, description = ?, ico = ? WHERE uid = ?`,
-      [name, description, ico, uid],
+      `UPDATE place SET name = ?, description = ?, ico = ? WHERE id = ?`,
+      [name, description, ico, id],
     )
   ).affectedRows;
 
   const updatedUserRows = (
     await dbConnection.query(
-      `UPDATE user SET email = ?, phoneNumber = ? WHERE id = ?`,
-      [email, phoneNumber, uid],
+      `UPDATE user SET firstName = ?, lastName = ?, email = ?, phoneNumber = ? WHERE id = ?`,
+      [firstName, lastName, email, phoneNumber, uid],
     )
   ).affectedRows;
 
@@ -88,97 +75,6 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
     if (id) {
       const { url } = await Cloudinary.v2.uploader.upload(file);
       await dbConnection.query(insertImageURLQuery, [id, url]);
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-// //DEPRECATED - DELETE
-// export const addTag = async (_, { name }, { dbConnection, auth }) => {
-//
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch  (error){
-//     throw new Error('Session neexistujícího uživatele');
-//   }
-//
-//   try {
-//     const insertTagQuery = 'INSERT INTO tag (uid, name) VALUES (?, ?);';
-//
-//     if (id) {
-//       await dbConnection.query(insertTagQuery, [id, name])
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     return false;
-//   }
-// };
-//
-// export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch  (error){
-//     throw new Error('Session neexistujícího uživatele');
-//   }
-//
-//   try {
-//     const deleteTagQuery = 'DELETE FROM tag WHERE uid = ? AND name = ?;';
-//
-//     if (id) {
-//       await dbConnection.query(deleteTagQuery, [id, name])
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     return false;
-//   }
-// };
-
-//TODO:-------SOLUTION FOR LAST SPRINT------
-export const addSportType = async (_, stid, {dbConnection, auth}) => {
-
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch  (error){
-    throw new Error('Session neexistujícího uživatele');
-  }
-
-  try {
-    const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
-
-    if (id) {
-      await dbConnection.query(insertSportTypeQuery, [id, stid])
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-//TODO:-------SOLUTION FOR LAST SPRINT------
-export const removeSportType = async (_, stid, {dbConnection, auth}) => {
-
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch  (error){
-    throw new Error('Session neexistujícího uživatele');
-  }
-
-  try {
-    const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
-    if (id) {
-      await dbConnection.query(removeSportTypeQuery, [id, stid])
       return true;
     } else {
       return false;

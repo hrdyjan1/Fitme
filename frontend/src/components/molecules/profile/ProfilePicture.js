@@ -2,17 +2,14 @@ import React from 'react';
 import {
   Box, Card, CardMedia,
 } from '@material-ui/core';
-import { InputFileButton, ImageButton } from 'src/components/atoms';
+import { InputImageButton, ProfileImageButton } from 'src/components/atoms'
 
 function ProfilePicture({ imageURL, loading, onSave }) {
   const [imageSource, setImageSource] = React.useState();
   const [isLoaded, setIsLoaded] = React.useState(false);
 
-  const change = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => setImageSource(reader.result);
+  const onload = (image) => {
+    setImageSource(image);
     setIsLoaded(true);
   };
 
@@ -32,14 +29,14 @@ function ProfilePicture({ imageURL, loading, onSave }) {
         />
       </Card>
       { !isLoaded && (
-      <InputFileButton
+      <InputImageButton
         text="Změnit profilovou fotku"
-        onChange={change}
+        onLoad={onload}
         loading={loading}
       />
       )}
       { isLoaded && (
-      <ImageButton
+      <ProfileImageButton
         text="Uložit"
         onClick={onSaveClick}
         loading={loading}

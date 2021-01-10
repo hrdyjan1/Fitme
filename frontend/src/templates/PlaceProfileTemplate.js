@@ -8,12 +8,13 @@ import {
   GeneralForm,
   PasswordForm,
   ProfileHeader,
-  ProfilePictureForm,
   TabPanel,
   CardBase,
   ProfileMenu,
-} from 'src/components/organisms';
-import { Notifications } from 'src/components/organisms/account/components';
+  Gallery,
+  SportTypes,
+  Trainers
+} from 'src/components/organisms'
 
 const subPages = [
   {
@@ -25,7 +26,7 @@ const subPages = [
     title: 'Fotografie',
   },
   {
-    id: 'security',
+    id: 'password',
     title: 'Heslo',
   },
   {
@@ -61,23 +62,52 @@ const useStyles = makeStyles((theme) => ({
 
 function PlaceProfileTemplate({
   place,
+  sportTypes,
+  placeSportTypes,
+  trainers,
+  placeTrainers,
   reFetchPlace,
+  reFetchPlaceSportTypes,
+  reFetchPlaceTrainers,
   placeLoading,
   passwordLoading,
-  profileImageLoading,
+  uploadPlaceImageLoading,
+  deletePlaceImageLoading,
+  addSportTypeLoading,
+  deleteSportTypeLoading,
+  addPlaceTrainerLoading,
+  deletePlaceTrainerLoading,
   onSavePlace,
   onSavePassword,
-  onSaveProfileImage,
+  onSavePlaceImage,
+  onDeletePlaceImage,
+  onSaveSportType,
+  onDeleteSportType,
+  onSavePlaceTrainer,
+  onDeletePlaceTrainer,
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
+  const isLoading = (
+    passwordLoading
+    || placeLoading
+    || uploadPlaceImageLoading
+    || deletePlaceImageLoading
+    || addSportTypeLoading
+    || deleteSportTypeLoading
+    || addPlaceTrainerLoading
+    || deletePlaceTrainerLoading
+  );
 
   return (
     <div className={classes.root}>
-      {(passwordLoading || placeLoading || profileImageLoading) && (
+      {isLoading && (
         <LinearProgress />
       )}
-      <ProfileHeader title="Váš profil trenéra" subtitle="Zde si můžete změnit veškeré vaše údaje." />
+      <ProfileHeader
+        title="Váš profil sportoviště"
+        subtitle="Zde si můžete změnit veškeré údaje o vašem sportovišti."
+      />
       {place && (
         <SectionAlternate className={classes.section}>
           <Grid container spacing={4}>
@@ -88,25 +118,45 @@ function PlaceProfileTemplate({
               <CardBase>
                 <TabPanel value={pageId} index="general">
                   <GeneralForm
-                    user={place}
-                    reFetchUser={reFetchPlace}
+                    data={place}
+                    reFetchData={reFetchPlace}
                     onSave={onSavePlace}
                     loading={placeLoading}
                   />
                 </TabPanel>
-                <TabPanel value={pageId} index="profilePhoto">
-                  <ProfilePictureForm
-                    imageURL={place?.imageURL}
-                    reFetchUser={reFetchPlace}
-                    onSave={onSaveProfileImage}
-                    loading={profileImageLoading}
+                <TabPanel value={pageId} index="photos">
+                  <Gallery
+                    name={place?.name}
+                    images={place?.pictureList}
+                    reFetchData={reFetchPlace}
+                    onSave={onSavePlaceImage}
+                    onDelete={onDeletePlaceImage}
                   />
                 </TabPanel>
                 <TabPanel value={pageId} index="password">
                   <PasswordForm onSave={onSavePassword} loading={passwordLoading} />
                 </TabPanel>
                 <TabPanel value={pageId} index="tags">
-                  <Notifications place={place} />
+                  <SportTypes
+                    sportTypes={sportTypes}
+                    placeSportTypes={placeSportTypes}
+                    reFetchPlaceSportTypes={reFetchPlaceSportTypes}
+                    onSave={onSaveSportType}
+                    onDelete={onDeleteSportType}
+                    addSportTypeLoading={addSportTypeLoading}
+                    deleteSportTypeLoading={deleteSportTypeLoading}
+                  />
+                </TabPanel>
+                <TabPanel value={pageId} index="trainers">
+                  <Trainers
+                    trainers={trainers}
+                    placeTrainers={placeTrainers}
+                    reFetchPlaceTrainers={reFetchPlaceTrainers}
+                    onSave={onSavePlaceTrainer}
+                    onDelete={onDeletePlaceTrainer}
+                    addTrainerLoading={addPlaceTrainerLoading}
+                    deleteTrainerLoading={deletePlaceTrainerLoading}
+                  />
                 </TabPanel>
               </CardBase>
             </Grid>

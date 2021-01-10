@@ -2,7 +2,7 @@ import getUser from '../user/helper'
 
 const singlePlace = async (_, { uid }, { dbConnection }) => {
 
-  const placeArray = await dbConnection.query('SELECT * FROM place WHERE uid = ?', [uid])
+  const placeArray = await dbConnection.query('SELECT * FROM place WHERE uid = ?;', [uid])
   const place = placeArray[0];
 
   const pictureListArray = await dbConnection.query('SELECT * FROM placeGallery WHERE uid = ?;', [uid])
@@ -22,9 +22,10 @@ const singlePlace = async (_, { uid }, { dbConnection }) => {
   if (place && user && address) {
     return {
       id: place.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       ico: place.ico,
       name: place.name,
-      // tagList: tagList,
       city: address.city || '',
       email: user.email || '',
       street: address.street || '',
@@ -69,25 +70,6 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
     return await dbConnection.query(wholeQuery, [sportType]);
   }
 }
-
-
-//TODO:-------SOLUTION FOR LAST SPRINT------
-export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
-
-  const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
-
-  let id = null;
-  try {
-    id = await getUser(auth);
-  } catch (error){
-    throw new Error('Session neexistujícího uživatele')
-  }
-
-  if (id) {
-    return (await dbConnection.query(selectFacilitySportTypesQuery, [id]));
-  }
-  return null;
-};
 
 export const placeTrainers = async (_p, _c, { dbConnection, auth }) => {
 
