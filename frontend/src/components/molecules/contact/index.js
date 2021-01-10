@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Contact = (props) => {
   const {
-    className, phone, email, city, street,
+    className, phone, email, city, street, title,
   } = props;
 
   const classes = useStyles();
@@ -44,7 +44,7 @@ const Contact = (props) => {
     <div className={clsx(classes.root, className)}>
       <div>
         <SectionHeader
-          title="Kontaktujte mě"
+          title={title}
           subtitle="Pokud se chcete na cokoliv zeptat, tak zde jsou důležité údaje, které by vám mohli pomoci."
           subtitleProps={{
             variant: 'body1',
@@ -66,29 +66,6 @@ const Contact = (props) => {
                   className={classes.listItemText}
                   primary="Město"
                   secondary={city}
-                  primaryTypographyProps={{
-                    className: classes.title,
-                    variant: 'subtitle1',
-                    color: 'textSecondary',
-                  }}
-                  secondaryTypographyProps={{
-                    variant: 'subtitle1',
-                    color: 'textPrimary',
-                  }}
-                />
-              </div>
-            )}
-            {phone && (
-              <div className={classes.item}>
-                <ListItemAvatar className={classes.listItemAvatar}>
-                  <Avatar>
-                    <PhoneIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  className={classes.listItemText}
-                  primary="Telefon"
-                  secondary={phone}
                   primaryTypographyProps={{
                     className: classes.title,
                     variant: 'subtitle1',
@@ -123,6 +100,29 @@ const Contact = (props) => {
                   }}
                 />
               </div>
+            )}
+            {phone && (
+            <div className={classes.item}>
+              <ListItemAvatar className={classes.listItemAvatar}>
+                <Avatar>
+                  <PhoneIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                className={classes.listItemText}
+                primary="Telefon"
+                secondary={phone}
+                primaryTypographyProps={{
+                  className: classes.title,
+                  variant: 'subtitle1',
+                  color: 'textSecondary',
+                }}
+                secondaryTypographyProps={{
+                  variant: 'subtitle1',
+                  color: 'textPrimary',
+                }}
+              />
+            </div>
             )}
             {email && (
               <div className={classes.item}>
