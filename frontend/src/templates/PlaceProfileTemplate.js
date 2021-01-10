@@ -12,8 +12,9 @@ import {
   CardBase,
   ProfileMenu,
   Gallery,
+  SportTypes,
+  Trainers
 } from 'src/components/organisms'
-import {Billing, Notifications} from 'src/components/organisms/account/components'
 
 const subPages = [
   {
@@ -61,19 +62,29 @@ const useStyles = makeStyles((theme) => ({
 
 function PlaceProfileTemplate({
   place,
+  sportTypes,
+  placeSportTypes,
+  trainers,
+  placeTrainers,
   reFetchPlace,
+  reFetchPlaceSportTypes,
+  reFetchPlaceTrainers,
   placeLoading,
   passwordLoading,
   uploadPlaceImageLoading,
   deletePlaceImageLoading,
-  addTagLoading,
-  deleteTagLoading,
+  addSportTypeLoading,
+  deleteSportTypeLoading,
+  addPlaceTrainerLoading,
+  deletePlaceTrainerLoading,
   onSavePlace,
   onSavePassword,
   onSavePlaceImage,
   onDeletePlaceImage,
-  onSaveTag,
-  onDeleteTag,
+  onSaveSportType,
+  onDeleteSportType,
+  onSavePlaceTrainer,
+  onDeletePlaceTrainer,
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
@@ -82,8 +93,10 @@ function PlaceProfileTemplate({
     || placeLoading
     || uploadPlaceImageLoading
     || deletePlaceImageLoading
-    || addTagLoading
-    || deleteTagLoading
+    || addSportTypeLoading
+    || deleteSportTypeLoading
+    || addPlaceTrainerLoading
+    || deletePlaceTrainerLoading
   );
 
   return (
@@ -124,10 +137,26 @@ function PlaceProfileTemplate({
                   <PasswordForm onSave={onSavePassword} loading={passwordLoading} />
                 </TabPanel>
                 <TabPanel value={pageId} index="tags">
-                  <Notifications place={place} />
+                  <SportTypes
+                    sportTypes={sportTypes}
+                    placeSportTypes={placeSportTypes}
+                    reFetchPlaceSportTypes={reFetchPlaceSportTypes}
+                    onSave={onSaveSportType}
+                    onDelete={onDeleteSportType}
+                    addSportTypeLoading={addSportTypeLoading}
+                    deleteSportTypeLoading={deleteSportTypeLoading}
+                  />
                 </TabPanel>
                 <TabPanel value={pageId} index="trainers">
-                  <Billing place={place} />
+                  <Trainers
+                    trainers={trainers}
+                    placeTrainers={placeTrainers}
+                    reFetchPlaceTrainers={reFetchPlaceTrainers}
+                    onSave={onSavePlaceTrainer}
+                    onDelete={onDeletePlaceTrainer}
+                    addTrainerLoading={addPlaceTrainerLoading}
+                    deleteTrainerLoading={deletePlaceTrainerLoading}
+                  />
                 </TabPanel>
               </CardBase>
             </Grid>

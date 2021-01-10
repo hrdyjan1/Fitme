@@ -186,3 +186,41 @@ export const uploadProfileImage = async (_, { file }, ctx) => {
     return false;
   }
 };
+
+export const addSportType = async (_, stid, {dbConnection, auth}) => {
+  try {
+    const id = await getUser(auth);
+    const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
+
+    if (id) {
+      await dbConnection.query(insertSportTypeQuery, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
+export const removeSportType = async (_, stid, {dbConnection, auth}) => {
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch  (error){
+    throw new Error('Session neexistujícího uživatele');
+  }
+
+  try {
+    const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
+    if (id) {
+      await dbConnection.query(removeSportTypeQuery, [id, stid])
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};

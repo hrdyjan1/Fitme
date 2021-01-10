@@ -14,3 +14,20 @@ export const user = async (_, __, { dbConnection, auth }) => {
   }
   return null
 };
+
+export const userSportTypes = async (_p, _c, { dbConnection, auth }) => {
+
+  const selectFacilitySportTypesQuery = 'SELECT stid, sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
+
+  let id = null;
+  try {
+    id = await getUser(auth);
+  } catch (error){
+    throw new Error('Session neexistujícího uživatele')
+  }
+
+  if (id) {
+    return (await dbConnection.query(selectFacilitySportTypesQuery, [id]));
+  }
+  return null;
+};

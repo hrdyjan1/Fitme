@@ -1,3 +1,4 @@
+import getUser from '../user/helper'
 
 const singlePlace = async (_, { uid }, { dbConnection }) => {
 
@@ -65,25 +66,6 @@ export const searchPlaces = async (_, { containedName, sportType }, {dbConnectio
     return await dbConnection.query(wholeQuery, [sportType]);
   }
 }
-
-
-//TODO:-------SOLUTION FOR LAST SPRINT------
-// export const placeSportTypes = async (_p, _c, { dbConnection, auth }) => {
-//
-//   const selectFacilitySportTypesQuery = 'SELECT sportTypeName FROM userSportType pst JOIN sportType st USING (stid) WHERE pst.uid= ?;';
-//
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch (error){
-//     throw new Error('Session neexistujícího uživatele')
-//   }
-//
-//   if (id) {
-//     return (await dbConnection.query(selectFacilitySportTypesQuery, [id]));
-//   }
-//   return null;
-// };
 
 export const placeTrainers = async (_p, _c, { dbConnection, auth }) => {
 

@@ -53,7 +53,7 @@ const Gallery = ({name, images, reFetchData, onSave, onDelete}) => {
                 title={name}
                 src={item?.imageURL}
                 alt={name}
-                onDelete={() => onDeleteImage(item.iid.toString())}
+                onDelete={() => onDeleteImage(item.iid)}
               />
             </GridListTile>
           )))}

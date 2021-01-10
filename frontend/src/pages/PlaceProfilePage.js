@@ -33,6 +33,48 @@ const PLACE_QUERY = gql`
   }
 `;
 
+const SPORT_TYPES_QUERY = gql`
+  query AllSportTypes {
+    allSportTypes {
+      stid
+      sportTypeName
+    }
+  }
+`;
+
+const PLACE_SPORT_TYPES_QUERY = gql`
+  query UserSportTypes {
+    userSportTypes {
+      stid
+      sportTypeName
+    }
+  }
+`;
+
+const TRAINERS_QUERY = gql`
+  query AllTrainers {
+    allTrainers {
+      id
+      firstName
+      lastName
+      description
+      imageURL
+    }
+  }
+`;
+
+const PLACE_TRAINERS_QUERY = gql`
+  query PlaceTrainers {
+    placeTrainers {
+      id
+      firstName
+      lastName
+      description
+      imageURL
+    }
+  }
+`;
+
 const PLACE_BASICS_MUTATION = gql`
   mutation UpdatePlaceBasics(
     $id: String!
@@ -78,20 +120,32 @@ const UPLOAD_IMAGE_MUTATION = gql`
 `;
 
 const DELETE_IMAGE_MUTATION = gql`
-  mutation DeletePlaceImage($iid: String!) {
+  mutation DeletePlaceImage($iid: Int!) {
     deletePlaceImage(iid: $iid)
   }
 `;
 
-const ADD_TAG_MUTATION = gql`
-  mutation AddTag($name: String!) {
-    addTag(name: $name)
+const ADD_SPORT_TYPE_MUTATION = gql`
+  mutation AddSportType($stid: Int!) {
+    addSportType(stid: $stid)
   }
 `;
 
-const DELETE_TAG_MUTATION = gql`
-  mutation DeleteTag($name: String!) {
-    deleteTag(name: $name)
+const DELETE_SPORT_TYPE_MUTATION = gql`
+  mutation RemoveSportType($stid: Int!) {
+    removeSportType(stid: $stid)
+  }
+`;
+
+const ADD_TRAINER_MUTATION = gql`
+  mutation AddTrainer($tid: String!) {
+    addTrainer(tid: $tid)
+  }
+`;
+
+const DELETE_TRAINER_MUTATION = gql`
+  mutation RemoveTrainer($tid: String!) {
+    removeTrainer(tid: $tid)
   }
 `;
 
@@ -106,6 +160,10 @@ function PlaceProfilePage() {
   const { showMessage, showErrorMessage } = useNotification();
 
   const placeFetcher = useQuery(PLACE_QUERY, { variables: { userid: user.id } });
+  const sportTypesFetcher = useQuery(SPORT_TYPES_QUERY);
+  const placeSportTypesFetcher = useQuery(PLACE_SPORT_TYPES_QUERY);
+  const trainersFetcher = useQuery(TRAINERS_QUERY);
+  const placeTrainersFetcher = useQuery(PLACE_TRAINERS_QUERY);
 
   const place = {
     mutationRequest: (values) => placeMutationRequest({ variables: {
@@ -119,23 +177,45 @@ function PlaceProfilePage() {
 
   const password = {
     mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
-    onCompleted: () => showMessage('Heslo bylo změněno.'),
+    onCompleted: (data) => data?.updatePassword
+      ? showMessage('Heslo bylo změněno.')
+      : showErrorMessage('Heslo se nepodařilo změnit.'),
     onError: (error) => showErrorMessage(error.message)
   }
 
   const placeImage = {
     uploadMutationRequest: (image) => uploadPlaceImageMutationRequest({ variables: { file: image } }),
     deleteMutationRequest: (id) => deletePlaceImageMutationRequest({ variables: { iid: id } }),
-    onUploadCompleted: () => showMessage('Fotka sportoviště byla úspěšně uložena.'),
-    onDeleteCompleted: () => showMessage('Fotka sportoviště byla úspěšně odstraněna.'),
+    onUploadCompleted: (data) => data?.uploadPlaceImage
+      ? showMessage('Fotka sportoviště byla úspěšně uložena.')
+      : showErrorMessage('Fotku sportoviště se nepodařilo uložit.'),
+    onDeleteCompleted: (data) => data?.deletePlaceImage
+      ? showMessage('Fotka sportoviště byla úspěšně odstraněna.')
+      : showErrorMessage('Fotku sportoviště se nepodařilo odstranit.'),
     onError: (error) => showErrorMessage(error.message),
   }
 
-  const tag = {
-    addMutationRequest: (tag) => addTagMutationRequest({ variables: { name: tag } }),
-    deleteMutationRequest: (tag) => deleteTagMutationRequest({ variables: { name: tag } }),
-    onAddCompleted: () => showMessage('Disciplína sportoviště byla úspěšně přidána.'),
-    onDeleteCompleted: () => showMessage('Disciplína sportoviště byla úspěšně odebrána.'),
+  const sportType = {
+    addMutationRequest: (id) => addSportTypeMutationRequest({ variables: { stid: id } }),
+    deleteMutationRequest: (id) => deleteSportTypeMutationRequest({ variables: { stid: id } }),
+    onAddCompleted: (data) => data?.addSportType
+      ? showMessage('Disciplína sportoviště byla úspěšně přidána.')
+      : showErrorMessage('Disciplínu sportoviště se nepodařilo přidat.'),
+    onDeleteCompleted: (data) => data?.deleteSportType
+      ? showMessage('Disciplína sportoviště byla úspěšně odebrána.')
+      : showErrorMessage('Disciplínu sportoviště se nepodařilo odebrat.'),
+    onError: (error) => showErrorMessage(error.message),
+  }
+
+  const placeTrainer = {
+    addMutationRequest: (id) => addPlaceTrainerMutationRequest({ variables: { tid: id } }),
+    deleteMutationRequest: (id) => deleteTrainerMutationRequest({ variables: { tid: id } }),
+    onAddCompleted: (data) => data?.addTrainer
+      ? showMessage('Trenér byl úspěšně přidán.')
+      : showErrorMessage('Trenéra se nepodařilo přidat.'),
+    onDeleteCompleted: (data) => data?.deleteTrainer
+      ? showMessage('Trenér byl úspěšně odebrán.')
+      : showErrorMessage('Trenéra se nepodařilo odebrat.'),
     onError: (error) => showErrorMessage(error.message),
   }
 
@@ -165,34 +245,56 @@ function PlaceProfilePage() {
       onError: placeImage.onError
     });
 
-  const [addTagMutationRequest, addTagMutationRequestState] = useMutation(
-    ADD_TAG_MUTATION,{
-      onCompleted: tag.onAddCompleted,
-      onError: tag.onError
+  const [addSportTypeMutationRequest, addSportTypeMutationRequestState] = useMutation(
+    ADD_SPORT_TYPE_MUTATION,{
+      onCompleted: sportType.onAddCompleted,
+      onError: sportType.onError
     });
 
-  const [deleteTagMutationRequest, deleteTagMutationRequestState] = useMutation(
-    DELETE_TAG_MUTATION,{
-      onCompleted: tag.onDeleteCompleted,
-      onError: tag.onError
+  const [deleteSportTypeMutationRequest, deleteSportTypeMutationRequestState] = useMutation(
+    DELETE_SPORT_TYPE_MUTATION,{
+      onCompleted: sportType.onDeleteCompleted,
+      onError: sportType.onError
+    });
+
+  const [addPlaceTrainerMutationRequest, addPlaceTrainerMutationRequestState] = useMutation(
+    ADD_TRAINER_MUTATION,{
+      onCompleted: placeTrainer.onAddCompleted,
+      onError: placeTrainer.onError
+    });
+
+  const [deleteTrainerMutationRequest, deletePlaceTrainerMutationRequestState] = useMutation(
+    DELETE_TRAINER_MUTATION,{
+      onCompleted: placeTrainer.onDeleteCompleted,
+      onError: placeTrainer.onError
     });
 
   return (
     <PlaceProfileTemplate
       place={placeFetcher.data?.place}
+      sportTypes={sportTypesFetcher.data?.allSportTypes}
+      placeSportTypes={placeSportTypesFetcher.data?.userSportTypes}
+      trainers={trainersFetcher.data?.allTrainers}
+      placeTrainers={placeTrainersFetcher.data?.placeTrainers}
       reFetchPlace={placeFetcher.refetch}
+      reFetchPlaceSportTypes={placeSportTypesFetcher.refetch}
+      reFetchPlaceTrainers={placeTrainersFetcher.refetch}
       placeLoading={placeMutationRequestState.loading}
       passwordLoading={passwordMutationRequestState.loading}
       uploadPlaceImageLoading={uploadPlaceImageMutationRequestState.loading}
       deletePlaceImageLoading={deletePlaceImageMutationRequestState.loading}
-      addTagLoading={addTagMutationRequestState.loading}
-      deleteTagLoading={deleteTagMutationRequestState.loading}
+      addSportTypeLoading={addSportTypeMutationRequestState.loading}
+      deleteSportTypeLoading={deleteSportTypeMutationRequestState.loading}
+      addPlaceTrainerLoading={addPlaceTrainerMutationRequestState.loading}
+      deletePlaceTrainerLoading={deletePlaceTrainerMutationRequestState.loading}
       onSavePlace={place.mutationRequest}
       onSavePassword={password.mutationRequest}
       onSavePlaceImage={placeImage.uploadMutationRequest}
       onDeletePlaceImage={placeImage.deleteMutationRequest}
-      onSaveTag={tag.addMutationRequest}
-      onDeleteTag={tag.deleteMutationRequest}
+      onSaveSportType={sportType.addMutationRequest}
+      onDeleteSportType={sportType.deleteMutationRequest}
+      onSavePlaceTrainer={placeTrainer.addMutationRequest}
+      onDeletePlaceTrainer={placeTrainer.deleteMutationRequest}
     />
   );
 }

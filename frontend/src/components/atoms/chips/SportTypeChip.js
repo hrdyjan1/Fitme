@@ -2,7 +2,7 @@
 import React from 'react';
 import { Chip } from '@material-ui/core';
 
-const Tag = ({ text, onDelete }) => {
+const SportTypeChip = ({ id, text, onDelete, loading }) => {
 
   return (
     <Chip
@@ -10,9 +10,10 @@ const Tag = ({ text, onDelete }) => {
       label={text}
       clickable
       color="primary"
-      onDelete={onDelete}
+      onDelete={() => onDelete(id)}
+      disabled={loading}
     />
   );
 };
 
-export { Tag };
+export { SportTypeChip };

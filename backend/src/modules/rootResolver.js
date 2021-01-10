@@ -13,9 +13,8 @@ export default {
     users: async (_p, _c, { dbConnection }) => {
       return dbConnection.query('SELECT * FROM user');
     },
-    // TODO:-------SOLUTION FOR LAST SPRINT------
     allSportTypes: async (_p, _c, {dbConnection}) => {
-      return dbConnection.query('SELECT sportTypeName FROM sportType;');
+      return dbConnection.query('SELECT stid, sportTypeName FROM sportType;');
     },
     allTrainers: async  (_p, _c, {dbConnection}) => {
       return dbConnection.query('SELECT u.id, u.firstName, u.lastName, t.description, u.imageURL FROM trainer t JOIN `user` u ON t.uid=u.id;');

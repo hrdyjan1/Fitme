@@ -129,52 +129,6 @@ export const deleteTag = async (_, { name }, { dbConnection, auth }) => {
   }
 };
 
-//TODO:-------SOLUTION FOR LAST SPRINT------
-// export const addSportType = async (_, stid, {dbConnection, auth}) => {
-//
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch  (error){
-//     throw new Error('Session neexistujícího uživatele');
-//   }
-//
-//   try {
-//     const insertSportTypeQuery = 'INSERT INTO userSportType (uid, stid) VALUES (?, ?);';
-//
-//     if (id) {
-//       await dbConnection.query(insertSportTypeQuery, [id, stid])
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     return false;
-//   }
-// };
-//TODO:-------SOLUTION FOR LAST SPRINT------
-// export const removeSportType = async (_, stid, {dbConnection, auth}) => {
-//
-//   let id = null;
-//   try {
-//     id = await getUser(auth);
-//   } catch  (error){
-//     throw new Error('Session neexistujícího uživatele');
-//   }
-//
-//   try {
-//     const removeSportTypeQuery = 'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
-//     if (id) {
-//       await dbConnection.query(removeSportTypeQuery, [id, stid])
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   } catch (error) {
-//     return false;
-//   }
-// };
-
 export const removeTrainer = async (_, tid, {dbConnection, auth}) => {
 
   let id = null;

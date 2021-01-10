@@ -25,14 +25,10 @@ const typeDefs = gql`
     imageURL: String
   }
 
-  #TODO:-------SOLUTION FOR LAST SPRINT------ 
   type SportType {
+    stid: Int!
     sportTypeName: String!
   }
-#  
-#  input SportTypeInput {
-#    sportTypeName: String!
-#  }
   
   type User {
     id: String!
@@ -117,10 +113,9 @@ const typeDefs = gql`
     place(uid: String!): PlaceDetail!
     trainer(uid: String!): TrainerDetail!
     searchPlaces(containedName: String, sportType: String): [Place!]!
-#TODO:-------SOLUTION FOR LAST SPRINT------ 
     allSportTypes: [SportType]!
     allTrainers: [Trainer]!
-#    placeSportTypes: [SportType]!
+    userSportTypes: [SportType]!
     placeTrainers: [Trainer]!
   }
 
@@ -196,15 +191,14 @@ const typeDefs = gql`
       zipCode: String
       country: String
     ): Boolean
-    deletePlaceImage(iid: String!): Boolean!
+    deletePlaceImage(iid: Int!): Boolean!
     uploadPlaceImage(file: String!): Boolean!
     addTag(name: String!): Boolean!
     deleteTag(name: String!): Boolean!
     addTrainer(tid: String!): Boolean!
     removeTrainer(tid: String!): Boolean!
-#TODO:-------SOLUTION FOR LAST SPRINT------ 
-#    addSportType(stid: String!): Boolean!
-#    removeSportType(stid: String!): Boolean!
+    addSportType(stid: Int!): Boolean!
+    removeSportType(stid: Int!): Boolean!
   }
 `;
 

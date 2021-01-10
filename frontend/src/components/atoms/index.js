@@ -7,7 +7,7 @@ import { FormTitle } from './titles/FormTitle';
 import { FormButton } from './buttons/FormButton';
 import { ProfileImageButton } from './buttons/ProfileImageButton';
 import { InputImageButton } from './buttons/InputImageButton';
-import { Tag } from './chips/Tag'
+import { SportTypeChip } from './chips/SportTypeChip'
 import { TextInput } from './inputs/TextInput'
 import { Icon } from './icon';
 
@@ -21,7 +21,7 @@ export {
   FormButton,
   ProfileImageButton,
   InputImageButton,
-  Tag,
+  SportTypeChip,
   TextInput,
   Icon
 }
