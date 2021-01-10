@@ -74,7 +74,6 @@ const typeDefs = gql`
     description: String!
     placeList: [Place]!
     sportTypeList: [SportType]
-    #    tagList: [Tag]!
     street: String!
     city: String!
     zipCode: String!
