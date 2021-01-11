@@ -61,7 +61,7 @@ export const searchPlaces = async (
   { containedName, sportType, city },
   { dbConnection },
 ) => {
-  const selectFilteredPlacesQuery = `SELECT DISTINCT name, description, uid, u.imageURL, a.city 
+  const selectFilteredPlacesQuery = `SELECT DISTINCT name, description, uid, u.imageURL 
     FROM place p 
     LEFT JOIN userSportType pst USING (uid)
     LEFT JOIN sportType st USING (stid)
@@ -77,12 +77,12 @@ export const searchPlaces = async (
   }
 
   if (typeof sportType === 'undefined' || sportType === null) {
-    let whereCondition = `WHERE name LIKE '%${containedName}% AND a.city LIKE '%${city}%';`;
+    let whereCondition = `WHERE name LIKE '%${containedName}%' AND COALESCE(a.city,'') LIKE '%${city}%';`;
     let wholeQuery = `${selectFilteredPlacesQuery} ${whereCondition}`;
 
     return await dbConnection.query(wholeQuery);
   } else {
-    let whereCondition = `WHERE sportTypeName = ? AND name LIKE '%${containedName}%' AND a.city LIKE '%${city}%';`;
+    let whereCondition = `WHERE sportTypeName = ? AND name LIKE '%${containedName}%' AND COALESCE(a.city,'') LIKE '%${city}%';`;
     let wholeQuery = `${selectFilteredPlacesQuery} ${whereCondition}`;
 
     return await dbConnection.query(wholeQuery, [sportType]);
