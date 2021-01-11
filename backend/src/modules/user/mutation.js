@@ -238,8 +238,6 @@ export const removeSportType = async (_, { stid }, { dbConnection, auth }) => {
   }
 
   try {
-    console.log(id)
-    console.log(stid)
     const removeSportTypeQuery =
       'DELETE FROM userSportType WHERE uid = ? AND stid = ?;';
     if (id) {
