@@ -125,7 +125,7 @@ function SportPlaceTemplate(props) {
           <Search
             options={[]}
             placeholder="Vyhledat podle názvu"
-            label="Hledání"
+            label="Název"
             freeSolo
             onInputChange={onSearchValueChange}
           />
