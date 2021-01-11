@@ -11,9 +11,8 @@ import {
   ProfilePictureForm,
   TabPanel,
   CardBase,
-  ProfileMenu,
-} from 'src/components/organisms';
-import { Notifications } from 'src/components/organisms/account/components';
+  ProfileMenu, SportTypes
+} from 'src/components/organisms'
 
 const subPages = [
   {
@@ -57,22 +56,33 @@ const useStyles = makeStyles((theme) => ({
 
 function TrainerProfileTemplate({
   trainer,
+  sportTypes,
+  trainerSportTypes,
   reFetchTrainer,
+  reFetchTrainerSportTypes,
   trainerLoading,
   passwordLoading,
   profileImageLoading,
+  addSportTypeLoading,
+  deleteSportTypeLoading,
   onSaveTrainer,
   onSavePassword,
   onSaveProfileImage,
+  onSaveSportType,
+  onDeleteSportType,
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
+  const isLoading =
+    trainerLoading ||
+    passwordLoading ||
+    profileImageLoading ||
+    addSportTypeLoading ||
+    deleteSportTypeLoading;
 
   return (
     <div className={classes.root}>
-      {(passwordLoading || trainerLoading || profileImageLoading) && (
-        <LinearProgress />
-      )}
+      {isLoading && <LinearProgress />}
       <ProfileHeader
         title="Váš profil trenéra"
         subtitle="Zde si můžete změnit veškeré vaše údaje."
@@ -112,7 +122,15 @@ function TrainerProfileTemplate({
                   />
                 </TabPanel>
                 <TabPanel value={pageId} index="tags">
-                  <Notifications place={trainer} />
+                  <SportTypes
+                    sportTypes={sportTypes}
+                    savedSportTypes={trainerSportTypes}
+                    reFetchSavedSportTypes={reFetchTrainerSportTypes}
+                    onSave={onSaveSportType}
+                    onDelete={onDeleteSportType}
+                    addSportTypeLoading={addSportTypeLoading}
+                    deleteSportTypeLoading={deleteSportTypeLoading}
+                  />
                 </TabPanel>
               </CardBase>
             </Grid>

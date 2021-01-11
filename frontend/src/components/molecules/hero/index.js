@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Grid, Typography } from '@material-ui/core';
 
-import { GalleryImage } from 'src/components/molecules/image/GalleryImage';
+import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 import { PARTNERS } from './helpers';
 
@@ -89,7 +89,7 @@ const Hero = (props) => {
                   sm={2}
                   key={partner.id}
                 >
-                  <GalleryImage
+                  <Image
                     src={partner.url}
                     alt={partner.alt}
                     className={classes.promoLogo}
@@ -101,7 +101,7 @@ const Hero = (props) => {
           <div className={classes.disclimer} data-aos="fade-up" />
         </Grid>
         <Grid item container justify="center" xs={12} md={6} data-aos="fade-up">
-          <GalleryImage
+          <Image
             src="/runner.jpg"
             alt="Runner"
             className={classes.image}

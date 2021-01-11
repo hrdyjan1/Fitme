@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0.1)',
   },
   listItem: {
+    height: '100%',
+    width: '100%',
     padding: 0,
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
@@ -50,13 +52,16 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     height: '100%',
   },
+  fullWidth: {
+    height: '100%',
+    width: '100%',
+  },
   title: {
     fontWeight: 'bold',
   },
 }));
 
 const TrainerCard = ({
-  id,
   name,
   imageSrc,
   description,
@@ -68,11 +73,11 @@ const TrainerCard = ({
   return (
     <CardBase className={classes.cardBase}>
       <ListItem disableGutters className={classes.listItem}>
-        <Grid container>
+        <Grid container justify="flex-end" alignContent="space-between" className={classes.fullWidth}>
           <Grid item xs={8} container direction="column" justify="center">
             <Typography>{name}</Typography>
           </Grid>
-          <Grid item xs={4} justify="center">
+          <Grid item xs={4}>
             <Box display="flex" justifyContent="center">
               <Avatar src={imageSrc} className={classes.avatar} />
             </Box>
@@ -82,12 +87,13 @@ const TrainerCard = ({
               <Typography>{description}</Typography>
             </Box>
           </Grid>
-          <Grid item sm={12}>
+          <Grid container item sm={12} justify="flex-end">
             <Button
-              onClick={() => onDelete(id)}
+              onClick={onDelete}
               variant="contained"
               color="secondary"
               disabled={loading}
+              size="small"
             >
               Odstranit
             </Button>

@@ -13,6 +13,7 @@ const PLACE_QUERY = gql`
       name
       phoneNumber
       ico
+      imageURL
       pictureList {
         iid
         imageURL
@@ -107,6 +108,12 @@ const PLACE_BASICS_MUTATION = gql`
   }
 `;
 
+const PROFILE_IMAGE_MUTATION = gql`
+  mutation UploadProfileImage($file: String!) {
+    uploadProfileImage(file: $file)
+  }
+`;
+
 const UPLOAD_IMAGE_MUTATION = gql`
   mutation UploadPlaceImage($file: String!) {
     uploadPlaceImage(file: $file)
@@ -174,6 +181,14 @@ function PlaceProfilePage() {
     onError: (error) => showErrorMessage(error.message),
   };
 
+  const profileImage = {
+    mutationRequest: (image) =>
+      profileImageMutationRequest({ variables: { file: image } }),
+    onCompleted: () =>
+      showMessage('Profilová fotka byla úspěšně aktualizována.'),
+    onError: (error) => showErrorMessage(error.message),
+  };
+
   const password = {
     mutationRequest: (values) =>
       passwordMutationRequest({ variables: { ...values } }),
@@ -210,7 +225,7 @@ function PlaceProfilePage() {
         ? showMessage('Disciplína sportoviště byla úspěšně přidána.')
         : showErrorMessage('Disciplínu sportoviště se nepodařilo přidat.'),
     onDeleteCompleted: (data) =>
-      data?.deleteSportType
+      data?.removeSportType
         ? showMessage('Disciplína sportoviště byla úspěšně odebrána.')
         : showErrorMessage('Disciplínu sportoviště se nepodařilo odebrat.'),
     onError: (error) => showErrorMessage(error.message),
@@ -226,7 +241,7 @@ function PlaceProfilePage() {
         ? showMessage('Trenér byl úspěšně přidán.')
         : showErrorMessage('Trenéra se nepodařilo přidat.'),
     onDeleteCompleted: (data) =>
-      data?.deleteTrainer
+      data?.removeTrainer
         ? showMessage('Trenér byl úspěšně odebrán.')
         : showErrorMessage('Trenéra se nepodařilo odebrat.'),
     onError: (error) => showErrorMessage(error.message),
@@ -239,6 +254,14 @@ function PlaceProfilePage() {
       onError: place.onError,
     }
   );
+
+  const [
+    profileImageMutationRequest,
+    profileImageMutationRequestState,
+  ] = useMutation(PROFILE_IMAGE_MUTATION, {
+    onCompleted: profileImage.onCompleted,
+    onError: profileImage.onError,
+  });
 
   const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
     PASSWORD_MUTATION,
@@ -307,6 +330,7 @@ function PlaceProfilePage() {
       reFetchPlaceSportTypes={placeSportTypesFetcher.refetch}
       reFetchPlaceTrainers={placeTrainersFetcher.refetch}
       placeLoading={placeMutationRequestState.loading}
+      profileImageLoading={profileImageMutationRequestState.loading}
       passwordLoading={passwordMutationRequestState.loading}
       uploadPlaceImageLoading={uploadPlaceImageMutationRequestState.loading}
       deletePlaceImageLoading={deletePlaceImageMutationRequestState.loading}
@@ -315,6 +339,7 @@ function PlaceProfilePage() {
       addPlaceTrainerLoading={addPlaceTrainerMutationRequestState.loading}
       deletePlaceTrainerLoading={deletePlaceTrainerMutationRequestState.loading}
       onSavePlace={place.mutationRequest}
+      onSaveProfileImage={profileImage.mutationRequest}
       onSavePassword={password.mutationRequest}
       onSavePlaceImage={placeImage.uploadMutationRequest}
       onDeletePlaceImage={placeImage.deleteMutationRequest}

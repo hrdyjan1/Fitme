@@ -13,13 +13,17 @@ import {
   ProfileMenu,
   Gallery,
   SportTypes,
-  Trainers,
-} from 'src/components/organisms';
+  Trainers, ProfilePictureForm
+} from 'src/components/organisms'
 
 const subPages = [
   {
     id: 'general',
     title: 'Obecné',
+  },
+  {
+    id: 'profilePhoto',
+    title: 'Profilová fotka',
   },
   {
     id: 'photos',
@@ -73,12 +77,14 @@ function PlaceProfileTemplate({
   passwordLoading,
   uploadPlaceImageLoading,
   deletePlaceImageLoading,
+  profileImageLoading,
   addSportTypeLoading,
   deleteSportTypeLoading,
   addPlaceTrainerLoading,
   deletePlaceTrainerLoading,
   onSavePlace,
   onSavePassword,
+  onSaveProfileImage,
   onSavePlaceImage,
   onDeletePlaceImage,
   onSaveSportType,
@@ -91,6 +97,7 @@ function PlaceProfileTemplate({
   const isLoading =
     passwordLoading ||
     placeLoading ||
+    profileImageLoading ||
     uploadPlaceImageLoading ||
     deletePlaceImageLoading ||
     addSportTypeLoading ||
@@ -125,6 +132,14 @@ function PlaceProfileTemplate({
                     loading={placeLoading}
                   />
                 </TabPanel>
+                <TabPanel value={pageId} index="profilePhoto">
+                  <ProfilePictureForm
+                    imageURL={place?.imageURL}
+                    reFetchUser={reFetchPlace}
+                    onSave={onSaveProfileImage}
+                    loading={profileImageLoading}
+                  />
+                </TabPanel>
                 <TabPanel value={pageId} index="photos">
                   <Gallery
                     name={place?.name}
@@ -143,8 +158,8 @@ function PlaceProfileTemplate({
                 <TabPanel value={pageId} index="tags">
                   <SportTypes
                     sportTypes={sportTypes}
-                    placeSportTypes={placeSportTypes}
-                    reFetchPlaceSportTypes={reFetchPlaceSportTypes}
+                    savedSportTypes={placeSportTypes}
+                    reFetchSavedSportTypes={reFetchPlaceSportTypes}
                     onSave={onSaveSportType}
                     onDelete={onDeleteSportType}
                     addSportTypeLoading={addSportTypeLoading}

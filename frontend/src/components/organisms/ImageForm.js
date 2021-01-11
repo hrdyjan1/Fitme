@@ -8,10 +8,12 @@ function ImageForm({ onSave, loading }) {
   const [imageSource, setImageSource] = React.useState();
 
   const change = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => setImageSource(reader.result);
+    try {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => setImageSource(reader.result);
+    } catch (e) {}
   };
 
   return (

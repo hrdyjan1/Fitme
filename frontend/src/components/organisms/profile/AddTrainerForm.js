@@ -24,14 +24,16 @@ const AddTrainerForm = ({
     });
   };
 
-  const hasPlaceTrainer = (trainer) =>
-    placeTrainers.some((placeTrainer) => placeTrainer.id === trainer.stid);
+  const hasPlaceTrainer = (trainer) => (
+    placeTrainers.some((placeTrainer) => placeTrainer.id === trainer.id)
+  );
 
   return (
     <div>
       <InputLabel label="Přidání trenéra" />
       <Autocomplete
         id="combo-box-demo"
+        value={selectedTrainer}
         options={trainers}
         getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
         getOptionDisabled={(option) => hasPlaceTrainer(option)}

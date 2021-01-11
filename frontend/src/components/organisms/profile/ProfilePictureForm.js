@@ -24,7 +24,7 @@ function ProfilePictureForm({ imageURL, reFetchUser, onSave, loading }) {
         <Grid item xs={12}>
           <Divider />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item container justify="center" xs={12}>
           <ProfilePicture
             imageURL={imageURL}
             onSave={onSave}
