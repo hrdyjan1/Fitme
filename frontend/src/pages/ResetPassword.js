@@ -58,7 +58,7 @@ function ResetPassword({ token }) {
     resetPassword({ variables: { lockedToken: token, password } })
       .then((r) => {
         if (r.data) {
-          showMessage('Zmena hesla probehla uspesne');
+          showMessage('Změna hesla proběhla úspěšně.');
           goHomePage();
         }
         if (r.errors) {

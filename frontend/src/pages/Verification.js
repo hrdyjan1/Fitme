@@ -52,9 +52,10 @@ function Verification({ token }) {
         if (r.data?.verify) {
           showMessage(TEXT.success);
           goHome();
+        } else {
+          showErrorMessage(TEXT.fail);
+          goHome();
         }
-        showErrorMessage(TEXT.fail);
-        goHome();
       })
       .catch(compose(goHome, showErrorMessage));
   }, [token, verify, goHome, showMessage, showErrorMessage]);
