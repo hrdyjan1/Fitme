@@ -32,7 +32,7 @@ export const yupValidation = {
 
   organization: yup
     .string()
-    .matches(regex.nameWithNumbers, validText.organization)
+    .matches(regex.companyName, validText.organization)
     .required(validText.required),
 
   ico: yup
