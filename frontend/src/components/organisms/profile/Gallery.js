@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
-import { useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles'
 import {
   useMediaQuery,
   GridList,
@@ -12,7 +12,14 @@ import {
 import { FormTitle, InputImageButton } from 'src/components/atoms';
 import { GalleryImage } from 'src/components/molecules';
 
+const useStyles = makeStyles(() => ({
+  root: {
+    width: '100%'
+  },
+}));
+
 const Gallery = ({ name, images, reFetchData, onSave, onDelete }) => {
+  const classes = useStyles();
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
     defaultMatches: true,
@@ -35,7 +42,7 @@ const Gallery = ({ name, images, reFetchData, onSave, onDelete }) => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
           <FormTitle title="Přidání nebo odebrání fotografie" />
@@ -51,9 +58,9 @@ const Gallery = ({ name, images, reFetchData, onSave, onDelete }) => {
           spacing={isMd ? 24 : 8}
         >
           {images.map(
-            (item) =>
+            (item, index) =>
               item?.imageURL && (
-                <GridListTile key={item.toString()} cols={isMd ? 1 : 3}>
+                <GridListTile key={item?.imageURL + index} cols={isMd ? 1 : 3}>
                   <GalleryImage
                     title={name}
                     src={item?.imageURL}

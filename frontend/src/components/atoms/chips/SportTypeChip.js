@@ -2,14 +2,14 @@
 import React from 'react';
 import { Chip } from '@material-ui/core';
 
-const SportTypeChip = ({ id, text, onDelete, loading }) => (
+const SportTypeChip = ({ text, onDelete, loading, className }) => (
   <Chip
-    size="small"
     label={text}
     clickable
     color="primary"
-    onDelete={() => onDelete(id)}
+    onDelete={onDelete}
     disabled={loading}
+    className={className}
   />
 );
 

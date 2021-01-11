@@ -1,8 +1,8 @@
 import React from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { TrainerProfileTemplate } from 'src/templates';
 import { useUser } from 'src/contexts/user';
 import { useNotification } from 'src/contexts/notification';
+import { TrainerProfileTemplate } from 'src/templates'
 
 const TRAINER_QUERY = gql`
   query Trainer($userid: String!) {
@@ -22,6 +22,24 @@ const TRAINER_QUERY = gql`
       zipCode
       country
       imageURL
+    }
+  }
+`;
+
+const SPORT_TYPES_QUERY = gql`
+  query AllSportTypes {
+    allSportTypes {
+      stid
+      sportTypeName
+    }
+  }
+`;
+
+const TRAINER_SPORT_TYPES_QUERY = gql`
+  query UserSportTypes {
+    userSportTypes {
+      stid
+      sportTypeName
     }
   }
 `;
@@ -66,9 +84,25 @@ const PASSWORD_MUTATION = gql`
   }
 `;
 
+const ADD_SPORT_TYPE_MUTATION = gql`
+  mutation AddSportType($stid: Int!) {
+    addSportType(stid: $stid)
+  }
+`;
+
+const DELETE_SPORT_TYPE_MUTATION = gql`
+  mutation RemoveSportType($stid: Int!) {
+    removeSportType(stid: $stid)
+  }
+`;
+
 function TrainerProfilePage() {
   const { user } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
+
+  const trainerFetcher = useQuery(TRAINER_QUERY, {variables: { userid: user.id }});
+  const sportTypesFetcher = useQuery(SPORT_TYPES_QUERY);
+  const trainerSportTypesFetcher = useQuery(TRAINER_SPORT_TYPES_QUERY);
 
   const trainer = {
     mutationRequest: (values) => trainerMutationRequest({ variables: values }),
@@ -91,9 +125,21 @@ function TrainerProfilePage() {
     onError: (error) => showErrorMessage(error.message),
   };
 
-  const trainerFetcher = useQuery(TRAINER_QUERY, {
-    variables: { userid: user.id },
-  });
+  const sportType = {
+    addMutationRequest: (id) =>
+      addSportTypeMutationRequest({ variables: { stid: id } }),
+    deleteMutationRequest: (id) =>
+      deleteSportTypeMutationRequest({ variables: { stid: id } }),
+    onAddCompleted: (data) =>
+      data?.addSportType
+        ? showMessage('Disciplína byla úspěšně přidána.')
+        : showErrorMessage('Disciplínu se nepodařilo přidat.'),
+    onDeleteCompleted: (data) =>
+      data?.removeSportType
+        ? showMessage('Disciplína byla úspěšně odebrána.')
+        : showErrorMessage('Disciplínu se nepodařilo odebrat.'),
+    onError: (error) => showErrorMessage(error.message),
+  };
 
   const [trainerMutationRequest, trainerMutationRequestState] = useMutation(
     TRAINER_MUTATION,
@@ -119,16 +165,39 @@ function TrainerProfilePage() {
     onError: profileImage.onError,
   });
 
+  const [
+    addSportTypeMutationRequest,
+    addSportTypeMutationRequestState,
+  ] = useMutation(ADD_SPORT_TYPE_MUTATION, {
+    onCompleted: sportType.onAddCompleted,
+    onError: sportType.onError,
+  });
+
+  const [
+    deleteSportTypeMutationRequest,
+    deleteSportTypeMutationRequestState,
+  ] = useMutation(DELETE_SPORT_TYPE_MUTATION, {
+    onCompleted: sportType.onDeleteCompleted,
+    onError: sportType.onError,
+  });
+
   return (
     <TrainerProfileTemplate
       trainer={trainerFetcher.data?.trainer}
+      sportTypes={sportTypesFetcher.data?.allSportTypes}
+      trainerSportTypes={trainerSportTypesFetcher.data?.userSportTypes}
       reFetchTrainer={trainerFetcher.refetch}
+      reFetchTrainerSportTypes={trainerSportTypesFetcher.refetch}
       trainerLoading={trainerMutationRequestState.loading}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
+      addSportTypeLoading={addSportTypeMutationRequestState.loading}
+      deleteSportTypeLoading={deleteSportTypeMutationRequestState.loading}
       onSaveTrainer={trainer.mutationRequest}
       onSavePassword={password.mutationRequest}
       onSaveProfileImage={profileImage.mutationRequest}
+      onSaveSportType={sportType.addMutationRequest}
+      onDeleteSportType={sportType.deleteMutationRequest}
     />
   );
 }

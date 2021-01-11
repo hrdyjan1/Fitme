@@ -105,7 +105,7 @@ export const uploadPlaceImage = async (_, { file }, ctx) => {
   }
 };
 
-export const removeTrainer = async (_, tid, { dbConnection, auth }) => {
+export const removeTrainer = async (_, { tid }, { dbConnection, auth }) => {
   let id = null;
   try {
     id = await getUser(auth);
@@ -115,7 +115,7 @@ export const removeTrainer = async (_, tid, { dbConnection, auth }) => {
 
   try {
     const removeTrainerQuery =
-      'DELETE FROM placeTrainer WHERE pid = ? AND tid = ?;';
+      'DELETE FROM placeTrainer WHERE pid = ? AND tid = ?';
     if (id) {
       await dbConnection.query(removeTrainerQuery, [id, tid]);
       return true;
@@ -127,7 +127,7 @@ export const removeTrainer = async (_, tid, { dbConnection, auth }) => {
   }
 };
 
-export const addTrainer = async (_, tid, { dbConnection, auth }) => {
+export const addTrainer = async (_, { tid }, { dbConnection, auth }) => {
   let id = null;
   try {
     id = await getUser(auth);

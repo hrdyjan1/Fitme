@@ -17,7 +17,7 @@ function ProfilePicture({ imageURL, loading, onSave }) {
   };
 
   return (
-    <Box width="300px" justifyText="center">
+    <Box width="300px">
       <Card>
         <CardMedia
           component="img"

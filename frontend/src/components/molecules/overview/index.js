@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
-import { GalleryImage } from 'src/components/molecules/image/GalleryImage';
+import { Image } from 'src/components/atoms/image';
 import { SectionHeader } from 'src/components/molecules/profile/SectionHeader';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +66,7 @@ const Overview = (props) => {
           sm={12}
           md={4}
         >
-          <GalleryImage
+          <Image
             src="/basket.jpg"
             className={clsx(classes.image, classes.imageLeft)}
           />
@@ -110,7 +110,7 @@ const Overview = (props) => {
           md={4}
           className={classes.imageRightContainer}
         >
-          <GalleryImage src="/basket.jpg" className={classes.image} />
+          <Image src="/basket.jpg" className={classes.image} />
         </Grid>
       </Grid>
     </div>

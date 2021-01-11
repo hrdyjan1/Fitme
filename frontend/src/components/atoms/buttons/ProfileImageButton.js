@@ -5,8 +5,6 @@ const ProfileImageButton = ({ text, onClick, loading }) => (
   <Button
     color="primary"
     variant="contained"
-    fullWidth
-    size="small"
     onClick={onClick}
     disabled={loading}
   >

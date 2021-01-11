@@ -6,17 +6,18 @@ import { FormTitle, SportTypeChip } from 'src/components/atoms';
 import { AddSportTypeForm } from 'src/components/organisms';
 
 const useStyles = makeStyles(() => ({
-  titleCta: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  root: {
+    width: '100%'
+  },
+  chip: {
+    margin: '3px'
   },
 }));
 
 const SportTypes = ({
   sportTypes,
-  placeSportTypes,
-  reFetchPlaceSportTypes,
+  savedSportTypes,
+  reFetchSavedSportTypes,
   onSave,
   onDelete,
   addSportTypeLoading,
@@ -29,6 +30,12 @@ const SportTypes = ({
     defaultMatches: true,
   });
 
+  const onDeleteSportType = (id) => {
+    onDelete(id).then(() => {
+      reFetchSavedSportTypes();
+    });
+  };
+
   return (
     <div className={classes.root}>
       <Grid container spacing={isMd ? 4 : 2}>
@@ -39,21 +46,22 @@ const SportTypes = ({
           <Divider />
         </Grid>
         <Grid item xs={12} md={6}>
-          {placeSportTypes?.map((sportType) => (
+          {savedSportTypes?.map((sportType) => (
             <SportTypeChip
-              id={sportType.stid}
+              key={sportType.stid}
               text={sportType.sportTypeName}
-              onDelete={onDelete}
+              onDelete={() => onDeleteSportType(sportType.stid)}
               loading={deleteSportTypeLoading}
+              className={classes.chip}
             />
           ))}
-          {placeSportTypes.length || <FormTitle title="Žadné disciplíny" />}
+          {!savedSportTypes.length && <FormTitle title="Žadné disciplíny" />}
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item container justify="center" xs={12} md={6}>
           <AddSportTypeForm
             sportTypes={sportTypes}
-            placeSportTypes={placeSportTypes}
-            reFetchData={reFetchPlaceSportTypes}
+            placeSportTypes={savedSportTypes}
+            reFetchData={reFetchSavedSportTypes}
             onSave={onSave}
             loading={addSportTypeLoading}
           />

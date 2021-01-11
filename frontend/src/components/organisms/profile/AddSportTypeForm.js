@@ -34,6 +34,7 @@ const AddSportTypeForm = ({
       <InputLabel label="Sportovní disciplína" />
       <Autocomplete
         id="combo-box-demo"
+        value={selectedSportType}
         options={sportTypes}
         getOptionLabel={(option) => option.sportTypeName}
         getOptionDisabled={(option) => hasPlaceSportType(option)}
