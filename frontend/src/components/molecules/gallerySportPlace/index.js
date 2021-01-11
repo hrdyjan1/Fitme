@@ -26,7 +26,7 @@ const GallerySportPlace = (props) => {
     <div className={clsx(classes.root, className)}>
       <SectionHeader
         title="Zkontrolujte naší galerii"
-        subtitle="Zde jsou vidět fotogravie sportoviště, sportovců, ..."
+        subtitle="Zde jsou vidět fotografie sportoviště, sportovců, ..."
         data-aos="fade-up"
       />
       <GridList cellHeight={isMd ? 360 : 260} cols={4} spacing={isMd ? 24 : 8}>

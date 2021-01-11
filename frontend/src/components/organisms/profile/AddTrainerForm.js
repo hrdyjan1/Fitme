@@ -42,7 +42,7 @@ const AddTrainerForm = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Vyberte disciplínu"
+            label="Vyberte trenéra"
             variant="outlined"
           />
         )}
