@@ -8,7 +8,7 @@ const validText = {
   lastName:
     'Příjmení smí obsahovat pouze písmena a nesmí být delší než 50 znaků.',
   organization:
-    'Název organizace smí obsahovat písmena, čísla, mezery a nesmí být delší než 50 znaků.',
+    'Název organizace smí obsahovat písmena, čísla, mezery, pomlčky znak "&" a nesmí být delší než 50 znaků.',
   ico: 'IČO nemá správný formát.',
   email: 'E-mail nemá správný formát.',
   phoneNumber: 'Telefonní číslo nemá správný formát.',

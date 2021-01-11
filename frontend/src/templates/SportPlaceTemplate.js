@@ -166,7 +166,7 @@ function SportPlaceTemplate(props) {
                   <div className={classes.ratingContainer}>{rating(3)}</div>
                   <div className={classes.priceCta}>
                     <Typography variant="subtitle1">
-                      {item.description ? truncate(item.description, 120) : ''}
+                      {item.description ? truncate(item.description, 230) : ''}
                     </Typography>
                   </div>
                 </CardContent>
