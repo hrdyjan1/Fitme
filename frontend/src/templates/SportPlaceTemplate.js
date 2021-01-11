@@ -104,7 +104,7 @@ function SportPlaceTemplate(props) {
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title="Sportoviště"
-        subtitle="Zde je seznam sportovišť."
+        subtitle="Zde je seznam sportovišť, kde trenér působí."
         titleVariant="h4"
       />
       {includeFilter && (

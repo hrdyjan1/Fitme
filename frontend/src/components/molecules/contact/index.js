@@ -45,7 +45,7 @@ const Contact = (props) => {
       <div>
         <SectionHeader
           title={title}
-          subtitle="Pokud se chcete na cokoliv zeptat, tak zde jsou důležité údaje, které by vám mohli pomoci."
+          subtitle="Pokud se chcete na cokoliv zeptat, tak zde jsou důležité údaje, které by vám mohly pomoci."
           subtitleProps={{
             variant: 'body1',
             color: 'textPrimary',

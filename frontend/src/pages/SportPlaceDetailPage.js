@@ -89,7 +89,7 @@ const SportPlaceDetailPage = () => {
     <div className={classes.root}>
       <HeroDetail
         title={data?.place.name}
-        subtitle={`Zde je seznam informací ke sportovnímu místu ${data?.place.name}.`}
+        subtitle={`Zde je seznam informací ke sportovišti ${data?.place.name}.`}
         src={backgroundImgSrc}
       />
       {shouldShowStory && (
