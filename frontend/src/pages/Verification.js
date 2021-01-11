@@ -41,24 +41,28 @@ const TEXT = {
 function Verification({ token }) {
   const classes = useStyles();
   const history = useHistory();
-  const { showMessage, showErrorMessage } = useNotification();
   const [verify] = useMutation(VERIFY);
+  const { showMessage, showErrorMessage } = useNotification();
+  const [isAlreadyVerified, setAlredyVerified] = React.useState(false);
 
   const goHome = useCallback(() => history.push(route.home()), [history]);
 
   React.useEffect(() => {
-    verify({ variables: { token } })
-      .then((r) => {
-        if (r.data?.verify) {
-          showMessage(TEXT.success);
-          goHome();
-        } else {
-          showErrorMessage(TEXT.fail);
-          goHome();
-        }
-      })
-      .catch(compose(goHome, () => showErrorMessage(TEXT.fail)));
-  }, [token, verify, goHome, showMessage, showErrorMessage]);
+    if (!isAlreadyVerified) {
+      setAlredyVerified(true);
+      verify({ variables: { token } })
+        .then((r) => {
+          if (r.data?.verify) {
+            showMessage(TEXT.success);
+            goHome();
+          } else {
+            showErrorMessage(TEXT.fail);
+            goHome();
+          }
+        })
+        .catch(compose(goHome, () => showErrorMessage(TEXT.fail)));
+    }
+  }, [token, verify, goHome, showMessage, showErrorMessage, isAlreadyVerified]);
 
   return (
     <Section className={classes.pagePaddingTop}>
