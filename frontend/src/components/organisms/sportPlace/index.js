@@ -25,8 +25,8 @@ const GET_ALL_SPORT_TYPES = gql`
   }
 `;
 const GET_FILTERED_PLACES = gql`
-  query SearchPlaces($containedName: String, $sportType: String) {
-    searchPlaces(containedName: $containedName, sportType: $sportType) {
+  query SearchPlaces($containedName: String, $sportType: String, $city: String) {
+    searchPlaces(containedName: $containedName, sportType: $sportType, city: $city) {
       uid
       description
       name
@@ -35,7 +35,7 @@ const GET_FILTERED_PLACES = gql`
   }
 `;
 
-const initialSearchPlaceData = { category: null, searchValue: null };
+const initialSearchPlaceData = { category: null, searchValue: null, city: null };
 
 function handleCategoriesOptions(data) {
   return data?.allSportTypes.map((s) => ({ title: s.sportTypeName })) || [];
@@ -43,7 +43,7 @@ function handleCategoriesOptions(data) {
 
 function handleFilterPlacesQueryOptions(data) {
   return {
-    variables: { containedName: data.searchValue, sportType: data.category },
+    variables: { containedName: data.searchValue, sportType: data.category, city: data.city },
   };
 }
 
@@ -62,6 +62,7 @@ const SportPlace = ({
   const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
+  const [city, setCity] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [searchValue, setSearchValue] = React.useState('');
   const { data: sportTypesData } = useQuery(GET_ALL_SPORT_TYPES);
@@ -79,6 +80,7 @@ const SportPlace = ({
   const maxPlaceToSee = showAll && places ? places.length : 6;
 
   // 🎬 Change category or search-value
+  const onCityChange = (_, value) => setCity(value);
   const onCategoryChange = (_, value) => setCategory(value);
   const onSearchValueChange = (_, value) => setSearchValue(value);
 
@@ -89,9 +91,11 @@ const SportPlace = ({
   });
 
   const handleFilterClick = () => {
+    const validCity = setNullIfEmpty(city);
     const validCategory = setNullIfEmpty(category);
     const validSearchValue = setNullIfEmpty(searchValue);
     setSearchPlaceData({
+      city: validCity,
       category: validCategory,
       searchValue: validSearchValue,
     });
@@ -122,6 +126,7 @@ const SportPlace = ({
       loading={loading}
       showAll={showAll}
       className={className}
+      onCityChange={onCityChange}
       includeFilter={includeFilter}
       maxPlaceToSee={maxPlaceToSee}
       goToSportPlaces={goToSportPlaces}
