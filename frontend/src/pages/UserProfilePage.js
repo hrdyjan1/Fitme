@@ -57,8 +57,9 @@ const PASSWORD_MUTATION = gql`
 `;
 
 function UserProfilePage() {
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
+  const USER_TYPE_ATHLETE = 'athlete';
 
   const userFetcher = useQuery(USER_QUERY);
 
@@ -114,6 +115,14 @@ function UserProfilePage() {
     onError: profileImage.onError,
   });
 
+  const onSaveUser = async (values) => {
+    return beUser.mutationRequest().then((response) => {
+      if (response.data?.updateUser) {
+        setUser({type: USER_TYPE_ATHLETE, ...values});
+      }
+    })
+  };
+
   return (
     <UserProfileTemplate
       user={userFetcher.data?.user}
@@ -121,7 +130,7 @@ function UserProfilePage() {
       reFetchUser={userFetcher.refetch}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
-      onSaveUser={beUser.mutationRequest}
+      onSaveUser={onSaveUser}
       onSavePassword={password.mutationRequest}
       onSaveProfileImage={profileImage.mutationRequest}
     />
