@@ -62,18 +62,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TrainerCard = ({
-  name,
-  imageSrc,
-  description,
-  onDelete,
-  loading,
+  name, imageSrc, description, onDelete, loading,
 }) => {
   const classes = useStyles();
 
   return (
     <CardBase className={classes.cardBase}>
       <ListItem disableGutters className={classes.listItem}>
-        <Grid container justify="flex-end" alignContent="space-between" className={classes.fullWidth}>
+        <Grid
+          container
+          justify="flex-end"
+          alignContent="space-between"
+          className={classes.fullWidth}
+        >
           <Grid item xs={8} container direction="column" justify="center">
             <Typography>{name}</Typography>
           </Grid>

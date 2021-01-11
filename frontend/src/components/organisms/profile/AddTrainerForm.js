@@ -26,9 +26,7 @@ const AddTrainerForm = ({
     });
   };
 
-  const hasPlaceTrainer = (trainer) => (
-    placeTrainers.some((placeTrainer) => placeTrainer.id === trainer.id)
-  );
+  const hasPlaceTrainer = (trainer) => placeTrainers.some((placeTrainer) => placeTrainer.id === trainer.id);
 
   return (
     <div>

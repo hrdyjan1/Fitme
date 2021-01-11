@@ -100,7 +100,9 @@ function TrainerProfilePage() {
   const { user } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
 
-  const trainerFetcher = useQuery(TRAINER_QUERY, { variables: { userid: user.id } });
+  const trainerFetcher = useQuery(TRAINER_QUERY, {
+    variables: { userid: user.id },
+  });
   const sportTypesFetcher = useQuery(SPORT_TYPES_QUERY);
   const trainerSportTypesFetcher = useQuery(TRAINER_SPORT_TYPES_QUERY);
 

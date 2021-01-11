@@ -11,7 +11,8 @@ import {
   ProfilePictureForm,
   TabPanel,
   CardBase,
-  ProfileMenu, SportTypes,
+  ProfileMenu,
+  SportTypes,
 } from 'src/components/organisms';
 
 const subPages = [

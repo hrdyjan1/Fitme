@@ -13,7 +13,8 @@ import {
   ProfileMenu,
   Gallery,
   SportTypes,
-  Trainers, ProfilePictureForm,
+  Trainers,
+  ProfilePictureForm,
 } from 'src/components/organisms';
 
 const subPages = [

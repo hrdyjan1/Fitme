@@ -25,8 +25,16 @@ const GET_ALL_SPORT_TYPES = gql`
   }
 `;
 const GET_FILTERED_PLACES = gql`
-  query SearchPlaces($containedName: String, $sportType: String, $city: String) {
-    searchPlaces(containedName: $containedName, sportType: $sportType, city: $city) {
+  query SearchPlaces(
+    $containedName: String
+    $sportType: String
+    $city: String
+  ) {
+    searchPlaces(
+      containedName: $containedName
+      sportType: $sportType
+      city: $city
+    ) {
       uid
       description
       name
@@ -35,7 +43,11 @@ const GET_FILTERED_PLACES = gql`
   }
 `;
 
-const initialSearchPlaceData = { category: null, searchValue: null, city: null };
+const initialSearchPlaceData = {
+  category: null,
+  searchValue: null,
+  city: null,
+};
 
 function handleCategoriesOptions(data) {
   return data?.allSportTypes.map((s) => ({ title: s.sportTypeName })) || [];
@@ -43,7 +55,11 @@ function handleCategoriesOptions(data) {
 
 function handleFilterPlacesQueryOptions(data) {
   return {
-    variables: { containedName: data.searchValue, sportType: data.category, city: data.city },
+    variables: {
+      containedName: data.searchValue,
+      sportType: data.category,
+      city: data.city,
+    },
   };
 }
 
@@ -57,7 +73,11 @@ function handlePlaces(data) {
 }
 
 const SportPlace = ({
-  sportData, className, includeFilter = true, showAll, ...rest
+  sportData,
+  className,
+  includeFilter = true,
+  showAll,
+  ...rest
 }) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -73,8 +93,13 @@ const SportPlace = ({
   const categoriesOptions = handleCategoriesOptions(sportTypesData);
 
   // 👓 Filtered Places
-  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(searchPlaceData);
-  const { data: filteredData, loading } = useQuery(GET_FILTERED_PLACES, filteredPlacesQueryOptions);
+  const filteredPlacesQueryOptions = handleFilterPlacesQueryOptions(
+    searchPlaceData,
+  );
+  const { data: filteredData, loading } = useQuery(
+    GET_FILTERED_PLACES,
+    filteredPlacesQueryOptions,
+  );
   const data = sportData || filteredData?.searchPlaces;
   const places = handlePlaces(data);
   const maxPlaceToSee = showAll && places ? places.length : 6;

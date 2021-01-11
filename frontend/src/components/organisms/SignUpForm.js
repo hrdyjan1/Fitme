@@ -27,12 +27,10 @@ function SignUpForm({ onSave, loading }) {
     userType: yup.string(),
     firstName: yupValidation.firstName,
     lastName: yupValidation.lastName,
-    organization: yup
-      .string()
-      .when('userType', {
-        is: USER_TYPE_PLACE_OWNER,
-        then: yupValidation.organization,
-      }),
+    organization: yup.string().when('userType', {
+      is: USER_TYPE_PLACE_OWNER,
+      then: yupValidation.organization,
+    }),
     ico: yup
       .string()
       .when('userType', { is: USER_TYPE_PLACE_OWNER, then: yupValidation.ico })
