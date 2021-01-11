@@ -12,7 +12,9 @@ const USER_TYPE_ATHLETE = 'athlete';
 const USER_TYPE_PLACE_OWNER = 'place';
 const USER_TYPE_TRAINER = 'trainer';
 
-function GeneralForm({ data, reFetchData, onSave, loading }) {
+function GeneralForm({
+  data, reFetchData, onSave, loading,
+}) {
   const { user } = useUser();
   const theme = useTheme();
   const isUserPlaceOwner = user.type === USER_TYPE_PLACE_OWNER;

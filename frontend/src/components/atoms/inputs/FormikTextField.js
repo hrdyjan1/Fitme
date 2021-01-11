@@ -21,9 +21,9 @@ function FormikTextField({ name, label, placeholder }) {
             error={Boolean(form.errors[name] && form.touched[name])}
             onBlur={form.handleBlur}
             helperText={
-              form.errors[name] &&
-              form.touched[name] &&
-              String(form.errors[name])
+              form.errors[name]
+              && form.touched[name]
+              && String(form.errors[name])
             }
             variant="outlined"
             fullWidth

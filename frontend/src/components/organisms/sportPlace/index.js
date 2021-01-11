@@ -66,7 +66,7 @@ const SportPlace = ({
   const [searchValue, setSearchValue] = React.useState('');
   const { data: sportTypesData } = useQuery(GET_ALL_SPORT_TYPES);
   const [searchPlaceData, setSearchPlaceData] = React.useState(
-    initialSearchPlaceData
+    initialSearchPlaceData,
   );
 
   const categoriesOptions = handleCategoriesOptions(sportTypesData);
@@ -104,10 +104,10 @@ const SportPlace = ({
         <i
           className={clsx(
             i <= count ? 'fas fa-star' : 'far fa-star',
-            classes.ratingIcon
+            classes.ratingIcon,
           )}
           key={i}
-        />
+        />,
       );
     }
 

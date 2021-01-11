@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import clsx from 'clsx';
-import { Box, List, ListItem, Grid, Typography } from '@material-ui/core';
+import {
+  Box, List, ListItem, Grid, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import CardBase from 'src/components/organisms/cardBase';
@@ -15,7 +17,9 @@ import {
   Gallery,
 } from './components';
 
-const TabPanel = ({ children, value, index, ...other }) => (
+const TabPanel = ({
+  children, value, index, ...other
+}) => (
   <Box component="div" hidden={value !== index} {...other}>
     {value === index && children}
   </Box>
@@ -116,7 +120,7 @@ function Template({ place }) {
                     component="a"
                     className={clsx(
                       classes.listItem,
-                      pageId === item.id ? classes.listItemActive : {}
+                      pageId === item.id ? classes.listItemActive : {},
                     )}
                     onClick={() => setPageId(item.id)}
                     disableGutters

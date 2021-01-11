@@ -26,6 +26,7 @@ const GET_PLACE = gql`
       phoneNumber
       description
       sportTypeList {
+        stid
         sportTypeName
       }
       trainerList {
@@ -35,6 +36,7 @@ const GET_PLACE = gql`
         lastName
       }
       pictureList {
+        iid
         imageURL
       }
     }
@@ -68,10 +70,12 @@ const SportPlaceDetailPage = () => {
   }));
   const trainerListData = trainerList.map((t) => ({
     ...t,
+    key: t.id,
     authorName: `${t.firstName} ${t.lastName}`,
     imageURL: t.imageURL,
   }));
   const pictureListData = pictureTypeList.map((t) => ({
+    key: t.iid,
     imageURL: t.imageURL,
     cols: 2,
   }));

@@ -51,7 +51,7 @@ function ProfileMenu({ pages, pageId, setPageId }) {
             component="a"
             className={clsx(
               classes.listItem,
-              pageId === item.id ? classes.listItemActive : {}
+              pageId === item.id ? classes.listItemActive : {},
             )}
             onClick={() => setPageId(item.id)}
             disableGutters

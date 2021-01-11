@@ -52,19 +52,19 @@ function Navbar() {
     setSignInVisible,
     setSignUpHidden,
     setForgotPassHidden,
-    deactivate
+    deactivate,
   );
   const onSignUpClick = compose(
     setSignUpVisible,
     setSignInHidden,
     setForgotPassHidden,
-    deactivate
+    deactivate,
   );
   const onForgotPassClick = compose(
     setForgotPassVisible,
     setSignInHidden,
     setSignUpHidden,
-    deactivate
+    deactivate,
   );
 
   return (
@@ -100,7 +100,9 @@ function Navbar() {
           <>
             <Button onClick={onUserNameClick}>
               <i className="fas fa-user" />
-              {user.firstName} {user.lastName}
+              {user.firstName}
+              {' '}
+              {user.lastName}
             </Button>
             <Button style={STYLES[1]} onClick={onLogoutClick}>
               Odhlásit se

@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GalleryImage = ({ title, src, srcSet, alt, onDelete }) => {
+const GalleryImage = ({
+  title, src, srcSet, alt, onDelete,
+}) => {
   const classes = useStyles();
 
   return (

@@ -69,8 +69,8 @@ function SignUpForm({ onSave, loading }) {
               placeholder="Zadejte název organizace"
             />
           )}
-          {(isUserPlaceOwner(formik.values.userType) ||
-            isUserTrainer(formik.values.userType)) && (
+          {(isUserPlaceOwner(formik.values.userType)
+            || isUserTrainer(formik.values.userType)) && (
             <FormikTextField name="ico" label="IČO" placeholder="Zadejte IČO" />
           )}
           <FormikTextField

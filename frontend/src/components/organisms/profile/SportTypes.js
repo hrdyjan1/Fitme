@@ -7,10 +7,10 @@ import { AddSportTypeForm } from 'src/components/organisms';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100%'
+    width: '100%',
   },
   chip: {
-    margin: '3px'
+    margin: '3px',
   },
 }));
 

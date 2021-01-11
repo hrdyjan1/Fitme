@@ -46,8 +46,7 @@ export function SignInDialog({
   const [signin, { loading }] = useMutation(SIGN_IN);
 
   const handleShowingForgotPassword = compose(onForgotPassClick, close);
-  const showUserProfile = (user) =>
-    history.push(route.userProfileRoute(user.type));
+  const showUserProfile = (user) => history.push(route.userProfileRoute(user.type));
 
   const onSave = (values) => {
     signin({
@@ -66,7 +65,7 @@ export function SignInDialog({
         } else {
           showMessage(
             String(response.errors) || 'Chybi uzivatel nebo token.',
-            SEVERITY.ERROR
+            SEVERITY.ERROR,
           );
         }
       })

@@ -131,7 +131,7 @@ const Gallery = (props) => {
                 <div
                   className={clsx(
                     'folio__info-wrapper',
-                    classes.folioInfoWrapper
+                    classes.folioInfoWrapper,
                   )}
                 >
                   <div className={classes.folioInfo}>

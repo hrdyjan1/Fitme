@@ -13,7 +13,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Image = ({ src, srcSet, alt, className, ...rest }) => {
+const Image = ({
+  src, srcSet, alt, className, ...rest
+}) => {
   const classes = useStyles();
 
   return (

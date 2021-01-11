@@ -34,7 +34,7 @@ function FormikPasswordField({ name, label, placeholder }) {
               onChange={form.handleChange}
               error={Boolean(form.errors[name] && form.touched[name])}
               onBlur={form.handleBlur}
-              endAdornment={
+              endAdornment={(
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
@@ -45,12 +45,12 @@ function FormikPasswordField({ name, label, placeholder }) {
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
-              }
+              )}
             />
             <FormHelperText error>
-              {form.errors[name] &&
-                form.touched[name] &&
-                String(form.errors[name])}
+              {form.errors[name]
+                && form.touched[name]
+                && String(form.errors[name])}
             </FormHelperText>
           </FormControl>
         )}

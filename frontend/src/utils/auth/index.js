@@ -12,7 +12,7 @@ function AuthProvider({ children }) {
 
   const contextValue = React.useMemo(
     () => createContextValue({ token: state.token, setState }),
-    [state.token, setState]
+    [state.token, setState],
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

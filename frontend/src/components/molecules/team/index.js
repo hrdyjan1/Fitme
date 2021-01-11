@@ -82,8 +82,8 @@ const Team = (props) => {
         subtitle="Zde je seznam našich trenérů. Pro bližší informace můžete kliknout na trenéra."
       />
       <Grid container spacing={isMd ? 2 : 1}>
-        {data.map((item, index) => (
-          <Grid item xs={6} sm={4} key={index} data-aos="fade-up">
+        {data.map((item) => (
+          <Grid item xs={6} sm={4} key={item.key} data-aos="fade-up">
             <CardBase className={classes.cardBase} liftUp onClick={() => onClick(item.id)}>
               <ListItem disableGutters className={classes.listItem}>
                 <ListItemAvatar className={classes.listItemAvatar}>
