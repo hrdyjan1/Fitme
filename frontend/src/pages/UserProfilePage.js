@@ -114,12 +114,6 @@ function UserProfilePage() {
     onError: profileImage.onError,
   });
 
-  const onSaveUser = (values) => {
-    beUser.mutationRequest(values).then(() =>{
-      setUser(values)
-    })
-  }
-
   return (
     <UserProfileTemplate
       user={userFetcher.data?.user}
@@ -127,7 +121,7 @@ function UserProfilePage() {
       reFetchUser={userFetcher.refetch}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
-      onSaveUser={onSaveUser}
+      onSaveUser={beUser.mutationRequest}
       onSavePassword={password.mutationRequest}
       onSaveProfileImage={profileImage.mutationRequest}
     />
