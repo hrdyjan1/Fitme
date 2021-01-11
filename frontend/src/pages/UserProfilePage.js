@@ -115,13 +115,11 @@ function UserProfilePage() {
     onError: profileImage.onError,
   });
 
-  const onSaveUser = async (values) => {
-    return beUser.mutationRequest().then((response) => {
-      if (response.data?.updateUser) {
-        setUser({type: USER_TYPE_ATHLETE, ...values});
-      }
-    })
-  };
+  const onSaveUser = async (values) => beUser.mutationRequest().then((response) => {
+    if (response.data?.updateUser) {
+      setUser({ type: USER_TYPE_ATHLETE, ...values });
+    }
+  });
 
   return (
     <UserProfileTemplate

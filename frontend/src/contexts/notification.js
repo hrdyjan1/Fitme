@@ -44,7 +44,9 @@ function NotificationProvider({ children, autoHideDuration = 3000 }) {
         autoHideDuration={autoHideDuration}
         onClose={closeMessage}
       >
-        <Alert severity={severity} onClose={closeMessage}>{message}</Alert>
+        <Alert severity={severity} onClose={closeMessage}>
+          {message}
+        </Alert>
       </Snackbar>
       <Provider value={value}>{children}</Provider>
     </>

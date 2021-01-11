@@ -33,7 +33,10 @@ const CardBase = ({ className, onClick = noop, children }) => {
   const classes = useStyles();
 
   return (
-    <Card className={clsx('card-base', classes.root, className)} onClick={onClick}>
+    <Card
+      className={clsx('card-base', classes.root, className)}
+      onClick={onClick}
+    >
       <CardContent className={clsx('card-base__content', classes.content)}>
         {children}
       </CardContent>

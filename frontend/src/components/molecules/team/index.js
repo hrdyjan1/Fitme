@@ -84,7 +84,11 @@ const Team = (props) => {
       <Grid container spacing={isMd ? 2 : 1}>
         {data.map((item) => (
           <Grid item xs={6} sm={4} key={item.key} data-aos="fade-up">
-            <CardBase className={classes.cardBase} liftUp onClick={() => onClick(item.id)}>
+            <CardBase
+              className={classes.cardBase}
+              liftUp
+              onClick={() => onClick(item.id)}
+            >
               <ListItem disableGutters className={classes.listItem}>
                 <ListItemAvatar className={classes.listItemAvatar}>
                   <Avatar src={item.imageURL} className={classes.avatar} />

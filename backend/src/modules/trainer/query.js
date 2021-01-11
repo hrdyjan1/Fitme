@@ -45,4 +45,3 @@ const singleTrainer = async (_, { uid }, { dbConnection }) => {
 };
 
 export { singleTrainer as trainer };
-

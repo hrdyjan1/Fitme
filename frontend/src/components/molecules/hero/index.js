@@ -101,11 +101,7 @@ const Hero = (props) => {
           <div className={classes.disclimer} data-aos="fade-up" />
         </Grid>
         <Grid item container justify="center" xs={12} md={6} data-aos="fade-up">
-          <Image
-            src="/runner.jpg"
-            alt="Runner"
-            className={classes.image}
-          />
+          <Image src="/runner.jpg" alt="Runner" className={classes.image} />
         </Grid>
       </Grid>
     </div>

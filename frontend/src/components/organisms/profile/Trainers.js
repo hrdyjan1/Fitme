@@ -69,7 +69,13 @@ const Trainers = ({
           <Grid item xs={12} className={classes.marginTop}>
             <Divider />
           </Grid>
-          <Grid item container justify="center" xs={12} className={classes.marginTop}>
+          <Grid
+            item
+            container
+            justify="center"
+            xs={12}
+            className={classes.marginTop}
+          >
             <AddTrainerForm
               trainers={trainers}
               placeTrainers={placeTrainers}

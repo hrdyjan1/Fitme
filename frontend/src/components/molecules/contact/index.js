@@ -102,27 +102,27 @@ const Contact = (props) => {
               </div>
             )}
             {phone && (
-            <div className={classes.item}>
-              <ListItemAvatar className={classes.listItemAvatar}>
-                <Avatar>
-                  <PhoneIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                className={classes.listItemText}
-                primary="Telefon"
-                secondary={phone}
-                primaryTypographyProps={{
-                  className: classes.title,
-                  variant: 'subtitle1',
-                  color: 'textSecondary',
-                }}
-                secondaryTypographyProps={{
-                  variant: 'subtitle1',
-                  color: 'textPrimary',
-                }}
-              />
-            </div>
+              <div className={classes.item}>
+                <ListItemAvatar className={classes.listItemAvatar}>
+                  <Avatar>
+                    <PhoneIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  className={classes.listItemText}
+                  primary="Telefon"
+                  secondary={phone}
+                  primaryTypographyProps={{
+                    className: classes.title,
+                    variant: 'subtitle1',
+                    color: 'textSecondary',
+                  }}
+                  secondaryTypographyProps={{
+                    variant: 'subtitle1',
+                    color: 'textPrimary',
+                  }}
+                />
+              </div>
             )}
             {email && (
               <div className={classes.item}>

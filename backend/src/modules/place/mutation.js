@@ -70,7 +70,12 @@ export const signupPlace = async (
   );
 
   const emailText = `Dobrý den, gratulujeme, registrace do systému Fit.me proběhla úspěšně. Zbývá ověřit tuto emailovou adresu \n Váš link pro ověření: \n\n http://frontend.team01.vse.handson.pro/verificationToken=${verificationToken} \n\n\n. Pokud nechcete dostávat další emaily z této adresy klikněte zde:`;
-  await sendEmail(EMAIL.header, email, 'Fit.me - Potvrzení registrace do systému', emailText);
+  await sendEmail(
+    EMAIL.header,
+    email,
+    'Fit.me - Potvrzení registrace do systému',
+    emailText,
+  );
 
   const user = { id, email, firstName, lastName, verified: 0 };
 

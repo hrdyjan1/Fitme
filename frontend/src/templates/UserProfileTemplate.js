@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, LinearProgress } from '@material-ui/core'
+import { Grid, LinearProgress } from '@material-ui/core';
 import {
   ProfileHeader,
   ProfileMenu,
@@ -8,9 +8,9 @@ import {
   GeneralForm,
   ProfilePictureForm,
   PasswordForm,
-} from 'src/components/organisms'
-import SectionAlternate from 'src/components/organisms/SectionAlternate'
-import { makeStyles } from '@material-ui/core/styles'
+} from 'src/components/organisms';
+import SectionAlternate from 'src/components/organisms/SectionAlternate';
+import { makeStyles } from '@material-ui/core/styles';
 
 const subPages = [
   {
