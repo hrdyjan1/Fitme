@@ -43,7 +43,7 @@ function ProfilePicture({ imageURL, loading, onSave }) {
       )}
       {isLoaded && (
         <ProfileImageButton
-          text="Uložit"
+          text="Potvrdit"
           onClick={onSaveClick}
           loading={loading}
         />

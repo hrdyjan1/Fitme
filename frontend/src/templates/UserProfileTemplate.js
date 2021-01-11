@@ -1,14 +1,56 @@
 import React from 'react';
-import { Box, LinearProgress } from '@material-ui/core';
+import { Grid, LinearProgress } from '@material-ui/core'
 import {
-  ContactInfoForm,
-  AddressForm,
-  ChangePasswordForm,
-} from 'src/components/organisms';
-import { ProfilePicture } from 'src/components/molecules';
+  ProfileHeader,
+  ProfileMenu,
+  CardBase,
+  TabPanel,
+  GeneralForm,
+  ProfilePictureForm,
+  PasswordForm,
+} from 'src/components/organisms'
+import SectionAlternate from 'src/components/organisms/SectionAlternate'
+import { makeStyles } from '@material-ui/core/styles'
+
+const subPages = [
+  {
+    id: 'general',
+    title: 'Obecné',
+  },
+  {
+    id: 'profilePhoto',
+    title: 'Profilová fotka',
+  },
+  {
+    id: 'password',
+    title: 'Heslo',
+  },
+];
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100%',
+    width: '100%',
+  },
+  section: {
+    '& .section-alternate__content': {
+      paddingTop: 0,
+      marginTop: theme.spacing(-5),
+      position: 'relative',
+      zIndex: 1,
+    },
+    '& .card-base__content': {
+      padding: theme.spacing(2),
+      [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(3),
+      },
+    },
+  },
+}));
 
 function UserProfileTemplate({
   user,
+  reFetchUser,
   passwordLoading,
   userLoading,
   profileImageLoading,
@@ -16,56 +58,55 @@ function UserProfileTemplate({
   onSavePassword,
   onSaveProfileImage,
 }) {
+  const [pageId, setPageId] = React.useState('general');
+  const classes = useStyles();
+  const isLoading = userLoading || passwordLoading || profileImageLoading;
+
   return (
-    <div>
-      {(passwordLoading || userLoading || profileImageLoading) && (
-        <LinearProgress />
-      )}
-      <h2>Můj profil</h2>
+    <div className={classes.root}>
+      {isLoading && <LinearProgress />}
+      <ProfileHeader
+        title="Váš profil sportovce"
+        subtitle="Zde si můžete změnit veškeré vaše údaje."
+      />
       {user && (
-        <Box
-          display="flex"
-          flexDirection="row"
-          flexWrap="wrap"
-          justifyContent="space-evenly"
-          marginTop="20px"
-        >
-          <Box
-            marginTop="20px"
-            marginBottom="70px"
-            width="100%"
-            display="flex"
-            flexDirection="row"
-            flexWrap="wrap"
-            justifyContent="center"
-          >
-            <ProfilePicture
-              imageURL={user?.imageURL}
-              loading={profileImageLoading}
-              onSave={onSaveProfileImage}
-            />
-          </Box>
-          <Box width="350px">
-            <ContactInfoForm
-              user={user}
-              loading={userLoading}
-              onSave={onSaveUser}
-            />
-          </Box>
-          <Box width="350px">
-            <AddressForm
-              user={user}
-              loading={userLoading}
-              onSave={onSaveUser}
-            />
-          </Box>
-          <Box width="350px">
-            <ChangePasswordForm
-              loading={passwordLoading}
-              onSave={onSavePassword}
-            />
-          </Box>
-        </Box>
+        <SectionAlternate className={classes.section}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={3}>
+              <ProfileMenu
+                pages={subPages}
+                pageId={pageId}
+                setPageId={setPageId}
+              />
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <CardBase>
+                <TabPanel value={pageId} index="general">
+                  <GeneralForm
+                    data={user}
+                    reFetchData={reFetchUser}
+                    onSave={onSaveUser}
+                    loading={userLoading}
+                  />
+                </TabPanel>
+                <TabPanel value={pageId} index="profilePhoto">
+                  <ProfilePictureForm
+                    imageURL={user?.imageURL}
+                    reFetchUser={reFetchUser}
+                    onSave={onSaveProfileImage}
+                    loading={profileImageLoading}
+                  />
+                </TabPanel>
+                <TabPanel value={pageId} index="password">
+                  <PasswordForm
+                    onSave={onSavePassword}
+                    loading={passwordLoading}
+                  />
+                </TabPanel>
+              </CardBase>
+            </Grid>
+          </Grid>
+        </SectionAlternate>
       )}
     </div>
   );

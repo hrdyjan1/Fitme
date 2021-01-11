@@ -134,7 +134,6 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
     email,
     firstName,
     lastName,
-    nickname,
     phoneNumber,
     street,
     city,
@@ -143,12 +142,11 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
   } = args;
 
   const selectUserQuery =
-    'SELECT email, firstName, lastName, ath.nickname, phoneNumber, a.street, a.city, a.zipCode, a.country FROM `user` u JOIN Address a ON u.id = a.uid JOIN athlete ath ON u.id = ath.uid WHERE id = ?;';
+    'SELECT email, firstName, lastName, phoneNumber, a.street, a.city, a.zipCode, a.country FROM `user` u JOIN Address a ON u.id = a.uid JOIN athlete ath ON u.id = ath.uid WHERE id = ?;';
   const updateUserQuery =
     'UPDATE user SET email = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE id = ?;';
   const updateAddressQuery =
     'UPDATE Address SET street = ?, city = ?, zipCode = ?, country = ? WHERE uid = ?;';
-  const updateAthleteQuery = 'UPDATE athlete SET nickname = ? WHERE uid = ?;';
 
   let id = null;
   try {
@@ -183,11 +181,6 @@ export const updateUser = async (_, args, { dbConnection, auth }) => {
     getDefinedValue(city, user.city),
     getDefinedValue(zipCode, user.zipCode),
     getDefinedValue(country, user.country),
-    id,
-  ]);
-
-  await dbConnection.query(updateAthleteQuery, [
-    getDefinedValue(nickname, user.nickname),
     id,
   ]);
 
