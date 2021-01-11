@@ -42,7 +42,6 @@ const typeDefs = gql`
 
   type UserDetail {
     email: String
-    nickname: String
     firstName: String
     lastName: String
     phoneNumber: String

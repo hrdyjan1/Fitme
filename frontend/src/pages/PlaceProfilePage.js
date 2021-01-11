@@ -176,13 +176,17 @@ function PlaceProfilePage() {
         ...values,
       },
     }),
-    onCompleted: () => showMessage('Základní informace byly aktualizovány.'),
+    onCompleted: (data) => (data?.updatePlaceBasics
+      ? showMessage('Základní informace byly úspěšně aktualizovány.')
+      : showErrorMessage('Základní informace se nepodařilo aktualizovat')),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const profileImage = {
     mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
-    onCompleted: () => showMessage('Profilová fotka byla úspěšně aktualizována.'),
+    onCompleted: (data) => (data?.uploadProfileImage
+      ? showMessage('Profilová fotka byla úspěšně uložena.')
+      : showErrorMessage('Profilovou fotku se nepodařilo uložit.')),
     onError: (error) => showErrorMessage(error.message),
   };
 

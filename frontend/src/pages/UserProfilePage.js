@@ -7,7 +7,6 @@ import { useNotification } from 'src/contexts/notification';
 const USER_QUERY = gql`
   query User {
     user {
-      nickname
       firstName
       lastName
       email
@@ -29,7 +28,6 @@ const PROFILE_IMAGE_MUTATION = gql`
 
 const USER_MUTATION = gql`
   mutation UpdateUser(
-    $nickname: String
     $firstName: String
     $lastName: String
     $email: String
@@ -40,7 +38,6 @@ const USER_MUTATION = gql`
     $country: String
   ) {
     updateUser(
-      nickname: $nickname
       firstName: $firstName
       lastName: $lastName
       email: $email
@@ -62,76 +59,80 @@ const PASSWORD_MUTATION = gql`
 function UserProfilePage() {
   const { setUser } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
+  const USER_TYPE_ATHLETE = 'athlete';
+
   const userFetcher = useQuery(USER_QUERY);
+
+  const beUser = {
+    mutationRequest: (values) => userMutationRequest({ variables: values }),
+    onCompleted: (data) => {
+      if (data?.updateUser) {
+        showMessage('Základní informace byly úspěšně aktualizovány.');
+      } else {
+        showErrorMessage('Základní informace se nepodařilo aktualizovat');
+      }
+    },
+    onError: (error) => showErrorMessage(error.message),
+  };
+
+  const password = {
+    mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
+    onCompleted: (data) => (data?.updatePassword
+      ? showMessage('Heslo bylo změněno.')
+      : showErrorMessage('Heslo se nepodařilo změnit.')),
+    onError: (error) => showErrorMessage(error.message),
+  };
+
+  const profileImage = {
+    mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
+    onCompleted: (data) => (data?.uploadProfileImage
+      ? showMessage('Profilová fotka byla úspěšně uložena.')
+      : showErrorMessage('Profilovou fotku se nepodařilo uložit.')),
+    onError: (error) => showErrorMessage(error.message),
+  };
+
+  const [userMutationRequest, userMutationRequestState] = useMutation(
+    USER_MUTATION,
+    {
+      onCompleted: beUser.onCompleted,
+      onError: beUser.onError,
+    },
+  );
+
+  const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
+    PASSWORD_MUTATION,
+    {
+      onCompleted: password.onCompleted,
+      onError: password.onError,
+    },
+  );
+
   const [
     profileImageMutationRequest,
     profileImageMutationRequestState,
-  ] = useMutation(PROFILE_IMAGE_MUTATION);
-  const [userMutationRequest, userMutationRequestState] = useMutation(
-    USER_MUTATION,
-  );
-  const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION,
-  );
+  ] = useMutation(PROFILE_IMAGE_MUTATION, {
+    onCompleted: profileImage.onCompleted,
+    onError: profileImage.onError,
+  });
 
-  const updateProfileImage = async (image) => {
-    profileImageMutationRequest({ variables: { file: image } })
-      .then((response) => {
-        if (response.data) {
-          showMessage('Profilová fotka byla úspěšně aktualizována..');
-        } else {
-          showErrorMessage(
-            String(response.errors) || 'Profilová nebyla aktualizována.',
-          );
-        }
-      })
-      .catch((error) => {
-        showErrorMessage(String(error.message));
-      });
-  };
-
-  const updateUser = async (values) => {
-    userMutationRequest({ variables: values })
-      .then((response) => {
-        if (!values.street) {
-          setUser(values);
-        }
-        if (response.data) {
-          showMessage('Údaje byly úspěšně aktualizovány.');
-        } else {
-          showErrorMessage(
-            String(response.errors) || 'Kontaktní údaje nebyly aktualizovány.',
-          );
-        }
-      })
-      .catch((error) => {
-        showErrorMessage(String(error.message));
-      });
-  };
-
-  const updatePassword = async (values) => {
-    passwordMutationRequest({ variables: { ...values } })
-      .then((response) => {
-        if (response.data) {
-          showMessage('Heslo bylo změněno.');
-        } else {
-          showErrorMessage(String(response.errors) || 'Heslo nebylo změněno.');
-        }
-      })
-      .catch((error) => {
-        showErrorMessage(error.message);
-      });
+  const onSaveUser = async (values) => {
+    return beUser.mutationRequest().then((response) => {
+      if (response.data?.updateUser) {
+        setUser({type: USER_TYPE_ATHLETE, ...values});
+      }
+    })
   };
 
   return (
     <UserProfileTemplate
       user={userFetcher.data?.user}
       userLoading={userMutationRequestState.loading}
+      reFetchUser={userFetcher.refetch}
       passwordLoading={passwordMutationRequestState.loading}
       profileImageLoading={profileImageMutationRequestState.loading}
-      onSaveUser={updateUser}
-      onSavePassword={updatePassword}
-      onSaveProfileImage={updateProfileImage}
+      onSaveUser={onSaveUser}
+      onSavePassword={password.mutationRequest}
+      onSaveProfileImage={profileImage.mutationRequest}
     />
   );
 }

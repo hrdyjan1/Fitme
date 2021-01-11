@@ -106,19 +106,25 @@ function TrainerProfilePage() {
 
   const trainer = {
     mutationRequest: (values) => trainerMutationRequest({ variables: values }),
-    onCompleted: () => showMessage('Základní informace byly aktualizovány.'),
+    onCompleted: (data) => (data?.updateTrainer
+      ? showMessage('Základní informace byly úspěšně aktualizovány.')
+      : showErrorMessage('Základní informace se nepodařilo aktualizovat')),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const password = {
     mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
-    onCompleted: () => showMessage('Heslo bylo změněno.'),
+    onCompleted: (data) => (data?.updatePassword
+      ? showMessage('Heslo bylo změněno.')
+      : showErrorMessage('Heslo se nepodařilo změnit.')),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const profileImage = {
     mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
-    onCompleted: () => showMessage('Profilová fotka byla úspěšně aktualizována.'),
+    onCompleted: (data) => (data?.uploadProfileImage
+      ? showMessage('Profilová fotka byla úspěšně uložena.')
+      : showErrorMessage('Profilovou fotku se nepodařilo uložit.')),
     onError: (error) => showErrorMessage(error.message),
   };
 
