@@ -111,7 +111,7 @@ const typeDefs = gql`
     places: [Place!]!
     place(uid: String!): PlaceDetail!
     trainer(uid: String!): TrainerDetail!
-    searchPlaces(containedName: String, sportType: String): [Place!]!
+    searchPlaces(containedName: String, sportType: String, city: String): [Place!]!
     allSportTypes: [SportType]!
     allTrainers: [Trainer]!
     userSportTypes: [SportType]!
