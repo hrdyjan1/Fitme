@@ -85,6 +85,7 @@ function SportPlaceTemplate(props) {
     loading,
     showAll,
     className,
+    onCityChange,
     includeFilter,
     maxPlaceToSee,
     goToSportPlaces,
@@ -113,6 +114,13 @@ function SportPlaceTemplate(props) {
             placeholder="Vybrat kategorii"
             label="Kategorie"
             onInputChange={onCategoryChange}
+          />
+          <Search
+            options={[]}
+            placeholder="Vyhledat podle města"
+            label="Města"
+            freeSolo
+            onInputChange={onCityChange}
           />
           <Search
             options={[]}
