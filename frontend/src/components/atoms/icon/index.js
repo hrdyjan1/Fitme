@@ -25,7 +25,9 @@ const useStyles = makeStyles(() => ({
  * @param {Object} props
  */
 const Icon = (props) => {
-  const { fontIconClass, size, fontIconColor, className, ...rest } = props;
+  const {
+    fontIconClass, size, fontIconColor, className, ...rest
+  } = props;
 
   const classes = useStyles();
 
@@ -37,7 +39,7 @@ const Icon = (props) => {
           classes.root,
           fontIconClass,
           classes[size],
-          className
+          className,
         )}
         style={{ color: fontIconColor }}
         // eslint-disable-next-line react/jsx-props-no-spreading

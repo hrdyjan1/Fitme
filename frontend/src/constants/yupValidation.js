@@ -72,9 +72,8 @@ export const yupValidation = {
     .matches(regex.password, validText.password)
     .required(validText.required),
 
-  passwordCheck: (fieldToCompare) =>
-    yup
-      .string()
-      .oneOf([yup.ref(fieldToCompare), null], validText.passwordCheck)
-      .required(validText.required),
+  passwordCheck: (fieldToCompare) => yup
+    .string()
+    .oneOf([yup.ref(fieldToCompare), null], validText.passwordCheck)
+    .required(validText.required),
 };

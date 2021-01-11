@@ -151,7 +151,7 @@ const Footer = ({ pages, className, ...rest }) => {
                 className={clsx(
                   classes.navLink,
                   classes.navLinkInternal,
-                  'submenu-item'
+                  'submenu-item',
                 )}
               >
                 {page.title}
@@ -164,7 +164,9 @@ const Footer = ({ pages, className, ...rest }) => {
   };
 
   const Pages = () => {
-    const { profile, sportPlaces, web, external } = pages.web.children;
+    const {
+      profile, sportPlaces, web, external,
+    } = pages.web.children;
     return (
       <div className={classes.menu}>
         <MenuGroup item={profile} />

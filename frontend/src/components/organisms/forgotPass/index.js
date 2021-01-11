@@ -85,9 +85,9 @@ function ForgotPassDialog({ show, close }) {
                         error={Boolean(form.errors.email && form.touched.email)}
                         onBlur={formikBag.handleBlur}
                         helperText={
-                          form.errors.email &&
-                          form.touched.email &&
-                          String(form.errors.email)
+                          form.errors.email
+                          && form.touched.email
+                          && String(form.errors.email)
                         }
                         variant="filled"
                         fullWidth

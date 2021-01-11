@@ -77,8 +77,8 @@ function PasswordForm({ onSave, loading }) {
                 <FormButton
                   text="Uložit"
                   disabled={
-                    loading ||
-                    Object.values(formik.values).some((value) => !value)
+                    loading
+                    || Object.values(formik.values).some((value) => !value)
                   }
                 />
               </Grid>

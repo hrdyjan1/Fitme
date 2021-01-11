@@ -1,11 +1,15 @@
 import React from 'react';
-import { Box, Fab, Card, Button } from '@material-ui/core';
+import {
+  Box, Fab, Card, Button,
+} from '@material-ui/core';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 
 import { CardForm } from 'src/components/organisms/CardForm';
+import { useNotification } from 'src/contexts/notification';
 
 function ImageForm({ onSave, loading }) {
   const [imageSource, setImageSource] = React.useState();
+  const { showErrorMessage } = useNotification();
 
   const change = (e) => {
     try {
@@ -13,7 +17,9 @@ function ImageForm({ onSave, loading }) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => setImageSource(reader.result);
-    } catch (e) {}
+    } catch (error) {
+      showErrorMessage('Fotku se nepodařilo nahrát.');
+    }
   };
 
   return (

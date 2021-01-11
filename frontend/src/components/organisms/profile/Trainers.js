@@ -8,13 +8,13 @@ import { AddTrainerForm } from 'src/components/organisms';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100%'
+    width: '100%',
   },
   list: {
-    width: '100%'
+    width: '100%',
   },
   marginTop: {
-    marginTop: '25px'
+    marginTop: '25px',
   },
 }));
 
@@ -44,7 +44,7 @@ const Trainers = ({
     <div className={classes.root}>
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12}>
-          <FormTitle title="Trenéři"   />
+          <FormTitle title="Trenéři" />
         </Grid>
         <Grid item xs={12}>
           <Divider />

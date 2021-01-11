@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
-import { Grid, Box, TextField, Button } from '@material-ui/core';
+import {
+  Grid, Box, TextField, Button,
+} from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { InputLabel } from 'src/components/atoms';
 
@@ -24,10 +26,9 @@ const AddSportTypeForm = ({
     });
   };
 
-  const hasPlaceSportType = (sportType) =>
-    placeSportTypes.some(
-      (placeSportType) => placeSportType.stid === sportType.stid
-    );
+  const hasPlaceSportType = (sportType) => placeSportTypes.some(
+    (placeSportType) => placeSportType.stid === sportType.stid,
+  );
 
   return (
     <div>

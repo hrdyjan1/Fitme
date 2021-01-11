@@ -31,7 +31,7 @@ const GallerySportPlace = (props) => {
       />
       <GridList cellHeight={isMd ? 360 : 260} cols={4} spacing={isMd ? 24 : 8}>
         {data.map((item) => (
-          <GridListTile key={item.toString()} cols={isMd ? item.cols : 4 || 1}>
+          <GridListTile key={item.key} cols={isMd ? item.cols : 4 || 1}>
             <Image
               src={item.imageURL}
               alt={item.location}

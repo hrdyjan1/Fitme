@@ -13,8 +13,8 @@ import {
   ProfileMenu,
   Gallery,
   SportTypes,
-  Trainers, ProfilePictureForm
-} from 'src/components/organisms'
+  Trainers, ProfilePictureForm,
+} from 'src/components/organisms';
 
 const subPages = [
   {
@@ -94,16 +94,15 @@ function PlaceProfileTemplate({
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
-  const isLoading =
-    passwordLoading ||
-    placeLoading ||
-    profileImageLoading ||
-    uploadPlaceImageLoading ||
-    deletePlaceImageLoading ||
-    addSportTypeLoading ||
-    deleteSportTypeLoading ||
-    addPlaceTrainerLoading ||
-    deletePlaceTrainerLoading;
+  const isLoading = passwordLoading
+    || placeLoading
+    || profileImageLoading
+    || uploadPlaceImageLoading
+    || deletePlaceImageLoading
+    || addSportTypeLoading
+    || deleteSportTypeLoading
+    || addPlaceTrainerLoading
+    || deletePlaceTrainerLoading;
 
   return (
     <div className={classes.root}>

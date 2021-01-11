@@ -23,7 +23,7 @@ function UserProvider({ children }) {
       setUser(u);
       signin({ token: t });
     },
-    [setUser, signin]
+    [setUser, signin],
   );
 
   const logout = React.useCallback(() => compose(signout, reset)(), [
@@ -39,7 +39,7 @@ function UserProvider({ children }) {
       login,
       logout,
     }),
-    [user, setUser, fullName, login, logout]
+    [user, setUser, fullName, login, logout],
   );
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }

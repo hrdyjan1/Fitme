@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const pickUpVerToken = compose(
   stringAfterEqual,
-  match(/\/verificationToken=(.+)/)
+  match(/\/verificationToken=(.+)/),
 );
 
 const TEXT = {

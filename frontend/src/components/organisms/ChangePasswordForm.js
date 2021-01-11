@@ -61,8 +61,8 @@ function ChangePasswordForm({ loading, onSave }) {
                   variant="contained"
                   color="primary"
                   disabled={
-                    loading ||
-                    Object.values(formikBag.values).some((value) => !value)
+                    loading
+                    || Object.values(formikBag.values).some((value) => !value)
                   }
                 >
                   Uložit

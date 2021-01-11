@@ -11,8 +11,8 @@ import {
   ProfilePictureForm,
   TabPanel,
   CardBase,
-  ProfileMenu, SportTypes
-} from 'src/components/organisms'
+  ProfileMenu, SportTypes,
+} from 'src/components/organisms';
 
 const subPages = [
   {
@@ -73,12 +73,11 @@ function TrainerProfileTemplate({
 }) {
   const [pageId, setPageId] = React.useState('general');
   const classes = useStyles();
-  const isLoading =
-    trainerLoading ||
-    passwordLoading ||
-    profileImageLoading ||
-    addSportTypeLoading ||
-    deleteSportTypeLoading;
+  const isLoading = trainerLoading
+    || passwordLoading
+    || profileImageLoading
+    || addSportTypeLoading
+    || deleteSportTypeLoading;
 
   return (
     <div className={classes.root}>

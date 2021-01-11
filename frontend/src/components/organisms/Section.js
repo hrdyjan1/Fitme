@@ -46,7 +46,7 @@ const Section = (props) => {
         narrow ? classes.narrow : {},
         disablePadding ? classes.disablePadding : {},
         alternate ? classes.alternate : {},
-        className
+        className,
       )}
       {...rest}
     >

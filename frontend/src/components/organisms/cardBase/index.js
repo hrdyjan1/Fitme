@@ -83,7 +83,7 @@ const CardBase = (props) => {
         noBorder ? classes.noBorder : {},
         noBg ? classes.noBg : {},
         liftUp ? classes.liftUp : {},
-        className
+        className,
       )}
       {...rest}
     >

@@ -5,7 +5,9 @@ const STYLES = ['link-btn--primary', 'link-btn--outline', 'link-btn--dark'];
 
 const SIZES = ['link-btn--medium', 'link-btn--large'];
 
-function Button({ children, onClick, style, size }) {
+function Button({
+  children, onClick, style, size,
+}) {
   const bSize = SIZES.includes(size) ? size : SIZES[0];
   const bStyle = STYLES.includes(style) ? style : STYLES[0];
   return (

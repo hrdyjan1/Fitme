@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   useMediaQuery,
   GridList,
@@ -14,11 +14,13 @@ import { GalleryImage } from 'src/components/molecules';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100%'
+    width: '100%',
   },
 }));
 
-const Gallery = ({ name, images, reFetchData, onSave, onDelete }) => {
+const Gallery = ({
+  name, images, reFetchData, onSave, onDelete,
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
@@ -58,17 +60,16 @@ const Gallery = ({ name, images, reFetchData, onSave, onDelete }) => {
           spacing={isMd ? 24 : 8}
         >
           {images.map(
-            (item, index) =>
-              item?.imageURL && (
-                <GridListTile key={item?.imageURL + index} cols={isMd ? 1 : 3}>
-                  <GalleryImage
-                    title={name}
-                    src={item?.imageURL}
-                    alt={name}
-                    onDelete={() => onDeleteImage(item.iid)}
-                  />
-                </GridListTile>
-              )
+            (item) => item?.imageURL && (
+            <GridListTile key={item?.iid} cols={isMd ? 1 : 3}>
+              <GalleryImage
+                title={name}
+                src={item?.imageURL}
+                alt={name}
+                onDelete={() => onDeleteImage(item.iid)}
+              />
+            </GridListTile>
+            ),
           )}
         </GridList>
       </Box>

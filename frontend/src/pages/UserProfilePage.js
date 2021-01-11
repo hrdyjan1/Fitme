@@ -68,10 +68,10 @@ function UserProfilePage() {
     profileImageMutationRequestState,
   ] = useMutation(PROFILE_IMAGE_MUTATION);
   const [userMutationRequest, userMutationRequestState] = useMutation(
-    USER_MUTATION
+    USER_MUTATION,
   );
   const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
-    PASSWORD_MUTATION
+    PASSWORD_MUTATION,
   );
 
   const updateProfileImage = async (image) => {
@@ -81,7 +81,7 @@ function UserProfilePage() {
           showMessage('Profilová fotka byla úspěšně aktualizována..');
         } else {
           showErrorMessage(
-            String(response.errors) || 'Profilová nebyla aktualizována.'
+            String(response.errors) || 'Profilová nebyla aktualizována.',
           );
         }
       })
@@ -100,7 +100,7 @@ function UserProfilePage() {
           showMessage('Údaje byly úspěšně aktualizovány.');
         } else {
           showErrorMessage(
-            String(response.errors) || 'Kontaktní údaje nebyly aktualizovány.'
+            String(response.errors) || 'Kontaktní údaje nebyly aktualizovány.',
           );
         }
       })

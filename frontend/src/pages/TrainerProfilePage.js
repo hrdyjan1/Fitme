@@ -2,7 +2,7 @@ import React from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useUser } from 'src/contexts/user';
 import { useNotification } from 'src/contexts/notification';
-import { TrainerProfileTemplate } from 'src/templates'
+import { TrainerProfileTemplate } from 'src/templates';
 
 const TRAINER_QUERY = gql`
   query Trainer($userid: String!) {
@@ -100,7 +100,7 @@ function TrainerProfilePage() {
   const { user } = useUser();
   const { showMessage, showErrorMessage } = useNotification();
 
-  const trainerFetcher = useQuery(TRAINER_QUERY, {variables: { userid: user.id }});
+  const trainerFetcher = useQuery(TRAINER_QUERY, { variables: { userid: user.id } });
   const sportTypesFetcher = useQuery(SPORT_TYPES_QUERY);
   const trainerSportTypesFetcher = useQuery(TRAINER_SPORT_TYPES_QUERY);
 
@@ -111,33 +111,26 @@ function TrainerProfilePage() {
   };
 
   const password = {
-    mutationRequest: (values) =>
-      passwordMutationRequest({ variables: { ...values } }),
+    mutationRequest: (values) => passwordMutationRequest({ variables: { ...values } }),
     onCompleted: () => showMessage('Heslo bylo změněno.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const profileImage = {
-    mutationRequest: (image) =>
-      profileImageMutationRequest({ variables: { file: image } }),
-    onCompleted: () =>
-      showMessage('Profilová fotka byla úspěšně aktualizována.'),
+    mutationRequest: (image) => profileImageMutationRequest({ variables: { file: image } }),
+    onCompleted: () => showMessage('Profilová fotka byla úspěšně aktualizována.'),
     onError: (error) => showErrorMessage(error.message),
   };
 
   const sportType = {
-    addMutationRequest: (id) =>
-      addSportTypeMutationRequest({ variables: { stid: id } }),
-    deleteMutationRequest: (id) =>
-      deleteSportTypeMutationRequest({ variables: { stid: id } }),
-    onAddCompleted: (data) =>
-      data?.addSportType
-        ? showMessage('Disciplína byla úspěšně přidána.')
-        : showErrorMessage('Disciplínu se nepodařilo přidat.'),
-    onDeleteCompleted: (data) =>
-      data?.removeSportType
-        ? showMessage('Disciplína byla úspěšně odebrána.')
-        : showErrorMessage('Disciplínu se nepodařilo odebrat.'),
+    addMutationRequest: (id) => addSportTypeMutationRequest({ variables: { stid: id } }),
+    deleteMutationRequest: (id) => deleteSportTypeMutationRequest({ variables: { stid: id } }),
+    onAddCompleted: (data) => (data?.addSportType
+      ? showMessage('Disciplína byla úspěšně přidána.')
+      : showErrorMessage('Disciplínu se nepodařilo přidat.')),
+    onDeleteCompleted: (data) => (data?.removeSportType
+      ? showMessage('Disciplína byla úspěšně odebrána.')
+      : showErrorMessage('Disciplínu se nepodařilo odebrat.')),
     onError: (error) => showErrorMessage(error.message),
   };
 
@@ -146,7 +139,7 @@ function TrainerProfilePage() {
     {
       onCompleted: trainer.onCompleted,
       onError: trainer.onError,
-    }
+    },
   );
 
   const [passwordMutationRequest, passwordMutationRequestState] = useMutation(
@@ -154,7 +147,7 @@ function TrainerProfilePage() {
     {
       onCompleted: password.onCompleted,
       onError: password.onError,
-    }
+    },
   );
 
   const [
